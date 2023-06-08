@@ -4,13 +4,17 @@
 
 You need to follow the subsequent steps to run this app on your local machine:
 
-### 1. Have the correct ruby version and rails version installed
+### 1. Have the correct versions of ruby, rails, node, and yarn
 
 This app was created with:
 
 * **ruby-3.2.2**
 
-* **Rails 6.1.7.3**
+* **rails 6.1.7.3**
+
+* **Node v16.20.0**
+
+* **yarn 1.22.19**
 
 So, it is absolutely necessary that you have the correct versions of *ruby* and
 *rails* installed on your system.
@@ -51,10 +55,12 @@ git clone git@github.com:Chitram-Dasgupta/kreeti-freelancing-app.git
 cd kreeti-freelancing-app
 ```
 
-### 5. Create the databases
+### 5. Create and migrate the databases
 
 ```sh
 rails db:create
+
+rails db:migrate
 ```
 
 ### 6. Install the requisite dependencies
