@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_authorization, only: %i[new create]
+  skip_before_action :require_authorization, only: %i[new create activation]
 
   def new; end
 
@@ -18,5 +18,8 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     redirect_to root_path, notice: 'Logged out!'
+  end
+
+  def activation
   end
 end

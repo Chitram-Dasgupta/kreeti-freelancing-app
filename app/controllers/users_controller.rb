@@ -7,8 +7,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @token = SecureRandom.urlsafe_base64
+    @login_link = "#{root_url}/login_verify?token=#{@token}&email=#{@user.email}"
     if @user.save
-      UserMailer.account_activation(@user).deliver_later
+      UserMailer.account_activation(@user, @login_link).deliver_later
       # session[:user_id] = @user.id
       redirect_to root_path, notice: 'Thank you for signing up!'
     else
