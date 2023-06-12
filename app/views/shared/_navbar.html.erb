@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-md px-2">
+  <%= link_to "Freelancing app", root_path, class: "navbar-brand"%>
+  <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#primary-navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="primary-navigation">
+    <ul class="navbar-nav ms-auto text-center">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Log in
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "As a client", new_session_path, class: "dropdown-item"%></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">As a freelancer</a></li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Register
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><%= link_to "As a client", new_user_path, class: "dropdown-item" %></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">As a freelancer</a></li>
+        </ul>
+      </li>
+      <% if logged_in? %>
+        <li class="nav-item">
+          <%= link_to 'Log out', { :controller => 'sessions', :action => 'destroy', :id => session[:user_id] },
+               data:  { :confirm => 'Are you sure?', :method => :delete, :remote => true} %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
