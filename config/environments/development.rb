@@ -34,7 +34,6 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Default Mailer Host
-  # Rails.application.routes.default_url_options[:host] = 'domain.example'
   Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 
 

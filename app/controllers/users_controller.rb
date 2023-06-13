@@ -12,7 +12,6 @@ class UsersController < ApplicationController
     if @user.save
       # UserMailer.account_activation(@user, @login_link).deliver_later
       UserMailer.account_activation(@user).deliver_later
-      # session[:user_id] = @user.id
       redirect_to root_path, notice: 'Thank you for signing up!'
     else
       flash.now[:error] = 'Please try again'
@@ -31,13 +30,13 @@ class UsersController < ApplicationController
     user = User.find_by(id: params[:id])
     if user
       user.email_activate
-      flash[:success] = "Welcome to the Sample App! Your email has been confirmed. Please sign in to continue."
+      flash[:success] = 'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
       redirect_to new_user_path
     else
-      flash[:error] = "Sorry. User does not exist"
+      flash[:error] = 'Sorry. User does not exist'
       redirect_to root_url
     end
-end
+  end
 
   private
 

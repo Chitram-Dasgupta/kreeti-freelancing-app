@@ -4,10 +4,14 @@ class SessionsController < ApplicationController
   def new; end
 
   def create
-    @user = User.find_by(email: params[:email])
+    @user = User.find_by(email: params[:email].downcase)
 
     if @user&.authenticate(params[:password])
-      session[:user_id] = @user.id
+      if @user.email_confirmed?
+        session[:user_id] = @user.id
+      else
+        flash[:error] = 'Please activate your account!'
+      end
       redirect_to root_path
     else
       flash[:error] = 'Invalid email or password'
@@ -20,6 +24,5 @@ class SessionsController < ApplicationController
     redirect_to root_path, notice: 'Logged out!'
   end
 
-  def activation
-  end
+  def activation; end
 end
