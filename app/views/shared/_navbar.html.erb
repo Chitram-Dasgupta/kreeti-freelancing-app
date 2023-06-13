@@ -10,26 +10,8 @@
   <div class="collapse navbar-collapse" id="primary-navigation">
     <ul class="navbar-nav ms-auto text-center">
       <% unless logged_in? %>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Log in
-          </a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "As a client", new_session_path, class: "dropdown-item"%></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">As a freelancer</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Register
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><%= link_to "As a client", new_user_path, class: "dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">As a freelancer</a></li>
-          </ul>
-        </li>
+        <li><%= link_to "Log in", new_session_path, class: "nav-item"%></li>
+        <li><%= link_to "Register", new_user_path, class: "nav-item"%></li>
       <% end %>
       <% if logged_in? %>
         <li class="nav-item">

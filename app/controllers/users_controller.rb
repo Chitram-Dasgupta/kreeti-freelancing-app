@@ -7,10 +7,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @token = SecureRandom.urlsafe_base64
-    @login_link = "#{root_url}/login_verify?token=#{@token}&email=#{@user.email}"
     if @user.save
-      # UserMailer.account_activation(@user, @login_link).deliver_later
       UserMailer.account_activation(@user).deliver_later
       redirect_to root_path, notice: 'Thank you for signing up!'
     else
@@ -27,7 +24,6 @@ class UsersController < ApplicationController
 
   def confirm_email
     user = User.find_by_confirmation_token(params[:token])
-    # user = User.find_by(id: params[:id])
     if user
       user.email_activate
       flash[:success] = 'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
@@ -41,6 +37,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:email, :password, :password_confirmation, :role)
   end
 end

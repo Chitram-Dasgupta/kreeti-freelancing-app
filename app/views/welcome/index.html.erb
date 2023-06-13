@@ -1,7 +1,11 @@
 <main class="text-center my-3 mx-2">
-  <% unless logged_in? %>
+  <% if !logged_in? %>
     <h2>Welcome visitor</h2>
-  <% else %>
+  <% elsif current_user.role == 'client' %>
+    <h2>Welcome client</h2>
+    <h2><%= current_user.email %></h2>
+  <% elsif current_user.role == 'freelancer' %>
+    <h2>Welcome freelancer</h2>
     <h2><%= current_user.email %></h2>
   <% end %>
   <p>As a visitor, you can look at public profiles of freelancers and the projects posted by clients</p>

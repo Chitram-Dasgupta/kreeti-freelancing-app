@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   validates :password, presence: true, length: { minimum: 6 }
 
+  enum role: %i[client freelancer admin]
+
   def email_activate
     self.email_confirmed = true
     self.confirmation_token = nil

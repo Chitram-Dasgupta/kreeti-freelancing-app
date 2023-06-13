@@ -10,6 +10,8 @@
     <%= f.label :password_confirmation %><br>
     <%= f.password_field :password_confirmation %><br>
     <br>
+    <%= select(:user, :role, [['Client', 'client'], ['Freelancer', 'freelancer']]) %> <br>
+    <br>
     <%= f.submit "Sign up" %>
   <% end %>
 </div>
