@@ -20,9 +20,9 @@ class ProfilesController < ApplicationController
 
   def profile_params
     if client?
-      params.require(:profile).permit(:name, :industry)
+      params.require(:profile).permit(:name, :industry, :profile_picture)
     elsif freelancer?
-      params.require(:profile).permit(:name, :qualification, :experience, :industry)
+      params.require(:profile).permit(:name, :qualification, :experience, :industry, :profile_picture)
     end
   end
 end

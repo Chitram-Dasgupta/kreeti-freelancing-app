@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
   enum role: %i[client freelancer admin]
 
-  delegate :name, :qualification, :experience, :industry, to: :profile
+  delegate :name, :qualification, :experience, :industry, :profile_picture, to: :profile
 
   def email_activate
     self.email_confirmed = true
