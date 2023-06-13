@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:email].downcase)
 
     if @user&.authenticate(params[:password])
-      if @user.email_confirmed?
+      if @user.email_confirmed
         session[:user_id] = @user.id
       else
         flash[:error] = 'Please activate your account!'

@@ -1,3 +1,3 @@
 <h1>Welcome to Freelancing App</h1>
 <h2>Click the link below to activate your account:</h2>
-<%= link_to 'Activate account', confirm_email_user_url(@user, @user.confirm_token) %>
+<%= link_to 'Activate account', confirm_email_user_url(@user, @user.confirm_token, token: @user.confirmation_token) %>

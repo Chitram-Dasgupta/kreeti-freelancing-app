@@ -26,8 +26,8 @@ class UsersController < ApplicationController
   def update; end
 
   def confirm_email
-    # user = User.find_by_confirmation_token(params[:id])
-    user = User.find_by(id: params[:id])
+    user = User.find_by_confirmation_token(params[:token])
+    # user = User.find_by(id: params[:id])
     if user
       user.email_activate
       flash[:success] = 'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'

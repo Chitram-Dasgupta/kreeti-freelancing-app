@@ -23,4 +23,5 @@ class User < ApplicationRecord
       self.confirmation_token = SecureRandom.urlsafe_base64.to_s
     end
   end
+
 end
