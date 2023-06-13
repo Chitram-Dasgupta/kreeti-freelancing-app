@@ -18,6 +18,7 @@
           <%= link_to 'Log out', { :controller => 'sessions', :action => 'destroy', :id => session[:user_id] },
                data:  { :confirm => 'Are you sure?', :method => :delete, :remote => true} %>
         </li>
+        <li class="nav-item"><%= link_to "Profile", profile_path(current_user) %></li>
       <% end %>
     </ul>
   </div>

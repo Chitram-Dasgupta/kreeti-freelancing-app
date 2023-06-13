@@ -2,9 +2,12 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   has_secure_password
 
+  has_one :profile, dependent: :destroy
+
   before_save { self.email = email.downcase }
 
   before_create :confirm_token
+  after_create :create_default_profile
 
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX, message: 'must be a valid email address' },
@@ -13,6 +16,8 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
 
   enum role: %i[client freelancer admin]
+
+  delegate :name, :qualification, :experience, :industry, to: :profile
 
   def email_activate
     self.email_confirmed = true
@@ -24,6 +29,10 @@ class User < ApplicationRecord
     if self.confirmation_token.blank?
       self.confirmation_token = SecureRandom.urlsafe_base64.to_s
     end
+  end
+
+  def create_default_profile
+    self.build_profile(name: '', industry: '').save
   end
 
 end
