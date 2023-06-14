@@ -17,12 +17,22 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @project = current_user.projects.find(params[:id])
   end
 
   def edit
+    @project = current_user.projects.find(params[:id])
   end
 
   def update
+    @project = current_user.projects.find(params[:id])
+
+    if @project.update(project_params)
+      redirect_to projects_path, notice: 'Project updated'
+    else
+      flash[:error] = 'Please enter the information correctly'
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

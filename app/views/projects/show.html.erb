@@ -1,2 +1,15 @@
-<h1>Projects#show</h1>
-<p>Find me in app/views/projects/show.html.erb</p>
+<div class="mx-2 my-3">
+  <p><strong>Title:</strong> <%= @project.title %></p>
+  <p><strong>Description:</strong> <%= @project.description %></p>
+  <% if @project.design_document.attached? %>
+    <p>Design Document: <%= link_to 'Download', url_for(@project.design_document) %></p>
+  <% else %>
+    <p>No design document attached.</p>
+  <% end %>
+  <% if @project.srs_document.attached? %>
+    <p>SRS Document: <%= link_to 'Download', url_for(@project.srs_document) %></p>
+  <% else %>
+    <p>No SRS document attached.</p>
+  <% end %>
+  <%= link_to 'Back to recent projects', projects_path %>
+</div>

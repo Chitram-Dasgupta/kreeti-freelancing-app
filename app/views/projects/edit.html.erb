@@ -1,2 +1,21 @@
-<h1>Projects#edit</h1>
-<p>Find me in app/views/projects/edit.html.erb</p>
+<div class="mx-2">
+  <h1>Edit your project</h1>
+  <%= form_with model:@project do |f| %>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %><br>
+    <br>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %><br>
+    <br>
+    <%= f.label :visibility %><br>
+    <%= select(:project, :visibility, [['Public', 'pub'], ['Private', 'priv']]) %> <br>
+    <br>
+    <%= f.label :design_document %><br>
+    <%= f.file_field :design_document %><br>
+    <br>
+    <%= f.label :srs_document %><br>
+    <%= f.file_field :srs_document %><br>
+    <br>
+    <%= f.submit "Create", class: "btn btn-primary" %>
+  <% end %>
+</div>

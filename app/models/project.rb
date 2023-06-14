@@ -9,4 +9,12 @@ class Project < ApplicationRecord
   enum visibility: %i[pub priv]
 
   scope :recent_by_user, ->(user) { where(user: user).order(created_at: :desc).limit(5) }
+
+  def visibility_status
+    if self.visibility == 'pub'
+      'Public'
+    else
+      'Private'
+    end
+  end
 end
