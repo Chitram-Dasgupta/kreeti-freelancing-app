@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.new(project_params)
     if @project.save
-      redirect_to project_path, notice: 'Project was successfully created!'
+      redirect_to projects_path, notice: 'Project was successfully created!'
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,6 +26,10 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    @project = current_user.projects.find(params[:id])
+    @project.destroy
+    flash[:notice] = 'The project was deleted'
+    redirect_to projects_path
   end
 
   private

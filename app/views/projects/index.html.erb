@@ -24,10 +24,7 @@
               Edit <i class="bi bi-pencil"></i>
             <% end %>
           <% end %>
-          <%= link_to project_path(project), class: "btn btn-danger", data:{
-            turbo_method: :delete,
-            turbo_confirm: 'Are you sure?'
-        } do %>
+          <%= link_to project_path(project), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
             Delete <i class="bi bi-trash"></i>
           <% end %>
         </div>
