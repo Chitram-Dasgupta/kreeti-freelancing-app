@@ -1,5 +1,9 @@
 <nav class="navbar navbar-expand-md px-2">
-  <%= link_to "Freelancing app", root_path, class: "navbar-brand"%>
+  <% if !logged_in? %>
+    <%= link_to "Freelancing app", root_path, class: "navbar-brand"%>
+  <% elsif client? %>
+    <%= link_to "Freelancing app", projects_path, class: "navbar-brand"%>
+  <% end %>
   <button
             class="navbar-toggler"
             type="button"

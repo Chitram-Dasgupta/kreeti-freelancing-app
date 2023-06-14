@@ -9,10 +9,11 @@ class SessionsController < ApplicationController
     if @user&.authenticate(params[:password])
       if @user.email_confirmed
         session[:user_id] = @user.id
+        redirect_to projects_path, notice: 'Logged in!'
       else
         flash[:error] = 'Please activate your account!'
+        redirect_to root_path
       end
-      redirect_to root_path
     else
       flash[:error] = 'Invalid email or password'
       render :new, status: :unprocessable_entity

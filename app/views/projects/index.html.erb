@@ -1,0 +1,38 @@
+<div class="mx-2">
+  <%= link_to new_project_path, class: "btn btn-info mb-2" do %>
+    New project <i class="bi bi-plus-circle-dotted"></i>
+  <% end %>
+  <h3>Your recently submitted projects</h3>
+  <% if @recent_projects.empty? %>
+    <p> You have not submitted any projects </p>
+  <% else %>
+    <% @recent_projects.each do |project| %>
+      <div class="card my-2 mx-1">
+        <div class="card-header">
+          Project
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= project.title %></h5>
+          <p class="card-text"><%= project.description %></p>
+          <p class="card-text"><%= time_ago_in_words(project.updated_at) %> ago</p>
+          <p class="card-text">by <%= project.user.email %></p>
+          <%= link_to project, class: "btn btn-primary" do %>
+            Show <i class="bi bi-arrow-right-circle"></i>
+          <% end %>
+          <% if client? %>
+            <%= link_to edit_project_path(project), class: "btn btn-primary" do %>
+              Edit <i class="bi bi-pencil"></i>
+            <% end %>
+          <% end %>
+          <%= link_to project_path(project), class: "btn btn-danger", data:{
+            turbo_method: :delete,
+            turbo_confirm: 'Are you sure?'
+        } do %>
+            Delete <i class="bi bi-trash"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <p>See more</p>
+  <% end %>
+</div>
