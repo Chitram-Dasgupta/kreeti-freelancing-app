@@ -1,0 +1,49 @@
+<div class="mx-2 mb-4">
+  <h3>Your recently submitted bids</h3>
+  <% if @recent_bids.empty? %>
+    <p> You have not submitted any bids </p>
+  <% else %>
+    <% @recent_bids.each do |bid| %>
+      <div class="card my-2 mx-1">
+        <div class="card-header">
+          Bid
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= bid.title %></h5>
+          <p class="card-text"><%= bid.description %></p>
+          <p class="card-text"><%= time_ago_in_words(bid.updated_at) %> ago</p>
+          <p class="card-text">by <%= bid.user.email %></p>
+          <%= link_to bid, class: "btn btn-primary" do %>
+            Show <i class="bi bi-arrow-right-circle"></i>
+          <% end %>
+          <% if client? %>
+            <%= link_to edit_bid_path(bid), class: "btn btn-primary" do %>
+              Edit <i class="bi bi-pencil"></i>
+            <% end %>
+          <% end %>
+          <%= link_to bid_path(bid), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
+            Delete <i class="bi bi-trash"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <p>See more</p>
+  <% end %>
+</div>
+<div>
+  <h2>Recent projects submitted by clients from around the world!</h2>
+  <% @recent_projects.each do |project| %>
+    <div class="card my-2 mx-1">
+      <div class="card-header">
+        <%= project.title %>
+      </div>
+      <div class="card-body">
+        <p class="card-text"><%= project.description %></p>
+        <p class="card-text">by <%= project.user.email %></p>
+        <%= link_to project, class: "btn btn-primary" do %>
+          Show <i class="bi bi-arrow-right-circle"></i>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

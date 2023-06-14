@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_one :profile, dependent: :destroy
   has_many :projects, dependent: :destroy
+  has_many :bids, dependent: :destroy
 
   before_save { self.email = email.downcase }
 

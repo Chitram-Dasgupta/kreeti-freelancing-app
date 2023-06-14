@@ -9,7 +9,12 @@ class SessionsController < ApplicationController
     if @user&.authenticate(params[:password])
       if @user.email_confirmed
         session[:user_id] = @user.id
-        redirect_to projects_path, notice: 'Logged in!'
+        flash[:notice] = 'Logged in!'
+        if client?
+          redirect_to projects_path
+        elsif freelancer?
+          redirect_to bids_path
+        end
       else
         flash[:error] = 'Please activate your account!'
         redirect_to root_path

@@ -11,5 +11,14 @@
   <% else %>
     <p>No SRS document attached.</p>
   <% end %>
-  <%= link_to 'Back to recent projects', projects_path %>
+  <% if client? %>
+    <%= link_to 'Back to recent projects', projects_path %>
+  <% elsif freelancer? %>
+    <p class="card-text">by <%= @project.user.email %></p>
+    <%= link_to new_bid_path, class: "btn btn-info mb-2" do %>
+      New Bid <i class="bi bi-plus-circle-dotted"></i>
+    <% end %>
+    <br>
+    <%= link_to 'Back to home page', bids_path %>
+  <% end%>
 </div>

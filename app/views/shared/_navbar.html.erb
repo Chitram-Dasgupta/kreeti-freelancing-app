@@ -3,6 +3,8 @@
     <%= link_to "Freelancing app", root_path, class: "navbar-brand"%>
   <% elsif client? %>
     <%= link_to "Freelancing app", projects_path, class: "navbar-brand"%>
+  <% elsif freelancer? %>
+    <%= link_to "Freelancing app", projects_path, class: "navbar-brand"%>
   <% end %>
   <button
             class="navbar-toggler"
