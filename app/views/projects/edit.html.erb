@@ -7,7 +7,7 @@
     <%= f.label :description %><br>
     <%= f.text_area :description %><br>
     <br>
-    <% ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer'].each do |skill| %>
+    <% Project.all_skills.each do |skill| %>
       <%= check_box_tag 'project[skills][]', skill, @project.skills.include?(skill) %>
       <%= label_tag "project_skills_#{skill.parameterize}", skill %>
     <% end %>

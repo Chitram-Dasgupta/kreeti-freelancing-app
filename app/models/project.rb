@@ -21,4 +21,8 @@ class Project < ApplicationRecord
       'Private'
     end
   end
+
+  def self.all_skills
+    ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer', 'Python developer']
+  end
 end
