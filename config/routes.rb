@@ -11,9 +11,12 @@ Rails.application.routes.draw do
   resources :projects
 
   resources :bids do
-    post 'accept', on: :member
-    post 'reject', on: :member
-    post 'hold', on: :member
+    member do
+      post 'accept'
+      post 'reject'
+      post 'hold'
+      post 'award'
+    end
   end
 
   root 'welcome#index'

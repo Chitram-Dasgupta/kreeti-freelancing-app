@@ -62,6 +62,12 @@ class BidsController < ApplicationController
     redirect_to bid.project, notice: 'Bid put on hold'
   end
 
+  def award
+    bid = Bid.find(params[:id])
+    bid.award
+    redirect_to bid.project, notice: 'Bid awarded!'
+  end
+
   private
 
   def bid_params
