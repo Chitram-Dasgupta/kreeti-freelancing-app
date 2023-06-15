@@ -1,2 +1,18 @@
-<h1>Bids#new</h1>
-<p>Find me in app/views/bids/new.html.erb</p>
+<div class="mx-2">
+  <h1>Create a new bid</h1>
+  <p>Go ahead and create a new bid to find freelancers from around the world!</p>
+  <%= form_with(model: @bid, url: bids_path, method: :post) do |f| %>
+    <%= f.label :bid_name %><br>
+    <%= f.text_field :bid_name %><br>
+    <br>
+    <%= f.label :bid_description %><br>
+    <%= f.text_area :bid_description %><br>
+    <br>
+    <%= f.label :bid_amount %><br>
+    <%= f.number_field :bid_amount, step: '0.01', min: '0', max: '999999.99' %><br>
+    <br>
+    <%= f.hidden_field :project_id, value: @project.id %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.submit "Create", class: "btn btn-primary" %>
+  <% end %>
+</div>

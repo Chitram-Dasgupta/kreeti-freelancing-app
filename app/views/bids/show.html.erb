@@ -1,2 +1,6 @@
-<h1>Bids#show</h1>
-<p>Find me in app/views/bids/show.html.erb</p>
+<div class="mx-2 my-3">
+  <h2><%= @bid.bid_name %></h4>
+  <p><%= @bid.bid_description %></p>
+  <p><%= @bid.bid_amount %></p>
+</div>
+<%= link_to 'Edit this bid', edit_bid_path(@bid) %>

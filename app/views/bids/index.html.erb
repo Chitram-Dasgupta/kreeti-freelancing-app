@@ -9,17 +9,16 @@
           Bid
         </div>
         <div class="card-body">
-          <h5 class="card-title"><%= bid.title %></h5>
-          <p class="card-text"><%= bid.description %></p>
+          <h5 class="card-title"><%= bid.bid_name %></h5>
+          <p class="card-text"><%= bid.bid_description %></p>
+          <p class="card-text"><%= bid.bid_amount %></p>
           <p class="card-text"><%= time_ago_in_words(bid.updated_at) %> ago</p>
           <p class="card-text">by <%= bid.user.email %></p>
           <%= link_to bid, class: "btn btn-primary" do %>
             Show <i class="bi bi-arrow-right-circle"></i>
           <% end %>
-          <% if client? %>
-            <%= link_to edit_bid_path(bid), class: "btn btn-primary" do %>
-              Edit <i class="bi bi-pencil"></i>
-            <% end %>
+          <%= link_to edit_bid_path(bid), class: "btn btn-secondary" do %>
+            Edit <i class="bi bi-pencil"></i>
           <% end %>
           <%= link_to bid_path(bid), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
             Delete <i class="bi bi-trash"></i>
