@@ -46,6 +46,6 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :description, :visibility, :design_document, :srs_document)
+    params.require(:project).permit(:title, :description, :visibility, :design_document, :srs_document, skills: [])
   end
 end

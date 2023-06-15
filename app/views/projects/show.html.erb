@@ -1,6 +1,9 @@
 <div class="mx-2 my-3">
   <p><strong>Title:</strong> <%= @project.title %></p>
   <p><strong>Description:</strong> <%= @project.description %></p>
+  <% @project.skills.each do |skill| %>
+    <p><%= skill %></p>
+  <% end %>
   <% if @project.design_document.attached? %>
     <p>Design Document: <%= link_to 'Download', url_for(@project.design_document) %></p>
   <% else %>

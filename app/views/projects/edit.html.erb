@@ -7,6 +7,11 @@
     <%= f.label :description %><br>
     <%= f.text_area :description %><br>
     <br>
+    <% ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer'].each do |skill| %>
+      <%= check_box_tag 'project[skills][]', skill, @project.skills.include?(skill) %>
+      <%= label_tag "project_skills_#{skill.parameterize}", skill %>
+    <% end %>
+    <br>
     <%= f.label :visibility %><br>
     <%= select(:project, :visibility, [['Public', 'pub'], ['Private', 'priv']]) %> <br>
     <br>
@@ -16,6 +21,6 @@
     <%= f.label :srs_document %><br>
     <%= f.file_field :srs_document %><br>
     <br>
-    <%= f.submit "Create", class: "btn btn-primary" %>
+    <%= f.submit "Update", class: "btn btn-primary" %>
   <% end %>
 </div>

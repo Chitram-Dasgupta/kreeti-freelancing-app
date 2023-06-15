@@ -16,6 +16,9 @@
         <div class="card-body">
           <h5 class="card-title"><%= project.title %></h5>
           <p class="card-text"><%= project.description %></p>
+          <% project.skills.each do |skill| %>
+            <p class="card-text"><%= skill %></p>
+          <% end %>
           <p class="card-text"><%= time_ago_in_words(project.updated_at) %> ago</p>
           <p class="card-text">by <%= project.user.email %></p>
           <%= link_to project, class: "btn btn-primary" do %>
