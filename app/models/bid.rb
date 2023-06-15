@@ -6,6 +6,8 @@ class Bid < ApplicationRecord
 
   enum bid_status: %i[pending accepted rejected awarded]
 
+  delegate :email, to: :user
+
   scope :recent_by_user, ->(user) { where(user_id: user.id).order(created_at: :desc).limit(5) }
 
   def accept

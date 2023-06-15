@@ -17,7 +17,7 @@
   <% if client? %>
     <%= link_to 'Back to recent projects', projects_path %>
   <% elsif freelancer? %>
-    <p class="card-text">by <%= @project.user.email %></p>
+    <p class="card-text">by <%= @project.email %></p>
     <%= link_to new_bid_path(project_id: @project.id), class: 'btn btn-primary' do %>
       New Bid <i class="bi bi-plus-circle-dotted"></i>
     <% end %>
@@ -30,7 +30,7 @@
       <p><%= bid.bid_description %></p>
       <p><%= bid.bid_amount %></p>
       <p><%= bid.bid_status %></p>
-      <p>by <%= bid.user.email %></p>
+      <p>by <%= bid.email %></p>
       <% unless bid.awarded? %>
         <% if bid.accepted? %>
           <%= link_to 'Award Bid to freelancer', award_bid_path(bid), method: :post, class: 'btn btn-primary' %>
