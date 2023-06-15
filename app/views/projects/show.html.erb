@@ -18,8 +18,12 @@
     <%= link_to 'Back to recent projects', projects_path %>
   <% elsif freelancer? %>
     <p class="card-text">by <%= @project.email %></p>
-    <%= link_to new_bid_path(project_id: @project.id), class: 'btn btn-primary' do %>
-      New Bid <i class="bi bi-plus-circle-dotted"></i>
+    <% unless @project.bid_awarded? %>
+      <%= link_to new_bid_path(project_id: @project.id), class: 'btn btn-primary' do %>
+        New Bid <i class="bi bi-plus-circle-dotted"></i>
+      <% end %>
+    <% else %>
+      <strong>You cannot bid on this project! Project has already been awarded</strong>
     <% end %>
     <br>
   <% end%>

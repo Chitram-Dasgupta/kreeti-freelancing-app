@@ -27,4 +27,8 @@ class Project < ApplicationRecord
   def self.all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer', 'Python developer']
   end
+
+  def bid_awarded?
+    self.bids.where(bid_status: :awarded).exists?
+  end
 end
