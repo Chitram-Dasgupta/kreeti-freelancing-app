@@ -24,4 +24,8 @@ class Bid < ApplicationRecord
     self.update(bid_status: :awarded)
     project.bids.where.not(id: self.id).update_all(bid_status: :rejected)
   end
+
+  def modifiable?
+    self.bid_status == 'pending' || self.bid_status == 'accepted'
+  end
 end

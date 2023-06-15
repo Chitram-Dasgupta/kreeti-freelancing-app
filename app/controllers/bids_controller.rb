@@ -1,4 +1,6 @@
 class BidsController < ApplicationController
+  before_action :check_rejected_or_awarded, only: %i[edit update]
+
   def index
     @recent_bids = Bid.recent_by_user(current_user)
     @recent_projects = Project.recent
@@ -69,6 +71,11 @@ class BidsController < ApplicationController
   end
 
   private
+
+  def check_rejected_or_awarded
+    @bid = Bid.find(params[:id])
+    redirect_to bids_path, notice: 'You cannot edit this bid' unless @bid.modifiable?
+  end
 
   def bid_params
     params.require(:bid).permit(:bid_name, :bid_description, :bid_status, :bid_amount, :project_id, :user_id)

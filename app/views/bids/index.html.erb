@@ -18,8 +18,10 @@
           <%= link_to bid, class: "btn btn-primary" do %>
             Show <i class="bi bi-arrow-right-circle"></i>
           <% end %>
-          <%= link_to edit_bid_path(bid), class: "btn btn-secondary" do %>
-            Edit <i class="bi bi-pencil"></i>
+          <% if bid.modifiable? %>
+            <%= link_to edit_bid_path(bid), class: "btn btn-secondary" do %>
+              Edit <i class="bi bi-pencil"></i>
+            <% end %>
           <% end %>
           <%= link_to bid_path(bid), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
             Delete <i class="bi bi-trash"></i>
