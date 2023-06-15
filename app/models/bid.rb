@@ -6,7 +6,20 @@ class Bid < ApplicationRecord
 
   enum bid_status: %i[pending accepted rejected]
 
-  # scope :recent_by_user, ->(user) { where(user: user).order(created_at: :desc).limit(5) }
-
   scope :recent_by_user, ->(user) { where(user_id: user.id).order(created_at: :desc).limit(5) }
+
+  def accept
+    self.update(bid_status: :accepted)
+    # project.bids.where.not(id: self.id).update_all(bid_status: :rejected)
+  end
+
+  def reject
+    self.update(bid_status: :rejected)
+    # project.bids.where.not(id: self.id).update_all(bid_status: :rejected)
+  end
+
+  def hold
+    self.update(bid_status: :pending)
+    # project.bids.where.not(id: self.id).update_all(bid_status: :rejected)
+  end
 end

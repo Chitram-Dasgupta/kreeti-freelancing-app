@@ -25,8 +25,19 @@
   <% end%>
   <h2>Bids:</h2>
   <% @bids.each do |bid| %>
+    <%# unless bid.rejected? %>
     <h4><%= bid.bid_name %></h4>
     <p><%= bid.bid_description %></p>
     <p><%= bid.bid_amount %></p>
+    <p><%= bid.bid_status %></p>
+    <p>by <%= bid.user.email %></p>
+    <% if bid.accepted? %>
+      <strong>Award project</strong>
+      <%= link_to 'Put on hold', hold_bid_path(bid), method: :post, class: 'btn btn-warning' %>
+    <% else %>
+      <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary' %>
+      <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger' %>
+    <% end %>
+    <%# end %>
   <% end %>
 </div>

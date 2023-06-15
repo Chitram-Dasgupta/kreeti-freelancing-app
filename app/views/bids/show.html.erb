@@ -2,5 +2,7 @@
   <h2><%= @bid.bid_name %></h4>
   <p><%= @bid.bid_description %></p>
   <p><%= @bid.bid_amount %></p>
+  <p><%= @bid.bid_status %></p>
+  <p><%= @bid.user.email %></p>
 </div>
 <%= link_to 'Edit this bid', edit_bid_path(@bid) %>

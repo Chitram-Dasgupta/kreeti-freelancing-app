@@ -44,10 +44,27 @@ class BidsController < ApplicationController
     redirect_to bids_path
   end
 
+  def accept
+    bid = Bid.find(params[:id])
+    bid.accept
+    redirect_to bid.project, notice: 'Bid accepted!'
+  end
+
+  def reject
+    bid = Bid.find(params[:id])
+    bid.reject
+    redirect_to bid.project, notice: 'Bid rejected'
+  end
+
+  def hold
+    bid = Bid.find(params[:id])
+    bid.hold
+    redirect_to bid.project, notice: 'Bid put on hold'
+  end
+
   private
 
   def bid_params
-    # params.require(:bid).permit(:bid_name, :bid_description, :bid_status, :bid_amount, :bid_code_document, :bid_design_document, :bid_other_document, :project_id, :user_id)
-    params.require(:bid).permit(:bid_name, :bid_description, :bid_amount, :project_id, :user_id)
+    params.require(:bid).permit(:bid_name, :bid_description, :bid_status, :bid_amount, :project_id, :user_id)
   end
 end
