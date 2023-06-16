@@ -6,7 +6,6 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_many :projects, dependent: :destroy
   has_many :bids, dependent: :destroy
-  has_and_belongs_to_many :categories
 
   before_save { self.email = email.downcase }
 
@@ -21,7 +20,7 @@ class User < ApplicationRecord
 
   enum role: %i[client freelancer admin]
 
-  delegate :name, :qualification, :experience, :industry, :profile_picture, to: :profile
+  delegate :name, :qualification, :experience, :industry, :profile_picture, :categories, to: :profile
 
   def email_activate
     self.email_confirmed = true

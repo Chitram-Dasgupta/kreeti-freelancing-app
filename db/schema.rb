@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_16_063118) do
+ActiveRecord::Schema.define(version: 2023_06_16_093731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,18 +65,18 @@ ActiveRecord::Schema.define(version: 2023_06_16_063118) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "categories_profiles", id: false, force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_categories_profiles_on_category_id"
+    t.index ["profile_id"], name: "index_categories_profiles_on_profile_id"
+  end
+
   create_table "categories_projects", id: false, force: :cascade do |t|
     t.bigint "project_id", null: false
     t.bigint "category_id", null: false
     t.index ["category_id"], name: "index_categories_projects_on_category_id"
     t.index ["project_id"], name: "index_categories_projects_on_project_id"
-  end
-
-  create_table "categories_users", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "category_id", null: false
-    t.index ["category_id"], name: "index_categories_users_on_category_id"
-    t.index ["user_id"], name: "index_categories_users_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -118,10 +118,10 @@ ActiveRecord::Schema.define(version: 2023_06_16_063118) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bids", "projects"
   add_foreign_key "bids", "users"
+  add_foreign_key "categories_profiles", "categories"
+  add_foreign_key "categories_profiles", "profiles"
   add_foreign_key "categories_projects", "categories"
   add_foreign_key "categories_projects", "projects"
-  add_foreign_key "categories_users", "categories"
-  add_foreign_key "categories_users", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "projects", "users"
 end
