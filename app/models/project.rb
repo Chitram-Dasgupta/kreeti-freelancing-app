@@ -12,12 +12,12 @@ class Project < ApplicationRecord
 
   delegate :email, to: :user
 
-  scope :recent_by_user, ->(user) { where(user: user).order(created_at: :desc).limit(5) }
+  scope :recent_by_user, ->(user) { where(user:).order(created_at: :desc).limit(5) }
 
   scope :recent, -> { order(created_at: :desc).limit(5) }
 
   def visibility_status
-    if self.visibility == 'pub'
+    if visibility == 'pub'
       'Public'
     else
       'Private'
@@ -25,10 +25,12 @@ class Project < ApplicationRecord
   end
 
   def self.all_skills
-    ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer', 'Python developer']
+    ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
+     'Python developer', 'Android developer', 'Java developer', 'Graphic designer',
+     'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
   end
 
   def bid_awarded?
-    self.bids.where(bid_status: :awarded).exists?
+    bids.where(bid_status: :awarded).exists?
   end
 end
