@@ -7,6 +7,12 @@
     <br>
     <%= f.label :description %><br>
     <%= f.text_area :description %><br>
+    <%= f.label :category_ids, "Categories" %><br>
+    <% @categories.each do |category| %>
+      <%= check_box_tag 'project[category_ids][]', category.id, false, id: "project_category_ids_#{category.id}" %>
+      <%= label_tag "project_category_ids_#{category.id}", category.name %>
+    <% end %><br>
+    <strong>Skills</strong><br>
     <% Project.all_skills.each do |skill| %>
       <%= check_box_tag 'project[skills][]', skill, @project.skills.include?(skill) %>
       <%= label_tag "project_skills_#{skill.parameterize}", skill %>
