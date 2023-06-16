@@ -61,6 +61,8 @@ cd kreeti-freelancing-app
 rails db:create
 
 rails db:migrate
+
+rails db:seed
 ```
 
 ### 6. Install the requisite dependencies
