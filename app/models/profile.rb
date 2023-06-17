@@ -1,8 +1,6 @@
 class Profile < ApplicationRecord
   belongs_to :user
 
-  has_and_belongs_to_many :categories
-
   has_one_attached :profile_picture
 
   validates :name, length: { maximum: 255 }

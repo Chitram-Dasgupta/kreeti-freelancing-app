@@ -1,6 +1,6 @@
 class Category < ApplicationRecord
-  has_and_belongs_to_many :projects
-  has_and_belongs_to_many :profiles
-
-  validates :name, presence: true, uniqueness: true
+  has_many :project_categories
+  has_many :projects, through: :project_categories
+  has_many :user_categories
+  has_many :users, through: :user_categories
 end
