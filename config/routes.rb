@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  # resources :profiles, only: %i[show edit update]
-
   resources :sessions, only: %i[new create destroy]
 
   resources :users, except: %i[index destroy] do
