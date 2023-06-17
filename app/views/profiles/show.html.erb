@@ -27,6 +27,6 @@
   <h2 class="mx-3 display-7">Industry: </h2>
   <h2 class="display-7"><%= current_user.industry %></h2>
 </section>
-<%= link_to edit_profile_path(current_user), class: "btn btn-primary mx-3" do %>
+<%= link_to edit_user_path(current_user), class: "btn btn-primary mx-3" do %>
   Edit <i class="bi bi-pencil"></i>
 <% end %>

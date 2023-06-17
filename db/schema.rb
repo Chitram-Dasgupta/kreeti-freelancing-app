@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_17_112228) do
+ActiveRecord::Schema.define(version: 2023_06_17_120303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,11 @@ ActiveRecord::Schema.define(version: 2023_06_17_112228) do
     t.boolean "email_confirmed", default: false
     t.string "confirmation_token"
     t.integer "role", null: false
+    t.string "name"
+    t.string "qualification"
+    t.integer "experience"
+    t.string "industry"
+    t.string "profile_picture"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

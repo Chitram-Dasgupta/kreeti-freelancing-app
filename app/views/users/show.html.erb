@@ -1,2 +1,32 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<% if @user.profile_picture.attached? %>
+  <br>
+  <%= image_tag @user.profile_picture, alt: 'Profile picture', size: '240x240', class: "img-thumbnail mx-auto d-block my-4" %>
+<% else %>
+  <br>
+  <%= image_tag 'https://picsum.photos/id/91/240', alt: 'Profile picture', size: '240x240', class: "img-thumbnail mx-auto d-block my-4" %>
+<% end %>
+<section class="d-flex justify-content-center">
+  <h2 class="mx-3 display-7">Email: </h2>
+  <h2 class="display-7"><%= @user.email %></h2>
+</section>
+<section class="d-flex justify-content-center">
+  <h2 class="mx-3 display-7">Name: </h2>
+  <h2 class="display-7"><%= @user.name %></h2>
+</section>
+<% if freelancer? %>
+  <section class="d-flex justify-content-center">
+    <h2 class="mx-3 display-7">Qualification: </h2>
+    <h2 class="display-7"><%= @user.qualification %></h2>
+  </section>
+  <section class="d-flex justify-content-center">
+    <h2 class="mx-3 display-7">Experience: </h2>
+    <h2 class="display-7"><%= @user.experience %></h2>
+  </section>
+<% end %>
+<section class="d-flex justify-content-center">
+  <h2 class="mx-3 display-7">Industry: </h2>
+  <h2 class="display-7"><%= @user.industry %></h2>
+</section>
+<%= link_to edit_user_path(@user), class: "btn btn-primary mx-3" do %>
+  Edit <i class="bi bi-pencil"></i>
+<% end %>

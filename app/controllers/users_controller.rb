@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :require_authorization, only: %i[new create confirm_email]
+  skip_before_action :require_authorization, only: %i[new create show confirm_email]
 
   def new
     @user = User.new
@@ -16,11 +16,23 @@ class UsersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @user = User.find_by(id: params[:id])
+  end
 
-  def edit; end
+  def edit
+    @user = User.find_by(id: params[:id])
+  end
 
-  def update; end
+  def update
+    @user = User.find_by(id: params[:id])
+    if @user.update!(user_params)
+      redirect_to @user, notice: 'Profile updated'
+    else
+      flash[:error] = 'Please enter the data properly'
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   def confirm_email
     user = User.find_by_confirmation_token(params[:token])
@@ -37,6 +49,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :role)
+    params.require(:user).permit(:email, :password, :password_confirmation, :role, :name, :qualification, :experience, :industry, :profile_picture)
   end
 end
