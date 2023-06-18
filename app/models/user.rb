@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # has_one :profile, dependent: :destroy
   has_many :projects, dependent: :destroy
   has_many :bids, dependent: :destroy
-  has_many :user_categories
+  has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
 
   has_one_attached :profile_picture

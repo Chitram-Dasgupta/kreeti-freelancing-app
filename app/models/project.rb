@@ -2,7 +2,7 @@ class Project < ApplicationRecord
   belongs_to :user
 
   has_many :bids, dependent: :destroy
-  has_many :project_categories
+  has_many :project_categories, dependent: :destroy
   has_many :categories, through: :project_categories
 
   has_one_attached :design_document
