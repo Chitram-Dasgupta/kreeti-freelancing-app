@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 2023_06_17_124945) do
     t.integer "experience"
     t.string "industry"
     t.string "profile_picture"
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
