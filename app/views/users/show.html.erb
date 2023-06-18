@@ -1,3 +1,4 @@
+<%= render 'shared/flash' %>
 <% if @user.profile_picture.attached? %>
   <br>
   <%= image_tag @user.profile_picture, alt: 'Profile picture', size: '240x240', class: "img-thumbnail mx-auto d-block my-4" %>

@@ -11,8 +11,9 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.new(project_params)
     if @project.save
-      redirect_to projects_path, notice: 'Project was successfully created!'
+      redirect_to projects_path, flash: { notice: 'Project was successfully created!' }
     else
+      flash.now[:error] = 'Please enter the information correctly'
       render :new, status: :unprocessable_entity
     end
   end
@@ -31,9 +32,9 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.find(params[:id])
 
     if @project.update(project_params)
-      redirect_to projects_path, notice: 'Project updated'
+      redirect_to projects_path, flash: { notice: 'Project was successfully updated!' }
     else
-      flash[:error] = 'Please enter the information correctly'
+      flash.now[:error] = 'Please enter the information correctly'
       render :edit, status: :unprocessable_entity
     end
   end
@@ -41,8 +42,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project = current_user.projects.find(params[:id])
     @project.destroy
-    flash[:notice] = 'The project was deleted'
-    redirect_to projects_path
+    redirect_to projects_path, flash: { notice: 'Project was successfully deleted!' }
   end
 
   private

@@ -14,8 +14,9 @@ class BidsController < ApplicationController
   def create
     @bid = Bid.new(bid_params)
     if @bid.save
-      redirect_to @bid.project, notice: 'Bid was successfully created.'
+      redirect_to @bid.project, flash: { success: 'Bid was successfully created' }
     else
+      flash.now[:error] = 'Bid could not be created. Please try again.'
       render :new
     end
   end
@@ -32,9 +33,9 @@ class BidsController < ApplicationController
     @bid = current_user.bids.find(params[:id])
 
     if @bid&.update(bid_params)
-      redirect_to bids_path, notice: 'Bid updated'
+      redirect_to bids_path, flash: { success: 'Bid was successfully updated' }
     else
-      flash[:error] = 'Please enter the information correctly'
+      flash.now[:error] = 'Please enter the information correctly'
       render :edit, status: :unprocessable_entity
     end
   end
@@ -42,39 +43,38 @@ class BidsController < ApplicationController
   def destroy
     @bid = Bid.find_by(id: params[:id])
     @bid.destroy
-    flash[:notice] = 'The bid was deleted'
-    redirect_to bids_path
+    redirect_to bids_path, flash: { notice: 'Bid was successfully deleted' }
   end
 
   def accept
     bid = Bid.find(params[:id])
     bid.accept
-    redirect_to bid.project, notice: 'Bid accepted!'
+    redirect_to bid.project, flash: { notice: 'Bid accepted' }
   end
 
   def reject
     bid = Bid.find(params[:id])
     bid.reject
-    redirect_to bid.project, notice: 'Bid rejected'
+    redirect_to bid.project, flash: { notice: 'Bid rejected' }
   end
 
   def hold
     bid = Bid.find(params[:id])
     bid.hold
-    redirect_to bid.project, notice: 'Bid put on hold'
+    redirect_to bid.project, flash: { notice: 'Bid put on hold' }
   end
 
   def award
     bid = Bid.find(params[:id])
     bid.award
-    redirect_to bid.project, notice: 'Bid awarded!'
+    redirect_to bid.project, flash: { sucess: 'Bid accepted' }
   end
 
   private
 
   def check_rejected_or_awarded
     @bid = Bid.find(params[:id])
-    redirect_to bids_path, notice: 'You cannot edit this bid' unless @bid.modifiable?
+    redirect_to bids_path, flash: { error: 'Bid cannot be modified' } unless @bid.modifiable?
   end
 
   def bid_params

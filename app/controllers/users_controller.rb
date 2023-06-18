@@ -9,9 +9,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       UserMailer.account_activation(@user).deliver_later
-      redirect_to root_path, notice: 'Thank you for signing up!'
+      redirect_to root_path, flash: { notice: 'Please check your email for activation link' }
     else
-      flash.now[:error] = 'Please try again'
+      flash.now[:error] = 'Please enter the data properly'
       render :new, status: :unprocessable_entity
     end
   end
@@ -27,9 +27,9 @@ class UsersController < ApplicationController
   def update
     @user = User.find_by(id: params[:id])
     if @user.update!(user_params)
-      redirect_to @user, notice: 'Profile updated'
+      redirect_to @user, flash: { success: 'Profile updated successfully' }
     else
-      flash[:error] = 'Please enter the data properly'
+      flash.now[:error] = 'Please enter the data properly'
       render :edit, status: :unprocessable_entity
     end
   end
@@ -38,11 +38,9 @@ class UsersController < ApplicationController
     user = User.find_by_confirmation_token(params[:token])
     if user
       user.email_activate
-      flash[:success] = 'Welcome to the Sample App! Your email has been confirmed. Please sign in to continue.'
-      redirect_to new_user_path
+      redirect_to new_session_path, flash: { success: 'Your email has been confirmed. Please sign in to continue.' }
     else
-      flash[:error] = 'Sorry. User does not exist'
-      redirect_to root_url
+      redirect_to root_path, flash: { error: 'Sorry. User does not exist' }
     end
   end
 

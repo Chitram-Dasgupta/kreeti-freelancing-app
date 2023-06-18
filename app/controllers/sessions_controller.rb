@@ -9,25 +9,23 @@ class SessionsController < ApplicationController
     if @user&.authenticate(params[:password])
       if @user.email_confirmed
         session[:user_id] = @user.id
-        flash[:notice] = 'Logged in!'
         if client?
-          redirect_to projects_path
+          redirect_to projects_path, flash: { notice: 'Logged in!' }
         elsif freelancer?
-          redirect_to bids_path
+          redirect_to bids_path, flash: { notice: 'Logged in!' }
         end
       else
-        flash[:error] = 'Please activate your account!'
-        redirect_to root_path
+        redirect_to root_path, flash: { error: 'Please activate your account!' }
       end
     else
-      flash[:error] = 'Invalid email or password'
+      flash.now[:error] = 'Invalid email or password'
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path, notice: 'Logged out!'
+    redirect_to root_path, flash: { notice: 'Logged out' }
   end
 
   def activation; end
