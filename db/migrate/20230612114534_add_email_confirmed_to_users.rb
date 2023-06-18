@@ -1,6 +1,8 @@
 class AddEmailConfirmedToUsers < ActiveRecord::Migration[6.1]
   def change
-    add_column :users, :email_confirmed, :boolean, default: false
-    add_column :users, :confirmation_token, :string
+    change_table :users, bulk: true do |t|
+      t.boolean :email_confirmed, default: false
+      t.string :confirmation_token
+    end
   end
 end

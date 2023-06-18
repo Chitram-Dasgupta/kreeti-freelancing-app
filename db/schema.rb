@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 2023_06_17_124945) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "email_confirmed", default: false
     t.string "confirmation_token"
-    t.integer "role", null: false
+    t.integer "role", default: 0, null: false
     t.string "name"
     t.string "qualification"
     t.integer "experience"

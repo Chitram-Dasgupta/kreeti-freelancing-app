@@ -10,7 +10,7 @@ class Project < ApplicationRecord
 
   validates :title, presence: true
 
-  enum visibility: %i[pub priv]
+  enum visibility: { pub: 0, priv: 1 }
 
   delegate :email, to: :user
 

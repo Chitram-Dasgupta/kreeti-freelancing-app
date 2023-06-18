@@ -4,7 +4,7 @@ class Bid < ApplicationRecord
 
   validates :bid_name, presence: true
 
-  enum bid_status: %i[pending accepted rejected awarded]
+  enum bid_status: { pending: 0, accepted: 1, rejected: 2, awarded: 3 }
 
   delegate :email, to: :user
 
@@ -24,7 +24,7 @@ class Bid < ApplicationRecord
 
   def award
     update(bid_status: :awarded)
-    project.bids.where.not(id:).update_all(bid_status: :rejected)
+    project.bids.where.not(id:).find_each { |b| b.update(bid_status: :rejected) }
   end
 
   def modifiable?

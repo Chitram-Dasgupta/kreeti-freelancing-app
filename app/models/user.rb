@@ -26,7 +26,7 @@ class User < ApplicationRecord
 
   validates :experience, numericality: { only_integer: true, allow_nil: true, less_than_or_equal_to: 100 }
 
-  enum role: %i[client freelancer admin]
+  enum role: { client: 0, freelancer: 1, admin: 2 }
 
   def email_activate
     self.email_confirmed = true
@@ -35,7 +35,7 @@ class User < ApplicationRecord
   end
 
   def confirm_token
-    return unless confirmation_token.blank?
+    return if confirmation_token.present?
 
     self.confirmation_token = SecureRandom.urlsafe_base64.to_s
   end
