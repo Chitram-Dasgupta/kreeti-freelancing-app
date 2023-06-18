@@ -6,21 +6,11 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(email: params[:email].downcase)
 
-    if @user&.authenticate(params[:password])
-      if @user.email_confirmed
-        session[:user_id] = @user.id
-        if client?
-          redirect_to projects_path, flash: { notice: 'Logged in!' }
-        elsif freelancer?
-          redirect_to bids_path, flash: { notice: 'Logged in!' }
-        end
-      else
-        redirect_to root_path, flash: { error: 'Please activate your account!' }
-      end
-    else
-      flash.now[:error] = 'Invalid email or password'
-      render :new, status: :unprocessable_entity
-    end
+    return handle_invalid_authentication unless @user&.authenticate(params[:password])
+    return handle_unconfirmed_email unless @user.email_confirmed
+
+    session[:user_id] = @user.id
+    handle_successful_authentication
   end
 
   def destroy
@@ -29,4 +19,23 @@ class SessionsController < ApplicationController
   end
 
   def activation; end
+
+  private
+
+  def handle_invalid_authentication
+    flash.now[:error] = 'Invalid email or password'
+    render :new, status: :unprocessable_entity
+  end
+
+  def handle_unconfirmed_email
+    redirect_to root_path, flash: { error: 'Please activate your account!' }
+  end
+
+  def handle_successful_authentication
+    if client?
+      redirect_to projects_path, flash: { notice: 'Logged in!' }
+    elsif freelancer?
+      redirect_to bids_path, flash: { notice: 'Logged in!' }
+    end
+  end
 end

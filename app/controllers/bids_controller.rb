@@ -1,5 +1,6 @@
 class BidsController < ApplicationController
   before_action :check_rejected_or_awarded, only: %i[edit update]
+  before_action :set_bid, only: %i[show destroy accept reject hold award]
 
   def index
     @recent_bids = Bid.recent_by_user(current_user)
@@ -21,16 +22,14 @@ class BidsController < ApplicationController
     end
   end
 
-  def show
-    @bid = Bid.find_by(id: params[:id])
-  end
+  def show; end
 
   def edit
-    @bid = Bid.find_by(id: params[:id])
+    @bid = current_user.bids.find_by(id: params[:id])
   end
 
   def update
-    @bid = current_user.bids.find(params[:id])
+    @bid = current_user.bids.find_by(id: params[:id])
 
     if @bid&.update(bid_params)
       redirect_to bids_path, flash: { success: 'Bid was successfully updated' }
@@ -41,39 +40,38 @@ class BidsController < ApplicationController
   end
 
   def destroy
-    @bid = Bid.find_by(id: params[:id])
     @bid.destroy
     redirect_to bids_path, flash: { notice: 'Bid was successfully deleted' }
   end
 
   def accept
-    bid = Bid.find(params[:id])
     bid.accept
     redirect_to bid.project, flash: { notice: 'Bid accepted' }
   end
 
   def reject
-    bid = Bid.find(params[:id])
     bid.reject
     redirect_to bid.project, flash: { notice: 'Bid rejected' }
   end
 
   def hold
-    bid = Bid.find(params[:id])
     bid.hold
     redirect_to bid.project, flash: { notice: 'Bid put on hold' }
   end
 
   def award
-    bid = Bid.find(params[:id])
     bid.award
     redirect_to bid.project, flash: { sucess: 'Bid accepted' }
   end
 
   private
 
+  def set_bid
+    @bid = Bid.find_by(id: params[:id])
+  end
+
   def check_rejected_or_awarded
-    @bid = Bid.find(params[:id])
+    @bid = Bid.find_by(id: params[:id])
     redirect_to bids_path, flash: { error: 'Bid cannot be modified' } unless @bid.modifiable?
   end
 

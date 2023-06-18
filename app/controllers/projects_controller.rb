@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_action :current_user_project, only: %i[edit update destroy]
+
   def index
     @recent_projects = Project.recent_by_user(current_user)
   end
@@ -24,13 +26,10 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @project = current_user.projects.find(params[:id])
     @categories = Category.all
   end
 
   def update
-    @project = current_user.projects.find(params[:id])
-
     if @project.update(project_params)
       redirect_to projects_path, flash: { notice: 'Project was successfully updated!' }
     else
@@ -40,12 +39,15 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = current_user.projects.find(params[:id])
     @project.destroy
     redirect_to projects_path, flash: { notice: 'Project was successfully deleted!' }
   end
 
   private
+
+  def current_user_project
+    @project = current_user.projects.find(params[:id])
+  end
 
   def project_params
     params.require(:project).permit(:title, :description, :visibility, :design_document, :srs_document, skills: [], category_ids: [])

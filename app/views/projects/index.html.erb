@@ -25,7 +25,6 @@
           <% project.skills.each do |skill| %>
             <p class="card-text"><%= skill %></p>
           <% end %>
-          <p class="card-text"><%= time_ago_in_words(project.updated_at) %> ago</p>
           <p class="card-text">by <%= project.email %></p>
           <%= link_to project, class: "btn btn-primary" do %>
             Show <i class="bi bi-arrow-right-circle"></i>

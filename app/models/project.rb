@@ -18,14 +18,6 @@ class Project < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc).limit(5) }
 
-  def visibility_status
-    if visibility == 'pub'
-      'Public'
-    else
-      'Private'
-    end
-  end
-
   def self.all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
      'Python developer', 'Android developer', 'Java developer', 'Graphic designer',

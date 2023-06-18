@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :require_authorization, only: %i[new create show confirm_email]
+  before_action :set_user, only: %i[show edit update]
 
   def new
     @user = User.new
@@ -16,16 +17,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    @user = User.find_by(id: params[:id])
-  end
+  def show; end
 
-  def edit
-    @user = User.find_by(id: params[:id])
-  end
+  def edit; end
 
   def update
-    @user = User.find_by(id: params[:id])
     if @user.update!(user_params)
       redirect_to @user, flash: { success: 'Profile updated successfully' }
     else
@@ -35,7 +31,7 @@ class UsersController < ApplicationController
   end
 
   def confirm_email
-    user = User.find_by_confirmation_token(params[:token])
+    user = User.find_by(confirmation_token: params[:token])
     if user
       user.email_activate
       redirect_to new_session_path, flash: { success: 'Your email has been confirmed. Please sign in to continue.' }
@@ -45,6 +41,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = User.find_by(id: params[:id])
+  end
 
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :role, :name, :qualification, :experience, :industry, :profile_picture)

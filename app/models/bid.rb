@@ -11,23 +11,23 @@ class Bid < ApplicationRecord
   scope :recent_by_user, ->(user) { where(user_id: user.id).order(created_at: :desc).limit(5) }
 
   def accept
-    self.update(bid_status: :accepted)
+    update(bid_status: :accepted)
   end
 
   def reject
-    self.update(bid_status: :rejected)
+    update(bid_status: :rejected)
   end
 
   def hold
-    self.update(bid_status: :pending)
+    update(bid_status: :pending)
   end
 
   def award
-    self.update(bid_status: :awarded)
-    project.bids.where.not(id: self.id).update_all(bid_status: :rejected)
+    update(bid_status: :awarded)
+    project.bids.where.not(id:).update_all(bid_status: :rejected)
   end
 
   def modifiable?
-    self.bid_status == 'pending' || self.bid_status == 'accepted'
+    bid_status == 'pending' || bid_status == 'accepted'
   end
 end

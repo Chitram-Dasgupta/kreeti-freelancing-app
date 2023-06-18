@@ -14,7 +14,6 @@
           <p class="card-text"><%= bid.bid_description %></p>
           <p class="card-text"><%= bid.bid_amount %></p>
           <p class="card-text"><%= bid.bid_status %></p>
-          <p class="card-text"><%= time_ago_in_words(bid.updated_at) %> ago</p>
           <p class="card-text">by <%= bid.email %></p>
           <%= link_to bid, class: "btn btn-primary" do %>
             Show <i class="bi bi-arrow-right-circle"></i>
