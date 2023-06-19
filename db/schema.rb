@@ -108,7 +108,6 @@ ActiveRecord::Schema.define(version: 2023_06_17_120303) do
     t.string "qualification"
     t.integer "experience"
     t.string "industry"
-    t.string "profile_picture"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

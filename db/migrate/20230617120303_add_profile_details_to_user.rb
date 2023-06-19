@@ -5,7 +5,6 @@ class AddProfileDetailsToUser < ActiveRecord::Migration[6.1]
       t.string :qualification
       t.integer :experience
       t.string :industry
-      t.string :profile_picture
     end
   end
 end
