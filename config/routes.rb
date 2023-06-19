@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     get :search, to: 'users#search', on: :collection
   end
 
-  resources :projects
+  resources :projects do
+    get :search, to: 'projects#search', on: :collection
+  end
 
   resources :bids do
     member do

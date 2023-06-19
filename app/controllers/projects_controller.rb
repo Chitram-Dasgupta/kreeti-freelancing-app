@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  skip_before_action :require_authorization, only: %i[search]
   before_action :current_user_project, only: %i[edit update destroy]
 
   def index
@@ -43,6 +44,14 @@ class ProjectsController < ApplicationController
     redirect_to projects_path, flash: { notice: 'Project was successfully deleted!' }
   end
 
+  def search
+    @projects = if params[:search].present?
+                  Project.search_projects(params[:search]).records
+                else
+                  Project.all
+                end
+  end
+
   private
 
   def current_user_project
@@ -50,6 +59,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:title, :description, :visibility, :design_document, :srs_document, skills: [], category_ids: [])
+    params.require(:project).permit(:title, :description, :visibility, :design_document, :srs_document, skills: [],
+                                                                                                        category_ids: [])
   end
 end

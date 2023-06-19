@@ -1,0 +1,15 @@
+<%= form_with url: search_projects_path, method: :get, local: true do |form| %>
+  <%= form.label :search, 'Search Projects by category:' %>
+  <%= form.text_field :search %>
+  <%= form.submit 'Search' %>
+<% end %>
+<br>
+<% @projects.each do |p| %>
+  <p><%= p.email %></p>
+  <p><%= p.title %></p>
+  <p><%= p.description %></p>
+  <% p.categories.each do |cat| %>
+    <p><%= cat.name %></p>
+  <% end %>
+  <hr>
+<% end %>

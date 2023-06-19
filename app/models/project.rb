@@ -1,4 +1,7 @@
 class Project < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :user
 
   has_many :bids, dependent: :destroy
@@ -18,6 +21,24 @@ class Project < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc).limit(5) }
 
+  def as_indexed_json(_options = {})
+    self.as_json(
+      only: %i[id title description],
+      include: { categories: { only: :name } }
+    )
+  end
+
+  settings index: { number_of_shards: 1 } do
+    mapping dynamic: 'false' do
+      indexes :id, type: :integer
+      indexes :title
+      indexes :description, type: :text
+      indexes :categories, type: :nested do
+        indexes :name, type: :text
+      end
+    end
+  end
+
   def self.all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
      'Python developer', 'Android developer', 'Java developer', 'Graphic designer',
@@ -26,5 +47,28 @@ class Project < ApplicationRecord
 
   def bid_awarded?
     bids.where(bid_status: :awarded).exists?
+  end
+
+  def self.search_projects(category_name)
+    search_definition = {
+      query: {
+        bool: {
+          must: [
+            {
+              nested: {
+                path: 'categories',
+                query: {
+                  match: {
+                    'categories.name': category_name
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    __elasticsearch__.search(search_definition)
   end
 end
