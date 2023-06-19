@@ -33,8 +33,20 @@ class User < ApplicationRecord
 
   def as_indexed_json(_options = {})
     self.as_json(
-      only: %i[id email role]
+      only: %i[id email role],
+      include: { categories: { only: :name } }
     )
+  end
+
+  settings index: { number_of_shards: 1 } do
+    mapping dynamic: 'false' do
+      indexes :id, type: :integer
+      indexes :email
+      indexes :role, type: :keyword
+      indexes :categories do
+        indexes :name, type: :text
+      end
+    end
   end
 
   def email_activate
