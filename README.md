@@ -4,7 +4,7 @@
 
 You need to follow the subsequent steps to run this app on your local machine:
 
-### 1. Have the correct versions of ruby, rails, node, and yarn
+### 1. Have the correct versions of ruby, rails, and other dependencies installed
 
 This app was created with:
 
@@ -18,8 +18,8 @@ This app was created with:
 
 * **elasticsearch 7.17.7**
 
-So, it is absolutely necessary that you have the correct versions of *ruby* and
-*rails* installed on your system.
+So, it is absolutely necessary that you have the correct version of the above
+mentioned software installed on your local system.
 
 ## 2. Install Postgresql
 
