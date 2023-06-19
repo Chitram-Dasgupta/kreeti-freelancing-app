@@ -8,13 +8,15 @@ You need to follow the subsequent steps to run this app on your local machine:
 
 This app was created with:
 
-* **ruby-3.2.2**
+* **ruby 3.2.2**
 
 * **rails 6.1.7.3**
 
-* **Node v16.20.0**
+* **node v16.20.0**
 
 * **yarn 1.22.19**
+
+* **elasticsearch 7.17.7**
 
 So, it is absolutely necessary that you have the correct versions of *ruby* and
 *rails* installed on your system.
@@ -82,7 +84,25 @@ rm babel.config.js
 rails webpacker:compile
 ```
 
-### 8. Finally, run the server
+### 8. Create the elasticsearch indices
+
+Please make sure that elasticsearch is running at `localhost:9200`
+
+Open up rails console:
+
+```sh
+rails console
+```
+
+Then inside rails console, run the following:
+
+```sh
+User.import force: true
+
+Project.import force: true
+```
+
+### 9. Finally, run the server
 
 ```sh
 rails s
