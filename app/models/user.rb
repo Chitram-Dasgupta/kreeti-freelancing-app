@@ -64,4 +64,26 @@ class User < ApplicationRecord
   def password_changed?
     !password.nil? || !password_confirmation.nil?
   end
+
+  def self.search_freelancer(query)
+    search_definition = {
+      query: {
+        bool: {
+          filter: [
+            { term: { role: 'freelancer' } }
+          ],
+          must: [
+            {
+              multi_match: {
+                query:,
+                fields: ['categories.name']
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    __elasticsearch__.search(search_definition)
+  end
 end

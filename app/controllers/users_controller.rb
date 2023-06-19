@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :require_authorization, only: %i[new create show confirm_email]
+  skip_before_action :require_authorization, only: %i[new create show confirm_email search]
   before_action :set_user, only: %i[show edit update]
 
   def new
@@ -40,6 +40,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    @users = if params[:search].present?
+               User.search_freelancer(params[:search]).records
+             else
+               User.all
+             end
+  end
+
   private
 
   def set_user
@@ -47,6 +55,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :role, :name, :qualification, :experience, :industry, :profile_picture)
+    params.require(:user).permit(:email, :password, :password_confirmation, :role, :name, :qualification, :experience,
+                                 :industry, :profile_picture)
   end
 end
