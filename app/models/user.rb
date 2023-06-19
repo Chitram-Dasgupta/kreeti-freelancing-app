@@ -43,7 +43,7 @@ class User < ApplicationRecord
       indexes :id, type: :integer
       indexes :email
       indexes :role, type: :keyword
-      indexes :categories do
+      indexes :categories, type: :nested do
         indexes :name, type: :text
       end
     end
