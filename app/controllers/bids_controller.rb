@@ -1,6 +1,6 @@
 class BidsController < ApplicationController
   before_action :check_rejected_or_awarded, only: %i[edit update]
-  before_action :set_bid, only: %i[show destroy accept reject hold award]
+  before_action :set_bid, only: %i[show edit update destroy accept reject hold award]
 
   def index
     @recent_bids = Bid.recent_by_user(current_user)
@@ -24,15 +24,15 @@ class BidsController < ApplicationController
 
   def show; end
 
-  def edit
-    @bid = current_user.bids.find_by(id: params[:id])
-  end
+  def edit; end
 
   def update
-    @bid = current_user.bids.find_by(id: params[:id])
-
     if @bid&.update(bid_params)
-      redirect_to bids_path, flash: { success: 'Bid was successfully updated' }
+      if admin?
+        redirect_to admin_manage_bids_path, flash: { success: 'Bid was successfully updated' }
+      else
+        redirect_to bids_path, flash: { success: 'Bid was successfully updated' }
+      end
     else
       flash.now[:error] = 'Please enter the information correctly'
       render :edit, status: :unprocessable_entity
@@ -41,7 +41,11 @@ class BidsController < ApplicationController
 
   def destroy
     @bid.destroy
-    redirect_to bids_path, flash: { notice: 'Bid was successfully deleted' }
+    if admin?
+      redirect_to admin_manage_bids_path, flash: { notice: 'Bid was successfully deleted' }
+    else
+      redirect_to bids_path, flash: { notice: 'Bid was successfully deleted' }
+    end
   end
 
   def accept
@@ -67,7 +71,11 @@ class BidsController < ApplicationController
   private
 
   def set_bid
-    @bid = Bid.find_by(id: params[:id])
+    @bid = if freelancer?
+             current_user.bids.find_by(id: params[:id])
+           else
+             Bid.find_by(id: params[:id])
+           end
   end
 
   def check_rejected_or_awarded

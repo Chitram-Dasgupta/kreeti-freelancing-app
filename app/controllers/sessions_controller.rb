@@ -33,9 +33,11 @@ class SessionsController < ApplicationController
 
   def handle_successful_authentication
     if client?
-      redirect_to projects_path, flash: { notice: 'Logged in!' }
+      redirect_to projects_path, flash: { notice: 'Logged in as client!' }
     elsif freelancer?
-      redirect_to bids_path, flash: { notice: 'Logged in!' }
+      redirect_to bids_path, flash: { notice: 'Logged in as freelancer!' }
+    else
+      redirect_to admins_path, flash: { notice: 'Logged in as admin!' }
     end
   end
 end

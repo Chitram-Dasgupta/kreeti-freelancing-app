@@ -1,0 +1,19 @@
+<%= render 'shared/flash' %>
+<h2>Manage projects</h2>
+<% @projects.each do |p| %>
+  <div class="mx-3">
+    <p><%= p.email %></p>
+    <p><%= p.title %></p>
+    <p><%= p.description %></p>
+    <%= link_to p, class: "btn btn-primary" do %>
+      Show <i class="bi bi-arrow-right-circle"></i>
+    <% end %>
+    <%= link_to edit_project_path(p), class: "btn btn-primary" do %>
+      Edit <i class="bi bi-pencil"></i>
+    <% end %>
+    <%= link_to project_path(p), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
+      Delete <i class="bi bi-trash"></i>
+    <% end %>
+    <hr>
+  </div>
+<% end %>

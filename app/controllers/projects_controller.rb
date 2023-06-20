@@ -32,7 +32,11 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(project_params)
-      redirect_to projects_path, flash: { notice: 'Project was successfully updated!' }
+      if admin?
+        redirect_to admin_manage_projects_path, flash: { notice: 'Project was successfully updated!' }
+      else
+        redirect_to projects_path, flash: { notice: 'Project was successfully updated!' }
+      end
     else
       flash.now[:error] = 'Please enter the information correctly'
       render :edit, status: :unprocessable_entity
@@ -41,7 +45,11 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project.destroy
-    redirect_to projects_path, flash: { notice: 'Project was successfully deleted!' }
+    if admin?
+      redirect_to admin_manage_projects_path, flash: { notice: 'Project was successfully deleted!' }
+    else
+      redirect_to projects_path, flash: { notice: 'Project was successfully deleted!' }
+    end
   end
 
   def search
@@ -55,7 +63,11 @@ class ProjectsController < ApplicationController
   private
 
   def current_user_project
-    @project = current_user.projects.find(params[:id])
+    @project = if admin?
+                 Project.find_by(id: params[:id])
+               else
+                 current_user.projects.find(params[:id])
+               end
   end
 
   def project_params

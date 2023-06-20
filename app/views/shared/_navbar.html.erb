@@ -5,6 +5,8 @@
     <%= link_to "Freelancing app", projects_path, class: "navbar-brand"%>
   <% elsif freelancer? %>
     <%= link_to "Freelancing app", bids_path, class: "navbar-brand"%>
+  <% else %>
+    <%= link_to "Freelancing app", admins_path, class: "navbar-brand"%>
   <% end %>
   <button
             class="navbar-toggler"
@@ -24,7 +26,9 @@
           <%= link_to 'Log out', { :controller => 'sessions', :action => 'destroy', :id => session[:user_id] },
                data:  { :confirm => 'Are you sure?', :method => :delete, :remote => true} %>
         </li>
-        <li class="nav-item"><%= link_to "Profile", user_path(current_user) %></li>
+        <% unless admin? %>
+          <li class="nav-item"><%= link_to "Profile", user_path(current_user) %></li>
+        <% end %>
       <% end %>
     </ul>
   </div>

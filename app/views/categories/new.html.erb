@@ -1,0 +1,10 @@
+<%= render 'shared/flash' %>
+<h1 class="text-center my-3">Create new category</h1>
+<div class="d-flex justify-content-center">
+  <%= form_with model: @category, url: categories_path do |f| %>
+    <%= f.label :name%><br>
+    <%= f.text_field :name%><br>
+    <br>
+    <%= f.submit "Create" %>
+  <% end %>
+</div>

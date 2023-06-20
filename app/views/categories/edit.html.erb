@@ -1,0 +1,10 @@
+<%= render 'shared/flash' %>
+<h1 class="mx-3 my-3">Edit profile</h1>
+<div class="mx-3 my-4">
+  <%= form_with model:@category do |f| %>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %><br>
+    <br>
+    <%= f.submit "Update", class: "btn btn-primary" %>
+  <% end %>
+</div>

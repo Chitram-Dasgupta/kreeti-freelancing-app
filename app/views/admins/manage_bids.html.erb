@@ -1,0 +1,21 @@
+<%= render 'shared/flash' %>
+<h2>Manage bids</h2>
+<% @bids.each do |b| %>
+  <div class="mx-3">
+    <p><%= b.project.title %></p>
+    <p>bid by: <%= b.email %></p>
+    <p><%= b.bid_name %></p>
+    <p><%= b.bid_description %></p>
+    <p><%= b.bid_amount %></p>
+    <%= link_to b, class: "btn btn-primary" do %>
+      Show <i class="bi bi-arrow-right-circle"></i>
+    <% end %>
+    <%= link_to edit_bid_path(b), class: "btn btn-primary" do %>
+      Edit <i class="bi bi-pencil"></i>
+    <% end %>
+    <%= link_to bid_path(b), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
+      Delete <i class="bi bi-trash"></i>
+    <% end %>
+    <hr>
+  </div>
+<% end %>

@@ -29,6 +29,8 @@ class User < ApplicationRecord
 
   validates :experience, numericality: { only_integer: true, allow_nil: true, less_than_or_equal_to: 100 }
 
+  validates :role, presence: true
+
   enum role: { client: 0, freelancer: 1, admin: 2 }
 
   def as_indexed_json(_options = {})

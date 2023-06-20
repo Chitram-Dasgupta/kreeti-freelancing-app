@@ -40,13 +40,15 @@
       <p><%= bid.bid_amount %></p>
       <p><%= bid.bid_status %></p>
       <p>by <%= bid.email %></p>
-      <% unless bid.awarded? %>
-        <% if bid.accepted? %>
-          <%= link_to 'Award Bid to freelancer', award_bid_path(bid), method: :post, class: 'btn btn-primary' %>
-          <%= link_to 'Put on hold', hold_bid_path(bid), method: :post, class: 'btn btn-warning' %>
-        <% else %>
-          <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary' %>
-          <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger' %>
+      <% if admin? || client? %>
+        <% unless bid.awarded? %>
+          <% if bid.accepted? %>
+            <%= link_to 'Award Bid to freelancer', award_bid_path(bid), method: :post, class: 'btn btn-primary' %>
+            <%= link_to 'Put on hold', hold_bid_path(bid), method: :post, class: 'btn btn-warning' %>
+          <% else %>
+            <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary' %>
+            <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger' %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

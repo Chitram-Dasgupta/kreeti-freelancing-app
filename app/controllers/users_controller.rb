@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :require_authorization, only: %i[new create show confirm_email search]
-  before_action :set_user, only: %i[show edit update]
+  before_action :set_user, only: %i[show edit update destroy]
+  before_action :require_authorization, only: %i[destroy]
 
   def new
     @user = User.new
@@ -46,6 +47,11 @@ class UsersController < ApplicationController
              else
                User.all
              end
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to admin_manage_users_path, flash: { success: 'User deleted successfully' }
   end
 
   private

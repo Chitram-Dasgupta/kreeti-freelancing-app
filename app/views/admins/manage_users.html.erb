@@ -1,0 +1,30 @@
+<%= render 'shared/flash' %>
+<h2>Manage users</h2>
+<% @users.each do |u| %>
+  <div class="mx-3">
+    <% if u.admin? %>
+      <% next %>
+    <% end %>
+    <% if u.profile_picture.attached? %>
+      <br>
+      <%= image_tag u.profile_picture, alt: 'Profile picture', size: '240x240', class: "img-thumbnail d-block my-4" %>
+    <% else %>
+      <br>
+      <%= image_tag 'https://picsum.photos/id/91/240', alt: 'Profile picture', size: '240x240', class: "img-thumbnail d-block my-4" %>
+    <% end %>
+    <p><%= u.email %></p>
+    <p><%= u.role %></p>
+    <p><%= u.name %></p>
+    <p><%= u.industry %></p>
+    <%= link_to u, class: "btn btn-primary" do %>
+      Show <i class="bi bi-arrow-right-circle"></i>
+    <% end %>
+    <%= link_to edit_user_path(u), class: "btn btn-primary" do %>
+      Edit <i class="bi bi-pencil"></i>
+    <% end %>
+    <%= link_to user_path(u), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
+      Delete <i class="bi bi-trash"></i>
+    <% end %>
+    <hr>
+  </div>
+<% end %>
