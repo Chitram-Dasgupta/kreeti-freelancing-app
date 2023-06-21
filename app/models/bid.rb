@@ -2,6 +2,8 @@ class Bid < ApplicationRecord
   belongs_to :user
   belongs_to :project
 
+  after_save :send_notifications
+
   validates :bid_name, presence: true
 
   enum bid_status: { pending: 0, accepted: 1, rejected: 2, awarded: 3 }
@@ -29,5 +31,17 @@ class Bid < ApplicationRecord
 
   def modifiable?
     bid_status == 'pending' || bid_status == 'accepted'
+  end
+
+  private
+
+  def send_notifications
+    return unless bid_status_changed?
+
+    ActionCable.server.broadcast 'bid_notifications_channel', { bid_id: id, bid_status: }
+  end
+
+  def bid_status_changed?
+    saved_change_to_attribute?(:bid_status)
   end
 end

@@ -49,23 +49,23 @@ class BidsController < ApplicationController
   end
 
   def accept
-    bid.accept
-    redirect_to bid.project, flash: { notice: 'Bid accepted' }
+    @bid.accept
+    redirect_to @bid.project, flash: { notice: 'Bid accepted' }
   end
 
   def reject
-    bid.reject
-    redirect_to bid.project, flash: { notice: 'Bid rejected' }
+    @bid.reject
+    redirect_to @bid.project, flash: { notice: 'Bid rejected' }
   end
 
   def hold
-    bid.hold
-    redirect_to bid.project, flash: { notice: 'Bid put on hold' }
+    @bid.hold
+    redirect_to @bid.project, flash: { notice: 'Bid put on hold' }
   end
 
   def award
-    bid.award
-    redirect_to bid.project, flash: { sucess: 'Bid accepted' }
+    @bid.award
+    redirect_to @bid.project, flash: { sucess: 'Bid accepted' }
   end
 
   private
