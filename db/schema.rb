@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_17_120303) do
+ActiveRecord::Schema.define(version: 2023_06_22_111247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,21 @@ ActiveRecord::Schema.define(version: 2023_06_17_120303) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "recipient_id", null: false
+    t.bigint "actor_id", null: false
+    t.bigint "project_id", null: false
+    t.bigint "bid_id", null: false
+    t.integer "bid_status"
+    t.boolean "read"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["actor_id"], name: "index_notifications_on_actor_id"
+    t.index ["bid_id"], name: "index_notifications_on_bid_id"
+    t.index ["project_id"], name: "index_notifications_on_project_id"
+    t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
+  end
+
   create_table "project_categories", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.bigint "category_id", null: false
@@ -115,6 +130,10 @@ ActiveRecord::Schema.define(version: 2023_06_17_120303) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bids", "projects"
   add_foreign_key "bids", "users"
+  add_foreign_key "notifications", "bids"
+  add_foreign_key "notifications", "projects"
+  add_foreign_key "notifications", "users", column: "actor_id"
+  add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "project_categories", "categories"
   add_foreign_key "project_categories", "projects"
   add_foreign_key "projects", "users"

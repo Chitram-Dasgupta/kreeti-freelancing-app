@@ -15,6 +15,7 @@ class BidsController < ApplicationController
   def create
     @bid = Bid.new(bid_params)
     if @bid.save
+      @bid.current_actor_id = current_user.id
       redirect_to @bid.project, flash: { success: 'Bid was successfully created' }
     else
       flash.now[:error] = 'Bid could not be created. Please try again.'
@@ -28,6 +29,7 @@ class BidsController < ApplicationController
 
   def update
     if @bid&.update(bid_params)
+      @bid.current_actor_id = current_user.id
       if admin?
         redirect_to admin_manage_bids_path, flash: { success: 'Bid was successfully updated' }
       else
@@ -49,21 +51,25 @@ class BidsController < ApplicationController
   end
 
   def accept
+    @bid.current_actor_id = current_user.id
     @bid.accept
     redirect_to @bid.project, flash: { notice: 'Bid accepted' }
   end
 
   def reject
+    @bid.current_actor_id = current_user.id
     @bid.reject
     redirect_to @bid.project, flash: { notice: 'Bid rejected' }
   end
 
   def hold
+    @bid.current_actor_id = current_user.id
     @bid.hold
     redirect_to @bid.project, flash: { notice: 'Bid put on hold' }
   end
 
   def award
+    @bid.current_actor_id = current_user.id
     @bid.award
     redirect_to @bid.project, flash: { sucess: 'Bid accepted' }
   end

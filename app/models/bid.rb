@@ -1,4 +1,6 @@
 class Bid < ApplicationRecord
+  attr_accessor :current_actor_id
+
   belongs_to :user
   belongs_to :project
 
@@ -40,6 +42,15 @@ class Bid < ApplicationRecord
 
     bid_project = Project.find_by(id: project_id)
     bid_project_title = bid_project.title
+
+    Notification.create!(
+      recipient_id: user_id,
+      actor_id: current_actor_id,
+      project_id:,
+      bid_id: id,
+      bid_status:,
+      read: false
+    )
 
     ActionCable.server.broadcast 'bid_notifications_channel',
                                  { bid_id: id, bid_status:, bid_project_title:, project_id:, recipient_id: user_id }
