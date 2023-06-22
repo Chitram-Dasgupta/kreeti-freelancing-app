@@ -23,7 +23,7 @@ document.addEventListener("turbolinks:load", () => {
       if (data.recipient_id == currentUserId) {
         const notificationItem = document.createElement("a");
         notificationItem.classList.add("dropdown-item");
-        notificationItem.href = "#";
+        notificationItem.href = "/projects/" + data.project_id;;
         notificationItem.textContent = `Your bid to ${data.bid_project_title} is changed to ${data.bid_status} status`;
 
         const notificationList = document.getElementById("notificationList");

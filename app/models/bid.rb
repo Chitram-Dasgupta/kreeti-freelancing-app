@@ -38,10 +38,11 @@ class Bid < ApplicationRecord
   def send_notifications
     return unless bid_status_changed?
 
-    bid_project_title = Project.find_by(id: project_id).title
+    bid_project = Project.find_by(id: project_id)
+    bid_project_title = bid_project.title
 
     ActionCable.server.broadcast 'bid_notifications_channel',
-                                 { bid_id: id, bid_status:, bid_project_title:, recipient_id: user_id }
+                                 { bid_id: id, bid_status:, bid_project_title:, project_id:, recipient_id: user_id }
   end
 
   def bid_status_changed?
