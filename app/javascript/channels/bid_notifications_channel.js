@@ -21,6 +21,8 @@ document.addEventListener("turbolinks:load", () => {
       // Called when there's incoming data on the websocket for this channel
       console.log("Bid status changed: ", data.bid_id, data.bid_status);
 
+      console.log("Current user Id from ruby server is: " + data.recipient_id);
+
       // Create a new notification item
       const notificationItem = document.createElement("a");
       notificationItem.classList.add("dropdown-item");
