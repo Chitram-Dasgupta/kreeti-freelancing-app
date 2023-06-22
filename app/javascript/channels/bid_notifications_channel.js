@@ -6,6 +6,7 @@ document.addEventListener("turbolinks:load", () => {
 
   consumer.subscriptions.create("BidNotificationsChannel", {
     connected() {
+      if (currentUserId != "") {
       fetch("/notifications/count")
         .then((response) => response.json())
         .then((data) => {
@@ -13,6 +14,7 @@ document.addEventListener("turbolinks:load", () => {
         });
 
       loadNotifications();
+      }
     },
 
     disconnected() {},
