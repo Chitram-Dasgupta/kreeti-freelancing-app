@@ -23,20 +23,22 @@ document.addEventListener("turbolinks:load", () => {
 
       console.log("Current user Id from ruby server is: " + data.recipient_id);
 
-      // Create a new notification item
-      const notificationItem = document.createElement("a");
-      notificationItem.classList.add("dropdown-item");
-      notificationItem.href = "#";
-      notificationItem.textContent = `Bid ${data.bid_id} status changed to ${data.bid_status}`;
+      if (data.recipient_id == currentUserId) {
+        // Create a new notification item
+        const notificationItem = document.createElement("a");
+        notificationItem.classList.add("dropdown-item");
+        notificationItem.href = "#";
+        notificationItem.textContent = `Bid ${data.bid_id} status changed to ${data.bid_status}`;
 
-      // Append the notification item to the notification list
-      const notificationList = document.getElementById("notificationList");
-      notificationList.appendChild(notificationItem);
+        // Append the notification item to the notification list
+        const notificationList = document.getElementById("notificationList");
+        notificationList.appendChild(notificationItem);
 
-      // Update the notification badge count
-      const notificationBadge = document.getElementById("notificationBadge");
-      const currentBadgeCount = parseInt(notificationBadge.textContent);
-      notificationBadge.textContent = currentBadgeCount + 1;
+        // Update the notification badge count
+        const notificationBadge = document.getElementById("notificationBadge");
+        const currentBadgeCount = parseInt(notificationBadge.textContent);
+        notificationBadge.textContent = currentBadgeCount + 1;
+      }
     }
   });
 });
