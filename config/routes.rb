@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :notifications do
+    collection do
+      get 'count'
+      get 'fetch_notifications'
+    end
+  end
+
   resources :sessions, only: %i[new create destroy]
 
   resources :users, except: %i[index] do

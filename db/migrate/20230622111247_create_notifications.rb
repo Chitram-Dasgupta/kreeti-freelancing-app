@@ -5,7 +5,7 @@ class CreateNotifications < ActiveRecord::Migration[6.1]
       t.references :actor, null: false, foreign_key: { to_table: :users }
       t.references :project, null: false, foreign_key: true
       t.references :bid, null: false, foreign_key: true
-      t.integer :bid_status
+      t.string :message
       t.boolean :read
 
       t.timestamps

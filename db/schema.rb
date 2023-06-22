@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2023_06_22_111247) do
     t.bigint "actor_id", null: false
     t.bigint "project_id", null: false
     t.bigint "bid_id", null: false
-    t.integer "bid_status"
+    t.string "message"
     t.boolean "read"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

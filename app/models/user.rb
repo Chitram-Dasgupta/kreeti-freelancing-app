@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :bids, dependent: :destroy
   has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
+  has_many :notifications, foreign_key: :recipient_id
 
   has_one_attached :profile_picture
 
