@@ -1,15 +1,12 @@
 function fetchNotificationsCount() {
-  const currentUserId = document.querySelector("body").dataset.currentUserId;
   const notificationBadge = document.getElementById("notificationBadge");
 
-  if (currentUserId != "") {
-    fetch("/notifications/count")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.count);
-        notificationBadge.innerText = data.count;
-      });
-  }
+  fetch("/notifications/count")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.count);
+      notificationBadge.innerText = data.count;
+    });
 }
 
 function loadNotifications() {
@@ -31,8 +28,11 @@ function loadNotifications() {
 }
 
 function fetchNotifications() {
-  fetchNotificationsCount();
-  loadNotifications();
+  const currentUserId = document.querySelector("body").dataset.currentUserId;
+  if (currentUserId != "") {
+    fetchNotificationsCount();
+    loadNotifications();
+  }
 }
 
 document.addEventListener("turbolinks:load", fetchNotifications);
