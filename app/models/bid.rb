@@ -4,7 +4,7 @@ class Bid < ApplicationRecord
   belongs_to :user
   belongs_to :project
 
-  # after_commit :send_notifications
+  after_save :send_notifications
 
   validates :bid_name, presence: true
 
@@ -16,28 +16,19 @@ class Bid < ApplicationRecord
 
   def accept
     update(bid_status: 'accepted')
-    puts "Bid status after accept: #{bid_status}"
-    # binding.pry()
-    send_notifications
   end
 
   def reject
     update(bid_status: 'rejected')
-    puts "Bid status after reject: #{bid_status}"
-    send_notifications
   end
 
   def hold
     update(bid_status: 'pending')
-    puts "Bid status after hold: #{bid_status}"
-    send_notifications
   end
 
   def award
     update(bid_status: 'awarded')
-    puts "Bid status after award: #{bid_status}"
     project.bids.where.not(id:).find_each { |b| b.update(bid_status: :rejected) }
-    send_notifications
   end
 
   def modifiable?
@@ -59,9 +50,7 @@ class Bid < ApplicationRecord
       message: "Your bid for #{bid_project_title} is #{bid_status}",
       read: false
     )
-
-    ActionCable.server.broadcast 'bid_notifications_channel',
-                                 { bid_id: id, bid_status:, bid_project_title:, project_id:, recipient_id: user_id }
+    ActionCable.server.broadcast 'bid_notifications_channel', { recipient_id: user_id }
   end
 
   def bid_status_changed?
