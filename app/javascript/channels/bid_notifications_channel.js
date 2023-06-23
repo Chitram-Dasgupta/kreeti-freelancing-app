@@ -5,8 +5,7 @@ document.addEventListener("turbolinks:load", () => {
   const notificationBadge = document.getElementById("notificationBadge");
 
   consumer.subscriptions.create("BidNotificationsChannel", {
-    connected() {
-    },
+    connected() {},
 
     disconnected() {},
 
@@ -15,26 +14,14 @@ document.addEventListener("turbolinks:load", () => {
         const currentBadgeCount = parseInt(notificationBadge.textContent);
         notificationBadge.textContent = currentBadgeCount + 1;
 
-        loadNotifications();
+        const notificationItem = document.createElement("a");
+        notificationItem.classList.add("dropdown-item");
+        notificationItem.href = "/projects/" + data.project_id;
+        notificationItem.textContent = `Your bid to ${data.bid_project_title} is ${data.bid_status}`;
+
+        const notificationList = document.getElementById("notificationList");
+        notificationList.insertBefore(notificationItem, notificationList.firstChild);
       }
     }
   });
-
-  function loadNotifications() {
-    const notificationList = document.getElementById("notificationList");
-
-    fetch("/notifications/fetch_notifications")
-      .then((response) => response.json())
-      .then((notifications) => {
-        notificationList.innerHTML = "";
-        notifications.forEach((notification) => {
-          const notificationItem = document.createElement("a");
-          notificationItem.classList.add("dropdown-item");
-          notificationItem.href = "/projects/" + notification.project_id;
-          notificationItem.textContent = notification.message;
-
-          notificationList.appendChild(notificationItem);
-        });
-      });
-  }
 });
