@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
 
     if @message.save
       logger.debug "Message saved"
+      ActionCable.server.broadcast 'room_channel', { content: @message.content }
     else
       logger.debug "Message NOT saved"
     end
