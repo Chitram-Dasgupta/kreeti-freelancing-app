@@ -1,7 +1,19 @@
 <%= render 'shared/flash' %>
 <main>
   <div class="text-center my-3">
-    <h2>Welcome visitor</h2>
+    <% if logged_in? %>
+      <% if client? %>
+        <h2>Welcome client</h2>
+      <% elsif freelancer? %>
+        <h2>Welcome freelancer</h2>
+      <% else %>
+        <h2>Welcome admin</h2>
+      <% end %>
+    <% else %>
+      <h2>Welcome visitor</h2>
+    <% end %>
+    <%= link_to 'Chat dashboard', rooms_path %><br>
+    <br>
     <%= link_to 'Search freelancers', search_users_path %><br>
     <%= link_to 'Search Projects', search_projects_path %>
     <p>As a visitor, you can look at public profiles of freelancers and the projects posted by clients</p>

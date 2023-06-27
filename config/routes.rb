@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :rooms, only: %i[index]
+
   resources :notifications do
     collection do
       get 'count'
