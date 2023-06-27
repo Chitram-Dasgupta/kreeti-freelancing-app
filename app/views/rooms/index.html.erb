@@ -1,2 +1,6 @@
-<h1>Rooms#index</h1>
-<p>Find me in app/views/rooms/index.html.erb</p>
+<h1>Chat dashboard</h1>
+<%= form_for Message.new, remote: true do |f| %>
+  <%= f.text_field :content %><br>
+  <br>
+  <%= f.submit %>
+<% end %>
