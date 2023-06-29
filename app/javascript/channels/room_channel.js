@@ -4,6 +4,8 @@ document.addEventListener("turbolinks:load", () => {
   var messages = document.getElementById("messages");
   const roomId = messages.getAttribute("data-room-id");
 
+  const currentUserId = document.querySelector("body").dataset.currentUserId;
+
   consumer.subscriptions.create(
     { channel: "RoomChannel", room_id: roomId },
     {
@@ -18,11 +20,14 @@ document.addEventListener("turbolinks:load", () => {
 
       received(data) {
         // Called when there's incoming data on the websocket for this channel
+        console.log(data);
         console.log(data.content);
 
-        var newMessage = document.createElement("div");
-        newMessage.textContent = data.content;
-        messages.appendChild(newMessage);
+        if (data.user_id != currentUserId) {
+          var newMessage = document.createElement("div");
+          newMessage.textContent = data.content;
+          messages.appendChild(newMessage);
+        }
       }
     }
   );
