@@ -11,7 +11,8 @@ class User < ApplicationRecord
   has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
   has_many :notifications, foreign_key: :recipient_id
-  has_many :user_rooms
+  has_many :user_rooms, foreign_key: :user1_id
+  has_many :user_rooms, foreign_key: :user2_id
   has_many :rooms, through: :user_rooms
 
   has_one_attached :profile_picture

@@ -1,4 +1,4 @@
 <h1>Chat dashboard</h1>
 <% @users.each do |user| %>
-  <%= link_to user.email, room_path(user.id) %> <br>
+  <%= link_to "Start chat with #{user.email}", start_conversation_rooms_path(user_id: user.id), method: :post %> <br>
 <% end %>
