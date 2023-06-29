@@ -12,6 +12,8 @@ This app was created with:
 
 * **rails 6.1.7.3**
 
+* **postgresql 15.3-1**
+
 * **node v16.20.0**
 
 * **yarn 1.22.19**
@@ -23,12 +25,7 @@ This app was created with:
 So, it is absolutely necessary that you have the correct version of the above
 mentioned software installed on your local system.
 
-## 2. Install Postgresql
-
-This app uses **postgresql 15.3-1** as the database. So, follow the installation
-instructions for the distribution of your choice.
-
-## 3. Set up the database
+### 2. Set up the database
 
 In the `config/database.yml`, you will find that the `username` is
 **freelancing_app**, and the `password` is **password**.
@@ -51,7 +48,7 @@ CREATE USER freelancing_app WITH PASSWORD 'password' CREATEDB;
 # Then quit out of psql and postgres
 ```
 
-### 4. Clone the repository and cd into it
+### 3. Clone the repository and cd into it
 
 ```sh
 git clone git@github.com:Chitram-Dasgupta/kreeti-freelancing-app.git
@@ -59,7 +56,7 @@ git clone git@github.com:Chitram-Dasgupta/kreeti-freelancing-app.git
 cd kreeti-freelancing-app
 ```
 
-### 5. Create and migrate the databases
+### 4. Create and migrate the databases
 
 ```sh
 rails db:create
@@ -69,13 +66,13 @@ rails db:migrate
 rails db:seed
 ```
 
-### 6. Install the requisite dependencies
+### 5. Install the requisite dependencies
 
 ```sh
 bundle
 ```
 
-### 7. Set up webpacker
+### 6. Set up webpacker
 
 ```sh
 rails webpacker:install
@@ -86,7 +83,7 @@ rm babel.config.js
 rails webpacker:compile
 ```
 
-### 8. Create the elasticsearch indices
+### 7. Create the elasticsearch indices
 
 Please make sure that elasticsearch is running at `localhost:9200`
 
@@ -104,7 +101,7 @@ User.import force: true
 Project.import force: true
 ```
 
-### 9. Finally, run the server
+### 8. Finally, run the server
 
 ```sh
 rails s
