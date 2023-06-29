@@ -1,7 +1,4 @@
 <h1>Chat dashboard</h1>
-<%= form_for Message.new, remote: true do |f| %>
-  <%= f.text_field :content %><br>
-  <br>
-  <%= f.submit %>
+<% @users.each do |user| %>
+  <%= link_to user.email, room_path(user.id) %> <br>
 <% end %>
-<div id="messages"></div>

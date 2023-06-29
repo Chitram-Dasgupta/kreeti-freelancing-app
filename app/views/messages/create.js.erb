@@ -1,0 +1,4 @@
+var messages = document.getElementById('messages');
+var newMessage = document.createElement('div');
+newMessage.innerText = '<%= @message.content %>';
+messages.appendChild(newMessage);

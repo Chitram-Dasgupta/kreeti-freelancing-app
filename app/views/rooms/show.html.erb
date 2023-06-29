@@ -1,0 +1,9 @@
+<h1>A particular room</h1>
+<%= form_with(model: [ @room, Message.new ], local: true, remote: true, id: "message-form") do |f| %>
+  <%= f.label :content %> <br>
+  <%= f.text_field :content %> <br>
+  <%= f.hidden_field :room_id, value: @room.id %>
+  <br>
+  <%= f.submit %>
+<% end %>
+<div id="messages" data-room-id="<%= @room.id %>"></div>

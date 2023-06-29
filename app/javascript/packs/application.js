@@ -8,6 +8,7 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "packs/notifications"
+import "packs/form_submit"
 
 Rails.start()
 Turbolinks.start()

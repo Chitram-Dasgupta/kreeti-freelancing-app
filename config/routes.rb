@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :rooms, only: %i[index]
-
-  resources :messages, only: %i[create]
+  resources :rooms, only: %i[index show create] do
+    resources :messages, only: %i[create]
+  end
 
   resources :notifications do
     collection do

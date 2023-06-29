@@ -1,18 +1,24 @@
 class MessagesController < ApplicationController
   def create
-    @message = Message.new(message_params)
+    @room = Room.find(params[:room_id])
+    @message = @room.messages.new(message_params)
 
     if @message.save
-      logger.debug "Message saved"
+      logger.debug 'Message saved'
       ActionCable.server.broadcast 'room_channel', { content: @message.content }
     else
-      logger.debug "Message NOT saved"
+      logger.debug 'Message NOT saved'
+    end
+
+    respond_to do |format|
+      format.html { redirect_to @room }
+      format.js
     end
   end
 
   private
 
   def message_params
-    params.require(:message).permit(:content)
+    params.require(:message).permit(:content, :room_id)
   end
 end
