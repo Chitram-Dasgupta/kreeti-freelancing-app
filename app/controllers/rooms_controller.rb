@@ -9,7 +9,7 @@ class RoomsController < ApplicationController
     @messages = @room.messages
   end
 
-  def start_conversation
+  def create
     other_user = User.find(params[:user_id])
     existing_room = UserRoom.where(
       '(user1_id = :current_user AND user2_id = :other_user) OR (user1_id = :other_user AND user2_id = :current_user)',

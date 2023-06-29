@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
-  resources :rooms, only: %i[index create] do
-    post 'start_conversation', on: :collection
+  resources :rooms, only: %i[index show create] do
     resources :messages, only: %i[create]
   end
-
-  resources :rooms, only: [:show]
 
   resources :notifications do
     collection do
