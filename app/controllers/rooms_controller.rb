@@ -11,6 +11,7 @@ class RoomsController < ApplicationController
   def show
     other_user = User.find(params[:id])
     @room = find_room(current_user, other_user) || create_room(current_user, other_user)
+    @messages = @room.messages
   end
 
   private

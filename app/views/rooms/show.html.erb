@@ -6,4 +6,10 @@
   <br>
   <%= f.submit %>
 <% end %>
-<div id="messages" data-room-id="<%= @room.id %>"></div>
+<div id="messages" data-room-id="<%= @room.id %>">
+  <% @messages.each do |m| %>
+    <div>
+      <%= m.content %>
+    </div>
+  <% end %>
+</div>
