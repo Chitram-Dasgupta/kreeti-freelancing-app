@@ -29,19 +29,4 @@ class RoomsController < ApplicationController
 
     redirect_to @room
   end
-
-  # private
-
-  # def find_room(user1, user2)
-  #   (user1.rooms & user2.rooms).first
-  # end
-
-  # def create_room(user1, user2)
-  #   room = Room.new
-  #   return unless room.save
-
-  #   UserRoom.create(user: user1, room:)
-  #   UserRoom.create(user: user2, room:)
-  #   room
-  # end
 end

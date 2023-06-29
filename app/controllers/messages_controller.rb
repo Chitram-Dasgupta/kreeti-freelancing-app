@@ -3,13 +3,7 @@ class MessagesController < ApplicationController
     @room = Room.find(params[:room_id])
     @message = @room.messages.new(message_params)
 
-    if @message.save
-      logger.debug 'Message saved'
-      # ActionCable.server.broadcast 'room_channel', { content: @message.content }
-      RoomChannel.broadcast_to(@room, { content: @message.content, user_id: current_user.id })
-    else
-      logger.debug 'Message NOT saved'
-    end
+    RoomChannel.broadcast_to(@room, { content: @message.content, user_id: @message.user_id }) if @message.save
 
     respond_to do |format|
       format.html { redirect_to @room }
@@ -20,6 +14,6 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:content, :room_id)
+    params.require(:message).permit(:content, :room_id).merge(user: current_user)
   end
 end

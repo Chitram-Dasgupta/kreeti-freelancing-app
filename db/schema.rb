@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_29_074016) do
+ActiveRecord::Schema.define(version: 2023_06_29_143138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,7 +70,9 @@ ActiveRecord::Schema.define(version: 2023_06_29_074016) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "room_id", null: false
+    t.bigint "user_id", null: false
     t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -155,6 +157,7 @@ ActiveRecord::Schema.define(version: 2023_06_29_074016) do
   add_foreign_key "bids", "projects"
   add_foreign_key "bids", "users"
   add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "notifications", "bids"
   add_foreign_key "notifications", "projects"
   add_foreign_key "notifications", "users", column: "actor_id"
