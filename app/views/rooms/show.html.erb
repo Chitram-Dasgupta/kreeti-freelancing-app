@@ -8,8 +8,8 @@
 <% end %>
 <div id="messages" data-room-id="<%= @room.id %>">
   <% @messages.each do |m| %>
-    <div>
+    <p class="<%= m.user == current_user ? 'text-start' : 'text-end' %>">
       <%= m.content %>
-    </div>
+    </p>
   <% end %>
 </div>

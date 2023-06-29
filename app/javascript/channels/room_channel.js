@@ -24,8 +24,10 @@ document.addEventListener("turbolinks:load", () => {
         console.log(data.content);
 
         if (data.user_id != currentUserId) {
-          var newMessage = document.createElement("div");
+          const newMessage = document.createElement("p");
+          newMessage.classList.add(data.user_id === currentUserId ? "text-start" : "text-end");
           newMessage.textContent = data.content;
+
           messages.appendChild(newMessage);
         }
       }
