@@ -1,5 +1,8 @@
 window.addEventListener("DOMContentLoaded", (event) => {
   var form = document.getElementById("message-form");
+  if (!form) {
+    return;
+  }
   var submitButton = form.querySelector('input[type="submit"]');
 
   form.addEventListener("submit", function (event) {

@@ -2,6 +2,9 @@ import consumer from "./consumer";
 
 document.addEventListener("turbolinks:load", () => {
   var messages = document.getElementById("messages");
+  if(!messages) {
+    return;
+  }
   const roomId = messages.getAttribute("data-room-id");
 
   const currentUserId = document.querySelector("body").dataset.currentUserId;
