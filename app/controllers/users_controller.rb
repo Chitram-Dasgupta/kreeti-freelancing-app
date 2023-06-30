@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     @users = if params[:search].present?
                User.search_freelancer(params[:search]).records
              else
-               User.all
+               User.where(role: 'freelancer')
              end
   end
 

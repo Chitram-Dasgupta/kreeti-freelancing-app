@@ -39,19 +39,39 @@ class User < ApplicationRecord
   enum role: { client: 0, freelancer: 1, admin: 2 }
 
   def as_indexed_json(_options = {})
-    self.as_json(
+    as_json(
       only: %i[id email role],
       include: { categories: { only: :name } }
     )
   end
 
-  settings index: { number_of_shards: 1 } do
+  settings index: { number_of_shards: 1, max_ngram_diff: 10 }, analysis: {
+    filter: {
+      ngram_filter: {
+        type: 'ngram',
+        min_gram: 2,
+        max_gram: 12
+      }
+    },
+    analyzer: {
+      index_ngram_analyzer: {
+        type: 'custom',
+        tokenizer: 'standard',
+        filter: %w[lowercase ngram_filter]
+      },
+      search_ngram_analyzer: {
+        type: 'custom',
+        tokenizer: 'standard',
+        filter: ['lowercase']
+      }
+    }
+  } do
     mapping dynamic: 'false' do
       indexes :id, type: :integer
       indexes :email
       indexes :role, type: :keyword
       indexes :categories, type: :nested do
-        indexes :name, type: :text
+        indexes :name, type: :text, analyzer: 'index_ngram_analyzer', search_analyzer: 'search_ngram_analyzer'
       end
     end
   end
@@ -72,7 +92,7 @@ class User < ApplicationRecord
     !password.nil? || !password_confirmation.nil?
   end
 
-  def self.search_freelancer(query)
+  def self.search_freelancer(category_name)
     search_definition = {
       query: {
         bool: {
@@ -81,9 +101,13 @@ class User < ApplicationRecord
           ],
           must: [
             {
-              multi_match: {
-                query:,
-                fields: ['categories.name']
+              nested: {
+                path: 'categories',
+                query: {
+                  match: {
+                    'categories.name': category_name
+                  }
+                }
               }
             }
           ]
