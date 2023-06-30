@@ -1,6 +1,5 @@
 class User < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include Searchable
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -37,44 +36,6 @@ class User < ApplicationRecord
   validates :role, presence: true
 
   enum role: { client: 0, freelancer: 1, admin: 2 }
-
-  def as_indexed_json(_options = {})
-    as_json(
-      only: %i[id email role],
-      include: { categories: { only: :name } }
-    )
-  end
-
-  settings index: { number_of_shards: 1, max_ngram_diff: 10 }, analysis: {
-    filter: {
-      ngram_filter: {
-        type: 'ngram',
-        min_gram: 2,
-        max_gram: 12
-      }
-    },
-    analyzer: {
-      index_ngram_analyzer: {
-        type: 'custom',
-        tokenizer: 'standard',
-        filter: %w[lowercase ngram_filter]
-      },
-      search_ngram_analyzer: {
-        type: 'custom',
-        tokenizer: 'standard',
-        filter: ['lowercase']
-      }
-    }
-  } do
-    mapping dynamic: 'false' do
-      indexes :id, type: :integer
-      indexes :email
-      indexes :role, type: :keyword
-      indexes :categories, type: :nested do
-        indexes :name, type: :text, analyzer: 'index_ngram_analyzer', search_analyzer: 'search_ngram_analyzer'
-      end
-    end
-  end
 
   def email_activate
     self.email_confirmed = true

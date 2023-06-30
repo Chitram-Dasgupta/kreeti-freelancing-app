@@ -26,6 +26,29 @@ class Project < ApplicationRecord
      'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
   end
 
+  def self.search_projects(category_name)
+    search_definition = {
+      query: {
+        bool: {
+          must: [
+            {
+              nested: {
+                path: 'categories',
+                query: {
+                  match: {
+                    'categories.name': category_name
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    __elasticsearch__.search(search_definition)
+  end
+
   def bid_awarded?
     bids.where(bid_status: :awarded).exists?
   end

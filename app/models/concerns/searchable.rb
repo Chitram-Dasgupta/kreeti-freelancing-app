@@ -7,7 +7,6 @@ module Searchable
 
     def as_indexed_json(_options = {})
       as_json(
-        only: %i[id title description],
         include: { categories: { only: :name } }
       )
     end
@@ -38,29 +37,6 @@ module Searchable
           indexes :name, type: 'text', analyzer: 'index_ngram_analyzer', search_analyzer: 'search_ngram_analyzer'
         end
       end
-    end
-
-    def self.search_projects(category_name)
-      search_definition = {
-        query: {
-          bool: {
-            must: [
-              {
-                nested: {
-                  path: 'categories',
-                  query: {
-                    match: {
-                      'categories.name': category_name
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      }
-
-      __elasticsearch__.search(search_definition)
     end
   end
 end
