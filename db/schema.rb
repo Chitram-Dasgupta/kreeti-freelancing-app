@@ -103,8 +103,6 @@ ActiveRecord::Schema.define(version: 2023_06_29_143138) do
     t.string "title", null: false
     t.text "description"
     t.integer "visibility"
-    t.string "design_document"
-    t.string "srs_document"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
