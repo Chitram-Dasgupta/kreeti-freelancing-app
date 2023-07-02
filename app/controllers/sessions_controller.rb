@@ -1,5 +1,9 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_authorization, only: %i[new create activation]
+  skip_before_action :require_authorization, only: %i[index new create activation]
+
+  def index
+    redirect_to new_session_path
+  end
 
   def new; end
 
@@ -23,7 +27,7 @@ class SessionsController < ApplicationController
   private
 
   def handle_invalid_authentication
-    flash.now[:error] = 'Invalid email or password'
+    flash.now[:error] = 'Invalid credentials. Please try again'
     render :new, status: :unprocessable_entity
   end
 

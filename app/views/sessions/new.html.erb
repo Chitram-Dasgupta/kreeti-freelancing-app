@@ -1,13 +1,15 @@
 <%= render 'shared/flash' %>
-<h1 class="text-center my-3">Log in!</h1>
+<h1 class="text-center my-4">Log in!</h1>
 <div class="d-flex justify-content-center">
   <%= form_with url: sessions_path do |f| %>
-    <%= f.label :email%><br>
-    <%= f.text_field :email%><br>
-    <br>
-    <%= f.label :password%><br>
-    <%= f.password_field :password%><br>
-    <br>
-    <%= f.submit "Login" %>
+    <div class="mb-3">
+      <%= f.label :email, class: 'form-label' %>
+      <%= f.text_field :email, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :password, class: 'form-label' %>
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
+    <%= f.submit "Login", class: 'btn btn-primary' %>
   <% end %>
 </div>
