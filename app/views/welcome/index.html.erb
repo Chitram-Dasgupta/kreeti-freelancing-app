@@ -8,13 +8,16 @@
       <% else %>
         <h1 class="display-4">Welcome admin</h1>
       <% end %>
+      <h2><%= current_user.username %></h2>
     <% else %>
       <h1 class="display-4">Welcome visitor</h1>
     <% end %>
-    <hr class="my-4">
-    <% if logged_in? %>
-      <%= link_to 'Chat dashboard', rooms_path, class: "btn btn-primary btn-lg" %>
+    <% if client? %>
+      <%= link_to 'My projects', projects_path, class: "btn btn-info btn-lg" %>
+    <% elsif freelancer? %>
+      <%= link_to 'My bids', bids_path, class: "btn btn-primary btn-lg" %>
     <% end %>
+    <hr class="my-4">
     <p class="lead mt-3">
       <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success" %>
       <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning" %>
