@@ -25,6 +25,11 @@
     <% end %>
   </div>
   <hr>
+  <% if current_user == @project.user %>
+    <%= link_to edit_project_path(@project), class: "btn btn-warning mt-2" do %>
+      Edit <i class="bi bi-pencil"></i>
+    <% end %>
+  <% end %>
   <% if freelancer? %>
     <p class="card-text">by <%= @project.username %></p>
     <% unless @project.bid_awarded? %>
