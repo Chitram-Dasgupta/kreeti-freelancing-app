@@ -1,5 +1,12 @@
 <%= render 'shared/flash' %>
 <h1 class="text-center my-4">Register now!</h1>
 <div class="d-flex justify-content-center">
-  <%= render 'user_form' %>
+  <%= form_with model: @user do |f| %>
+    <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:email, 'email'], [:password, 'password'], [:password_confirmation, 'password']] %>
+    <div class="mb-3">
+      <%= f.label :role, class: 'form-label' %>
+      <%= select(:user, :role, [['Client', 'client'], ['Freelancer', 'freelancer']], {}, { class: 'form-select' }) %>
+    </div>
+    <%= f.submit 'Sign up', class: 'btn btn-primary' %>
+  <% end %>
 </div>

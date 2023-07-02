@@ -1,24 +1,18 @@
 <%= render 'shared/flash' %>
 <h1 class="mx-3 my-3">Edit profile</h1>
-<div class="mx-3 my-4">
-  <%= form_with model:@user do |f| %>
-    <%= f.label :profile_picture %><br>
-    <%= f.file_field :profile_picture %><br>
-    <br>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %><br>
-    <br>
+<div class="d-flex justify-content-center">
+  <%= form_with model: @user do |f| %>
+    <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:profile_picture, 'file'], [:industry, 'text']] %>
     <% if freelancer? %>
-      <%= f.label :qualification %><br>
-      <%= f.text_field :qualification %><br>
-      <br>
-      <%= f.label :experience %><br>
-      <%= f.number_field :experience, in: 0..100, step: 1 %><br>
+      <div class="mb-3">
+        <%= f.label :qualification, class: 'form-label' %>
+        <%= f.text_field :qualification, class: 'form-control' %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :experience, class: 'form-label' %>
+        <%= f.number_field :experience, in: 0..100, step: 1, class: 'form-control' %>
+      </div>
     <% end %>
-    <br>
-    <%= f.label :industry %><br>
-    <%= f.text_field :industry %><br>
-    <br>
     <%= f.submit "Update", class: "btn btn-primary" %>
   <% end %>
 </div>
