@@ -1,5 +1,5 @@
 Welcome to Freelancing App
 You are one step away from joining the best platform for freelancers and clients.
 Please click the link below to activate your account and start using our services. Please note that the link is valid only for 30 minutes.
-<%= confirm_email_user_url(@user, @user.confirm_token) %>
+<%= confirm_email_user_url(@user, @user.confirm_token, token: @user.confirmation_token) %>
 If you did not sign up for Freelancing App, please ignore this email.
