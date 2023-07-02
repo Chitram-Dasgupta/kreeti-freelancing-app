@@ -1,24 +1,56 @@
 <%= render 'shared/flash' %>
-<main>
-  <div class="text-center my-3">
+<main class="container mt-5">
+  <div class="jumbotron text-center">
     <% if logged_in? %>
       <% if client? %>
-        <h2>Welcome client</h2>
+        <h1 class="display-4">Welcome client</h1>
       <% elsif freelancer? %>
-        <h2>Welcome freelancer</h2>
+        <h1 class="display-4">Welcome freelancer</h1>
       <% else %>
-        <h2>Welcome admin</h2>
+        <h1 class="display-4">Welcome admin</h1>
       <% end %>
     <% else %>
-      <h2>Welcome visitor</h2>
+      <h1 class="display-4">Welcome visitor</h1>
     <% end %>
+    <hr class="my-4">
     <% if logged_in? %>
-      <%= link_to 'Chat dashboard', rooms_path %><br>
+      <%= link_to 'Chat dashboard', rooms_path, class: "btn btn-primary btn-lg" %>
     <% end %>
-    <br>
-    <%= link_to 'Search freelancers', search_users_path %><br>
-    <%= link_to 'Search Projects', search_projects_path %>
-    <p>As a visitor, you can look at public profiles of freelancers and the projects posted by clients</p>
-    <p>To post your freelancing projects, register as a client. Or, if you are looking for freelancing work, register as a freelancer</p>
+    <p class="lead mt-3">
+      <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success" %>
+      <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning" %>
+    </p>
+    <hr class="my-4">
+    <p class="lead">
+      As a visitor, you can look at public profiles of freelancers and the projects posted by clients. To post your freelancing projects, register as a client. Or, if you are looking for freelancing work, register as a freelancer.
+    </p>
   </div>
 </main>
+<hr class="my-4">
+<section class="my-5">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="display-6">Post Your Projects</h2>
+      <p class="lead">
+        As a client, you have the ability to post projects and get things done. Whether it's a small task or a big project, you'll find the right freelancer to work on it.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="display-6">Freelancers from All Over the World</h2>
+      <p class="lead">
+        Our platform hosts freelancers from all around the globe. No matter what your project requires, you will find a freelancer with the right skills and background.
+      </p>
+    </div>
+  </div>
+</section>
+<hr class="my-4">
+<section class="my-5 bg-light p-5 rounded">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h2 class="display-6">Chat and Collaborate</h2>
+      <p class="lead">
+        Collaborate with freelancers through our built-in chat system. Discuss projects, share ideas and get updates in real time.
+      </p>
+    </div>
+  </div>
+</section>
