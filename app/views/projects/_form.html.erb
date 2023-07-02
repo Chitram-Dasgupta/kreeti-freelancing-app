@@ -1,0 +1,60 @@
+<%= form_with model: local_assigns[:form_object] do |f| %>
+  <div class="mb-3">
+    <%= f.label :title, class: 'form-label' %>
+    <%= f.text_field :title, class: 'form-control' %>
+    <%= render 'shared/field_errors', object: local_assigns[:form_object], field: :title %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :description, class: 'form-label' %>
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :category_ids, "Categories", class: 'form-label' %>
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Select Categories
+      </button>
+      <ul class="dropdown-menu checkbox-menu overflow-auto allow-focus" style="height: 200px;" aria-labelledby="categoriesDropdown">
+        <% Category.all.each do |category| %>
+          <li>
+            <div class="dropdown-item">
+              <%= check_box_tag 'project[category_ids][]', category.id, local_assigns[:form_object].categories.include?(category), id: "project_category_ids_#{category.id}" %>
+              <%= label_tag "project_category_ids_#{category.id}", category.name %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= f.label :skills, "Skills", class: 'form-label' %>
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="skillsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Select Skills
+      </button>
+      <ul class="dropdown-menu checkbox-menu overflow-auto allow-focus" style="height: 200px;" aria-labelledby="skillsDropdown">
+        <% Project.all_skills.each do |skill| %>
+          <li>
+            <div class="dropdown-item">
+              <%= check_box_tag 'project[skills][]', skill, local_assigns[:form_object].skills.include?(skill), id: "project_skills_#{skill.parameterize}" %>
+              <%= label_tag "project_skills_#{skill.parameterize}", skill %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= f.label :visibility, class: 'form-label' %>
+    <%= select(:project, :visibility, [['Public', 'pub'], ['Private', 'priv']], {}, { class: 'form-select' }) %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :design_document, class: 'form-label' %>
+    <%= f.file_field :design_document, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :srs_document, class: 'form-label' %>
+    <%= f.file_field :srs_document, class: 'form-control' %>
+  </div>
+  <%= f.submit local_assigns[:submit_text], class: "btn btn-primary" %>
+<% end %>

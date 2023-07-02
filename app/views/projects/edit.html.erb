@@ -1,33 +1,5 @@
 <%= render 'shared/flash' %>
 <div class="mx-2">
   <h1>Edit your project</h1>
-  <%= form_with model:@project do |f| %>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %><br>
-    <br>
-    <%= f.label :description %><br>
-    <%= f.text_area :description %><br>
-    <strong>Categories:</strong><br>
-    <%= f.label :category_ids, "Categories" %>
-    <% @categories.each do |category| %>
-      <%= check_box_tag 'project[category_ids][]', category.id, @project.categories.include?(category), id: "project_category_ids_#{category.id}" %>
-      <%= label_tag "project_category_ids_#{category.id}", category.name %>
-    <% end %>
-    <br>
-    <% Project.all_skills.each do |skill| %>
-      <%= check_box_tag 'project[skills][]', skill, @project.skills.include?(skill) %>
-      <%= label_tag "project_skills_#{skill.parameterize}", skill %>
-    <% end %>
-    <br>
-    <%= f.label :visibility %><br>
-    <%= select(:project, :visibility, [['Public', 'pub'], ['Private', 'priv']]) %> <br>
-    <br>
-    <%= f.label :design_document %><br>
-    <%= f.file_field :design_document %><br>
-    <br>
-    <%= f.label :srs_document %><br>
-    <%= f.file_field :srs_document %><br>
-    <br>
-    <%= f.submit "Update", class: "btn btn-primary" %>
-  <% end %>
+  <%= render 'form', form_object: @project, submit_text: 'Update' %>
 </div>
