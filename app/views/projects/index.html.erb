@@ -1,45 +1,18 @@
 <%= render 'shared/flash' %>
-<div class="mx-2">
+<div class="container mt-3">
   <% if client? %>
     <%= link_to new_project_path, class: "btn btn-info mb-2" do %>
-      New project <i class="bi bi-plus-circle-dotted"></i>
+      <i class="bi bi-plus-circle-dotted"></i> New project
     <% end %>
-    <h3>Your recently submitted projects</h3>
+    <h3 class="my-3">Your recently submitted projects</h3>
   <% end %>
   <% if @recent_projects.empty? %>
-    <p> You have not submitted any projects </p>
+    <div class="alert alert-info">You have not submitted any projects.</div>
   <% else %>
-    <% @recent_projects.each do |project| %>
-      <div class="card my-2 mx-1">
-        <div class="card-header">
-          Project
-        </div>
-        <div class="card-body">
-          <h5 class="card-title"><%= project.title %></h5>
-          <p class="card-text"><%= project.description %></p>
-          <strong>Categories:</strong>
-          <% project.categories.each do |cat| %>
-            <p><%= cat.name %></p>
-          <% end %>
-          <strong>Skills:</strong>
-          <% project.skills.each do |skill| %>
-            <p class="card-text"><%= skill %></p>
-          <% end %>
-          <p class="card-text">by <%= project.username %></p>
-          <%= link_to project, class: "btn btn-primary" do %>
-            Show <i class="bi bi-arrow-right-circle"></i>
-          <% end %>
-          <% if client? %>
-            <%= link_to edit_project_path(project), class: "btn btn-primary" do %>
-              Edit <i class="bi bi-pencil"></i>
-            <% end %>
-          <% end %>
-          <%= link_to project_path(project), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
-            Delete <i class="bi bi-trash"></i>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <p>See more</p>
+    <div class="row">
+      <% @recent_projects.each do |project| %>
+        <%= render 'project_card', project: %>
+      <% end %>
+    </div>
   <% end %>
 </div>

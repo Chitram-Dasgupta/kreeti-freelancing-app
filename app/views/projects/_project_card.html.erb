@@ -1,11 +1,26 @@
 <div class="col">
   <div class="card h-100">
+    <div class="card-header">
+      Project
+    </div>
     <div class="card-body">
       <h5 class="card-title"><%= link_to project.title, project, class: 'text-decoration-none' %></h5>
       <h6 class="card-subtitle mb-2"><%= link_to project.username, project.user, class: 'text-decoration-none text-muted' %></h6>
       <p class="card-text"><%= project.description %></p>
       <% project.categories.each do |cat| %>
-        <span class="badge bg-info"><%= cat.name %></span>
+        <span class="badge bg-secondary"><%= cat.name %></span>
+      <% end %>
+      <hr>
+      <%= link_to project, class: "btn btn-primary mt-2" do %>
+        Show <i class="bi bi-arrow-right-circle"></i>
+      <% end %>
+      <% if current_user == project.user %>
+        <%= link_to edit_project_path(project), class: "btn btn-warning mt-2" do %>
+          Edit <i class="bi bi-pencil"></i>
+        <% end %>
+        <%= link_to project_path(project), class: "btn btn-danger mt-2", method: :delete, data: { confirm: 'Are you sure?' } do %>
+          Delete <i class="bi bi-trash"></i>
+        <% end %>
       <% end %>
     </div>
   </div>
