@@ -9,6 +9,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "packs/notifications"
 import "packs/form_submit"
+import "packs/multiselect_input"
 
 Rails.start()
 Turbolinks.start()

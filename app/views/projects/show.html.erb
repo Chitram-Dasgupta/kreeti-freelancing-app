@@ -2,9 +2,6 @@
 <div class="container mt-3">
   <h1 class="mb-3"><%= @project.title %></h1>
   <h5 class="text-muted mb-3"><%= @project.description %></h5>
-  <% @project.skills.each do |skill| %>
-    <span class="badge bg-success"><%= skill %></span>
-  <% end %>
   <hr>
   <% if @project.design_document.attached? %>
     <p>Design Document: <%= link_to 'Download', url_for(@project.design_document), class: 'btn btn-primary mt-2' %></p>
@@ -16,10 +13,18 @@
   <% else %>
     <p>No SRS document attached.</p>
   <% end %>
-  <strong>Categories:</strong>
-  <% @project.categories.each do |cat| %>
-    <span class="badge bg-secondary"><%= cat.name %></span>
-  <% end %>
+  <div>
+    <strong>Skills:</strong>
+    <% @project.skills.each do |skill| %>
+      <span class="badge bg-success"><%= skill %></span>
+    <% end %>
+  </div>
+  <div class="mt-2">
+    <strong class="mt-4">Categories:</strong>
+    <% @project.categories.each do |cat| %>
+      <span class="badge bg-secondary"><%= cat.name %></span>
+    <% end %>
+  </div>
   <hr>
   <% if freelancer? %>
     <p class="card-text">by <%= @project.username %></p>

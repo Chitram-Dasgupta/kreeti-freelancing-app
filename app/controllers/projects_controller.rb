@@ -8,7 +8,6 @@ class ProjectsController < ApplicationController
 
   def new
     @project = current_user.projects.new
-    @categories = Category.all
   end
 
   def create
