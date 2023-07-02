@@ -1,3 +1,9 @@
 <h1>Welcome to Freelancing App</h1>
-<h2>Click the link below to activate your account:</h2>
-<%= link_to 'Activate account', confirm_email_user_url(@user, @user.confirm_token, token: @user.confirmation_token) %>
+<p>You are one step away from joining the best platform for freelancers and clients.</p>
+<p>Please click the button below to activate your account and start using our services.</p>
+<p>Please note that the below link is valid only for <strong>30 minutes</strong>.</p>
+<div>
+  <%= link_to 'Activate account', confirm_email_user_url(@user, @user.confirm_token), class: 'btn btn-primary' %>
+</div>
+<br>
+<p>If you did not sign up for Freelancing App, please ignore this email.</p>

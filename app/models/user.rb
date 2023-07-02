@@ -38,15 +38,21 @@ class User < ApplicationRecord
   enum role: { client: 0, freelancer: 1, admin: 2 }
 
   def email_activate
-    self.email_confirmed = true
-    self.confirmation_token = nil
-    save
+    if confirmation_token_created_at < 30.minutes.ago
+      errors.add(:confirmation_token, 'expired')
+    else
+      self.email_confirmed = true
+      self.confirmation_token = nil
+      self.confirmation_token_created_at = nil
+      save
+    end
   end
 
   def confirm_token
     return if confirmation_token.present?
 
     self.confirmation_token = SecureRandom.urlsafe_base64.to_s
+    self.confirmation_token_created_at = Time.current
   end
 
   def password_changed?

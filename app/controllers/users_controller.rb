@@ -39,7 +39,12 @@ class UsersController < ApplicationController
     user = User.find_by(confirmation_token: params[:token])
     if user
       user.email_activate
-      redirect_to new_session_path, flash: { success: 'Your email has been confirmed. Please sign in to continue.' }
+      if user.errors[:confirmation_token].any?
+        user.destroy
+        redirect_to new_user_path, flash: { error: 'Confirmation token expired. Please sign up again.' }
+      else
+        redirect_to new_session_path, flash: { success: 'Your email has been confirmed. Please sign in to continue.' }
+      end
     else
       redirect_to root_path, flash: { error: 'Sorry. User does not exist' }
     end
