@@ -14,7 +14,7 @@
           <p class="card-text"><%= bid.bid_description %></p>
           <p class="card-text"><%= bid.bid_amount %></p>
           <p class="card-text"><%= bid.bid_status %></p>
-          <p class="card-text">by <%= bid.email %></p>
+          <p class="card-text">by <%= bid.username %></p>
           <%= link_to bid, class: "btn btn-primary" do %>
             Show <i class="bi bi-arrow-right-circle"></i>
           <% end %>
@@ -47,7 +47,7 @@
             <p><%= cat.name %></p>
           <% end %>
         </p>
-        <p class="card-text">by <%= project.email %></p>
+        <p class="card-text">by <%= project.username %></p>
         <%= link_to project, class: "btn btn-primary" do %>
           Show <i class="bi bi-arrow-right-circle"></i>
         <% end %>

@@ -5,7 +5,7 @@
 <% end %>
 <br>
 <% @users.each do |u| %>
-  <p><%= u.email%> <%= u.role %></p>
+  <p><%= u.username%> <%= u.role %></p>
   <% u.categories.each do |cat| %>
     <span><%= cat.name %> </span>
   <% end %>

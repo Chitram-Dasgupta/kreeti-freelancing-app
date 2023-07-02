@@ -2,7 +2,7 @@
 <h2>Manage projects</h2>
 <% @projects.each do |p| %>
   <div class="mx-3">
-    <p><%= p.email %></p>
+    <p><%= p.username %></p>
     <p><%= p.title %></p>
     <p><%= p.description %></p>
     <%= link_to p, class: "btn btn-primary" do %>

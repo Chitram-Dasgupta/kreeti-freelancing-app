@@ -14,7 +14,7 @@ class Project < ApplicationRecord
 
   enum visibility: { pub: 0, priv: 1 }
 
-  delegate :email, to: :user
+  delegate :username, to: :user
 
   scope :recent_by_user, ->(user) { where(user:).order(created_at: :desc).limit(5) }
 
