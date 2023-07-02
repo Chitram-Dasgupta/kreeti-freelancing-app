@@ -1,0 +1,8 @@
+<% if object.errors[field].any? %>
+  <% object.errors[field].each do |error| %>
+    <div class="text-danger mt-2" role="alert">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <%= error.capitalize %>
+    </div>
+  <% end %>
+<% end %>

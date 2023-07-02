@@ -1,0 +1,9 @@
+<%= form_with url: sessions_path do |f| %>
+  <% [[:email, 'email'], [:password, 'password']].each do |field, type| %>
+    <div class="mb-3">
+      <%= f.label field, class: 'form-label' %>
+      <%= f.send("#{type}_field", field, class: 'form-control') %>
+    </div>
+  <% end %>
+  <%= f.submit 'Log in', class: 'btn btn-primary' %>
+<% end %>

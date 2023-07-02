@@ -1,0 +1,14 @@
+<%= form_with model: @user, url: users_path do |f| %>
+  <% [[:username, 'text'], [:email, 'email'], [:password, 'password'], [:password_confirmation, 'password']].each do |field, type| %>
+    <div class="mb-3">
+      <%= f.label field, class: 'form-label' %>
+      <%= f.send("#{type}_field", field, class: 'form-control') %>
+      <%= render 'shared/field_errors', object: @user, field: field %>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= f.label :role, class: 'form-label' %>
+    <%= select(:user, :role, [['Client', 'client'], ['Freelancer', 'freelancer']], {}, { class: 'form-select' }) %>
+  </div>
+  <%= f.submit 'Sign up', class: 'btn btn-primary' %>
+<% end %>
