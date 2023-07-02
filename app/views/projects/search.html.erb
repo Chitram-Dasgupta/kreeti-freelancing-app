@@ -1,9 +1,4 @@
-<%= form_with url: search_projects_path, method: :get, local: true do |form| %>
-  <%= form.label :search, 'Search Projects by category:' %>
-  <%= form.text_field :search %>
-  <%= form.submit 'Search' %>
-<% end %>
-<br>
+<%= render 'shared/search_form', search_path: search_projects_path %>
 <% @projects.each do |p| %>
   <p><%= p.username %></p>
   <p><%= p.title %></p>
