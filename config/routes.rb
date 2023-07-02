@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :sessions, only: %i[new create destroy]
 
-  resources :users, except: %i[index] do
+  resources :users do
     get :confirm_email, to: 'users#confirm_email', on: :member
     get :search, to: 'users#search', on: :collection
   end

@@ -143,11 +143,12 @@ ActiveRecord::Schema.define(version: 2023_06_29_143138) do
     t.boolean "email_confirmed", default: false
     t.string "confirmation_token"
     t.integer "role", default: 0, null: false
-    t.string "name"
+    t.string "username"
     t.string "qualification"
     t.integer "experience"
     t.string "industry"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

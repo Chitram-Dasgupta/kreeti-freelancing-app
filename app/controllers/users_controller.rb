@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
   before_action :require_authorization, only: %i[destroy]
 
+  def index
+    redirect_to new_user_path
+  end
+
   def new
     @user = User.new
   end
@@ -61,7 +65,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :role, :name, :qualification, :experience,
+    params.require(:user).permit(:email, :password, :password_confirmation, :role, :username, :qualification, :experience,
                                  :industry, :profile_picture)
   end
 end

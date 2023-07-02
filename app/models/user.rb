@@ -29,7 +29,7 @@ class User < ApplicationRecord
 
   validates :password, length: { minimum: 6 }, allow_blank: true, if: :password_changed?, on: :update
 
-  validates :name, length: { maximum: 255 }
+  validates :username, presence: true, uniqueness: true, length: { maximum: 255 }
 
   validates :experience, numericality: { only_integer: true, allow_nil: true, less_than_or_equal_to: 100 }
 
