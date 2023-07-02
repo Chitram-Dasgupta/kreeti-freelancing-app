@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="mt-3">
   <% if client? %>
     <%= link_to new_project_path, class: "btn btn-info mb-2" do %>
       <i class="bi bi-plus-circle-dotted"></i> New project
@@ -10,7 +10,9 @@
   <% else %>
     <div class="row">
       <% @recent_projects.each do |project| %>
-        <%= render 'project_card', project: %>
+        <div class="col-lg-4">
+          <%= render 'project_card', project: project %>
+        </div>
       <% end %>
     </div>
   <% end %>

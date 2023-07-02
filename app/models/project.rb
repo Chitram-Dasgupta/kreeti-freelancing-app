@@ -16,7 +16,7 @@ class Project < ApplicationRecord
 
   delegate :username, to: :user
 
-  scope :recent_by_user, ->(user) { where(user:).order(created_at: :desc).limit(5) }
+  scope :recent_by_user, ->(user) { where(user:).order(created_at: :desc).limit(6) }
 
   scope :recent, -> { order(created_at: :desc).limit(5) }
 
