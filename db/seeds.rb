@@ -9,26 +9,26 @@ cat8 = Category.create!(name: 'Android Development')
 cat9 = Category.create!(name: 'iOS Development')
 cat10 = Category.create!(name: 'Technical Support')
 
-User.create!(email: 'admin@example.com', password: '123456', password_confirmation: '123456', role: 'admin',
+User.create!(username: 'admin', email: 'admin@example.com', password: '123456', password_confirmation: '123456', role: 'admin',
              email_confirmed: true, confirmation_token: nil)
 
-c1 = User.create!(email: 'c1@email.com', password: '123456', password_confirmation: '123456', role: 'client',
+c1 = User.create!(username: 'c1', email: 'c1@email.com', password: '123456', password_confirmation: '123456', role: 'client',
                   email_confirmed: true, confirmation_token: nil)
 
-c2 = User.create!(email: 'c2@email.com', password: '123456', password_confirmation: '123456', role: 'client',
+c2 = User.create!(username: 'c2', email: 'c2@email.com', password: '123456', password_confirmation: '123456', role: 'client',
                   email_confirmed: true, confirmation_token: nil)
 
-c3 = User.create!(email: 'c3@email.com', password: '123456', password_confirmation: '123456', role: 'client',
+c3 = User.create!(username: 'c3', email: 'c3@email.com', password: '123456', password_confirmation: '123456', role: 'client',
                   email_confirmed: true, confirmation_token: nil)
 
-c4 = User.create!(email: 'c4@email.com', password: '123456', password_confirmation: '123456', role: 'client',
+c4 = User.create!(username: 'c4', email: 'c4@email.com', password: '123456', password_confirmation: '123456', role: 'client',
                   email_confirmed: true, confirmation_token: nil)
 
-f1 = User.create!(email: 'f1@email.com', password: '123456', password_confirmation: '123456', role: 'freelancer',
+f1 = User.create!(username: 'f1', email: 'f1@email.com', password: '123456', password_confirmation: '123456', role: 'freelancer',
                   email_confirmed: true, confirmation_token: nil)
 f1.categories << cat1 << cat2 << cat10
 
-f2 = User.create!(email: 'f2@email.com', password: '123456', password_confirmation: '123456', role: 'freelancer',
+f2 = User.create!(username: 'f2', email: 'f2@email.com', password: '123456', password_confirmation: '123456', role: 'freelancer',
                   email_confirmed: true, confirmation_token: nil)
 f2.categories << cat2 << cat4 << cat5 << cat6 << cat7
 
