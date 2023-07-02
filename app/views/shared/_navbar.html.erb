@@ -1,43 +1,45 @@
-<nav class="navbar navbar-expand-md px-2">
-  <% if !logged_in? %>
-    <%= link_to "Freelancing app", root_path, class: "navbar-brand"%>
-  <% elsif client? %>
-    <%= link_to "Freelancing app", projects_path, class: "navbar-brand"%>
-  <% elsif freelancer? %>
-    <%= link_to "Freelancing app", bids_path, class: "navbar-brand"%>
-  <% else %>
-    <%= link_to "Freelancing app", admins_path, class: "navbar-brand"%>
-  <% end %>
-  <button
+<nav class="navbar navbar-expand-md navbar-light bg-light px-2">
+  <div class="container">
+    <% if !logged_in? %>
+      <%= link_to "Freelancing app", root_path, class: "navbar-brand"%>
+    <% elsif client? %>
+      <%= link_to "Freelancing app", projects_path, class: "navbar-brand"%>
+    <% elsif freelancer? %>
+      <%= link_to "Freelancing app", bids_path, class: "navbar-brand"%>
+    <% else %>
+      <%= link_to "Freelancing app", admins_path, class: "navbar-brand"%>
+    <% end %>
+    <button
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#primary-navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="primary-navigation">
-    <ul class="navbar-nav ms-auto text-center">
-      <% unless logged_in? %>
-        <li><%= link_to "Log in", new_session_path, class: "nav-item"%></li>
-        <li><%= link_to "Register", new_user_path, class: "nav-item"%></li>
-      <% end %>
-      <% if logged_in? %>
-        <li class="nav-item">
-          <%= link_to 'Log out', { :controller => 'sessions', :action => 'destroy', :id => session[:user_id] },
-               data:  { :confirm => 'Are you sure?', :method => :delete, :remote => true} %>
-        </li>
-        <% unless admin? %>
-          <li class="nav-item"><%= link_to "Profile", user_path(current_user) %></li>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="primary-navigation">
+      <ul class="navbar-nav ms-auto text-center">
+        <% unless logged_in? %>
+          <li class="nav-item"><%= link_to "Log in", new_session_path, class: "nav-link"%></li>
+          <li class="nav-item"><%= link_to "Register", new_user_path, class: "nav-link"%></li>
         <% end %>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="bi bi-bell-fill"></i>
-            <span class="badge rounded-pill bg-danger" id="notificationBadge">0</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" id="notificationList">
-          </div>
-        </li>
-      <% end %>
-    </ul>
+        <% if logged_in? %>
+          <li class="nav-item">
+            <%= link_to 'Log out', { :controller => 'sessions', :action => 'destroy', :id => session[:user_id] },
+               data:  { :confirm => 'Are you sure?', :method => :delete, :remote => true}, class: "nav-link" %>
+          </li>
+          <% unless admin? %>
+            <li class="nav-item"><%= link_to "Profile", user_path(current_user), class: "nav-link" %></li>
+          <% end %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="bi bi-bell-fill"></i>
+              <span class="badge rounded-pill bg-danger" id="notificationBadge">0</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" id="notificationList">
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 </nav>
