@@ -1,4 +1,4 @@
-<div class="col">
+<div class="col m-2">
   <div class="card h-100">
     <div class="card-header">
       Project
@@ -22,6 +22,9 @@
           Delete <i class="bi bi-trash"></i>
         <% end %>
       <% end %>
+    </div>
+    <div class="card-footer text-muted">
+      Posted at <%= project.created_at.strftime("%d %B %Y") %>
     </div>
   </div>
 </div>
