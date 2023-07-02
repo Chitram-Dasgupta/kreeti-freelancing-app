@@ -1,0 +1,12 @@
+<div class="col">
+  <div class="card h-100">
+    <div class="card-body">
+      <h5 class="card-title"><%= link_to project.title, project, class: 'text-decoration-none' %></h5>
+      <h6 class="card-subtitle mb-2"><%= link_to project.username, project.user, class: 'text-decoration-none text-muted' %></h6>
+      <p class="card-text"><%= project.description %></p>
+      <% project.categories.each do |cat| %>
+        <span class="badge bg-info"><%= cat.name %></span>
+      <% end %>
+    </div>
+  </div>
+</div>

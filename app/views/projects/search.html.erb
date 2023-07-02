@@ -1,10 +1,6 @@
 <%= render 'shared/search_form', search_path: search_projects_path %>
-<% @projects.each do |p| %>
-  <p><%= p.username %></p>
-  <p><%= p.title %></p>
-  <p><%= p.description %></p>
-  <% p.categories.each do |cat| %>
-    <span><%= cat.name %> </span>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <% @projects.each do |p| %>
+    <%= render 'project_card', project: p %>
   <% end %>
-  <hr>
-<% end %>
+</div>

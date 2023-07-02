@@ -28,6 +28,8 @@
   <h2 class="mx-3 display-7">Industry: </h2>
   <h2 class="display-7"><%= @user.industry %></h2>
 </section>
-<%= link_to edit_user_path(@user), class: "btn btn-primary mx-3" do %>
-  Edit <i class="bi bi-pencil"></i>
+<% if current_user == @user %>
+  <%= link_to edit_user_path(@user), class: "btn btn-primary mx-3" do %>
+    Edit <i class="bi bi-pencil"></i>
+  <% end %>
 <% end %>

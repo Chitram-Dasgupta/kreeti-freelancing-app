@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  skip_before_action :require_authorization, only: %i[search]
+  skip_before_action :require_authorization, only: %i[show search]
   before_action :current_user_project, only: %i[edit update destroy]
 
   def index
