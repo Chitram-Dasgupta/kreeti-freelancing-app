@@ -1,8 +1,6 @@
 <%= render 'shared/search_form', search_path: search_users_path %>
-<% @users.each do |u| %>
-  <p><%= u.username%> <%= u.role %></p>
-  <% u.categories.each do |cat| %>
-    <span><%= cat.name %> </span>
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+  <% @users.each do |u| %>
+    <%= render 'user_card', user: u %>
   <% end %>
-  <hr>
-<% end %>
+</div>

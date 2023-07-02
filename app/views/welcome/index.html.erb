@@ -12,7 +12,9 @@
     <% else %>
       <h2>Welcome visitor</h2>
     <% end %>
-    <%= link_to 'Chat dashboard', rooms_path %><br>
+    <% if logged_in? %>
+      <%= link_to 'Chat dashboard', rooms_path %><br>
+    <% end %>
     <br>
     <%= link_to 'Search freelancers', search_users_path %><br>
     <%= link_to 'Search Projects', search_projects_path %>
