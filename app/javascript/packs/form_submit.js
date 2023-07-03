@@ -20,20 +20,24 @@ window.addEventListener("DOMContentLoaded", (event) => {
       body: formData,
       headers: {
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-        Accept: "text/javascript"
+        Accept: "application/json"
       },
       credentials: "same-origin"
     })
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((data) => {
-        eval(data);
-        submitButton.disabled = false; // Re-enable the submit button
+        if (data.status === "ok") {
+          submitButton.disabled = false; // Re-enable the submit button
+        } else {
+          console.error("Error:", data.errors);
+          submitButton.disabled = false; // Re-enable the submit button in case of an error
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
         submitButton.disabled = false; // Re-enable the submit button in case of an error
       });
 
-    submitButton.disabled = true; // Disable the submit button when the form is submitted
+    submitButton.disabled = true;
   });
 });
