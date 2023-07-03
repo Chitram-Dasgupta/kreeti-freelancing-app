@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2023_07_02_110035) do
   create_table "bids", force: :cascade do |t|
     t.string "bid_name", null: false
     t.text "bid_description"
-    t.integer "bid_status"
+    t.integer "bid_status", default: 0
     t.decimal "bid_amount", precision: 8, scale: 2
     t.string "bid_code_document"
     t.string "bid_design_document"

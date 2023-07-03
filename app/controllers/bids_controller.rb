@@ -9,7 +9,7 @@ class BidsController < ApplicationController
 
   def new
     @project = Project.find(params[:project_id])
-    @bid = @project.bids.new
+    @bid = Bid.new
   end
 
   def create
@@ -90,6 +90,6 @@ class BidsController < ApplicationController
   end
 
   def bid_params
-    params.require(:bid).permit(:bid_name, :bid_description, :bid_status, :bid_amount, :project_id, :user_id)
+    params.require(:bid).permit(:bid_name, :bid_description, :bid_amount, :project_id, :user_id)
   end
 end

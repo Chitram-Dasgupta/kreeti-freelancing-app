@@ -3,7 +3,7 @@ class CreateBids < ActiveRecord::Migration[6.1]
     create_table :bids do |t|
       t.string :bid_name, null: false
       t.text :bid_description
-      t.integer :bid_status
+      t.integer :bid_status, default: 0
       t.decimal :bid_amount, precision: 8, scale: 2
       t.string :bid_code_document
       t.string :bid_design_document

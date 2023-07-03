@@ -4,7 +4,7 @@ class Bid < ApplicationRecord
   belongs_to :user
   belongs_to :project
 
-  after_save :send_notifications
+  # after_save :send_notifications
 
   validates :bid_name, presence: true
 

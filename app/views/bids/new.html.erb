@@ -1,19 +1,33 @@
 <div class="mx-2">
   <h1>Create a new bid</h1>
   <p>Go ahead and create a new bid to find freelancers from around the world!</p>
-  <%= form_with(model: @bid, url: bids_path, method: :post) do |f| %>
-    <%= f.label :bid_name %><br>
-    <%= f.text_field :bid_name %><br>
-    <br>
-    <%= f.label :bid_description %><br>
-    <%= f.text_area :bid_description %><br>
-    <br>
-    <%= f.label :bid_amount %><br>
-    <%= f.number_field :bid_amount, step: '0.01', min: '0', max: '999999.99' %><br>
-    <br>
-    <%= f.hidden_field :bid_status, value: :pending %>
-    <%= f.hidden_field :project_id, value: @project.id %>
-    <%= f.hidden_field :user_id, value: current_user.id %>
-    <%= f.submit "Create", class: "btn btn-primary" %>
+  <%= form_with(model: @bid, url: bids_path, local: true) do |form| %>
+    <% if @bid.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@bid.errors.count, "error") %> prohibited this bid from being saved:</h2>
+        <ul>
+          <% @bid.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= form.label :bid_name %>
+      <%= form.text_field :bid_name %>
+    </div>
+    <div class="field">
+      <%= form.label :bid_description %>
+      <%= form.text_area :bid_description %>
+    </div>
+    <div class="field">
+      <%= form.label :bid_amount %>
+      <%= form.number_field :bid_amount, step: 0.01 %>
+    </div>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <%= form.hidden_field :project_id, value: @project.id %>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
   <% end %>
 </div>
