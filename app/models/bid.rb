@@ -7,6 +7,7 @@ class Bid < ApplicationRecord
   after_save :send_notifications
 
   validates :bid_name, presence: true
+  validates :bid_amount, presence: true, numericality: { greater_than: 0 }
   validates :user_id, uniqueness: { scope: :project_id, message: 'has already placed a bid for this project' }
 
   enum bid_status: { pending: 0, accepted: 1, rejected: 2, awarded: 3 }

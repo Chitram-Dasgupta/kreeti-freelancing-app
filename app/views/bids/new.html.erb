@@ -2,32 +2,22 @@
   <h1>Create a new bid</h1>
   <p>Go ahead and create a new bid to find freelancers from around the world!</p>
   <%= form_with(model: @bid, url: bids_path, local: true) do |form| %>
-    <% if @bid.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@bid.errors.count, "error") %> prohibited this bid from being saved:</h2>
-        <ul>
-          <% @bid.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <div class="field">
-      <%= form.label :bid_name %>
-      <%= form.text_field :bid_name %>
+    <div class="mb-3">
+      <%= form.label :bid_name, class: 'form-label' %>
+      <%= form.text_field :bid_name, class: 'form-control' %>
+      <%= render 'shared/field_errors', object: @bid, field: :bid_name %>
     </div>
-    <div class="field">
-      <%= form.label :bid_description %>
-      <%= form.text_area :bid_description %>
+    <div class="mb-3">
+      <%= form.label :bid_description, class: 'form-label' %>
+      <%= form.text_area :bid_description, class: 'form-control' %>
     </div>
-    <div class="field">
-      <%= form.label :bid_amount %>
-      <%= form.number_field :bid_amount, step: 0.01 %>
+    <div class="mb-3">
+      <%= form.label :bid_amount, class: 'form-label' %>
+      <%= form.number_field :bid_amount, step: 0.01, class: 'form-control' %>
+      <%= render 'shared/field_errors', object: @bid, field: :bid_amount %>
     </div>
     <%= form.hidden_field :user_id, value: current_user.id %>
     <%= form.hidden_field :project_id, value: @project.id %>
-    <div class="actions">
-      <%= form.submit %>
-    </div>
+    <%= form.submit 'Create bid', class: 'btn btn-primary' %>
   <% end %>
 </div>
