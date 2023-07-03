@@ -5,6 +5,7 @@ class AddProfileDetailsToUser < ActiveRecord::Migration[6.1]
       t.string :qualification
       t.integer :experience
       t.string :industry
+      t.integer :visibility, default: 0
     end
     add_index :users, :username, unique: true
   end

@@ -29,7 +29,7 @@ f1 = User.create!(username: 'f1', email: 'f1@email.com', password: '123456', pas
 f1.categories << cat1 << cat2 << cat10
 
 f2 = User.create!(username: 'f2', email: 'f2@email.com', password: '123456', password_confirmation: '123456', role: 'freelancer',
-                  email_confirmed: true, confirmation_token: nil)
+                  email_confirmed: true, confirmation_token: nil, visibility: 'priv')
 f2.categories << cat2 << cat4 << cat5 << cat6 << cat7
 
 p1 = c1.projects.create!(title: 'Web Design project', description: 'lorem ipsum')

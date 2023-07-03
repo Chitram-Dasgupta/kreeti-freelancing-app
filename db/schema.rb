@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 2023_07_02_110035) do
     t.string "qualification"
     t.integer "experience"
     t.string "industry"
+    t.integer "visibility", default: 0
     t.datetime "confirmation_token_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

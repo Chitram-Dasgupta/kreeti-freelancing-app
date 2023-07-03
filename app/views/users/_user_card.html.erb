@@ -9,7 +9,8 @@
             Chat <i class="bi bi-chat-dots-fill"></i>
           <% end %>
         <% end %>
-        <%= render 'shared/profile_picture', user: user, size: '320x320' %>
+        <%= render 'shared/profile_picture', user:, size: '320x320' %>
+        <p class="card-text"><%= user.visibility_status %></p>
         <% user.categories.each do |cat| %>
           <span class="badge bg-info"><%= cat.name %></span>
         <% end %>

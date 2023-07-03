@@ -36,6 +36,7 @@ class User < ApplicationRecord
   validates :role, presence: true
 
   enum role: { client: 0, freelancer: 1, admin: 2 }
+  enum visibility: { pub: 0, priv: 1 }
 
   def email_activate
     if confirmation_token_created_at < 30.minutes.ago
@@ -76,6 +77,11 @@ class User < ApplicationRecord
                   }
                 }
               }
+            },
+            {
+              match: {
+                'visibility': 'pub'
+              }
             }
           ]
         }
@@ -83,5 +89,11 @@ class User < ApplicationRecord
     }
 
     __elasticsearch__.search(search_definition)
+  end
+
+  def visibility_status
+    return 'Public' if visibility == 'pub'
+
+    'Private'
   end
 end
