@@ -15,9 +15,7 @@
       <% end %>
     </div>
   </div>
-  <!-- Messages and Form goes here -->
   <div id="messages" class="overflow-auto flex-column mb-auto" data-room-id="<%= @room.id %>">
-    <!-- Messages go here -->
     <% @messages.each do |m| %>
       <div class="d-flex <%= m.user == current_user ? 'justify-content-start' : 'justify-content-end' %>">
         <div class="<%= m.user == current_user ? 'bg-primary' : 'bg-secondary' %> text-white rounded-pill px-3 py-1 mb-1 mx-2">

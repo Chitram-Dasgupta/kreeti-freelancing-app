@@ -1,14 +1,19 @@
 window.addEventListener("DOMContentLoaded", (event) => {
   var form = document.getElementById("message-form");
+
   if (!form) {
     return;
   }
-  var submitButton = form.querySelector('input[type="submit"]');
+
+  var submitButton = form.querySelector('button[type="submit"]'); // Select the submit button
+  var messageInput = form.querySelector('input[name="message[content]"]'); // Select the text input field
 
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent the form from being submitted normally
 
     var formData = new FormData(form);
+
+    messageInput.value = ""; // Clear the text input field
 
     fetch(form.action, {
       method: "POST",
