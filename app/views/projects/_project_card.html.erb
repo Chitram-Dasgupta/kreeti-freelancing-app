@@ -14,6 +14,11 @@
       <%= link_to project, class: "btn btn-primary mt-2" do %>
         Show <i class="bi bi-arrow-right-circle"></i>
       <% end %>
+      <% if freelancer? && !project.bid_awarded? %>
+        <%= link_to new_bid_path(project_id: project.id), class: 'btn btn-warning mt-2' do %>
+          New Bid <i class="bi bi-plus-circle-dotted"></i>
+        <% end %>
+      <% end %>
       <% if current_user == project.user %>
         <%= link_to edit_project_path(project), class: "btn btn-warning mt-2" do %>
           Edit <i class="bi bi-pencil"></i>
