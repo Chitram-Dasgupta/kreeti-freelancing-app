@@ -1,23 +1,5 @@
 <div class="mx-2">
   <h1>Create a new bid</h1>
   <p>Go ahead and create a new bid to find freelancers from around the world!</p>
-  <%= form_with(model: @bid, url: bids_path, local: true) do |form| %>
-    <div class="mb-3">
-      <%= form.label :bid_name, class: 'form-label' %>
-      <%= form.text_field :bid_name, class: 'form-control' %>
-      <%= render 'shared/field_errors', object: @bid, field: :bid_name %>
-    </div>
-    <div class="mb-3">
-      <%= form.label :bid_description, class: 'form-label' %>
-      <%= form.text_area :bid_description, class: 'form-control' %>
-    </div>
-    <div class="mb-3">
-      <%= form.label :bid_amount, class: 'form-label' %>
-      <%= form.number_field :bid_amount, step: 0.01, class: 'form-control' %>
-      <%= render 'shared/field_errors', object: @bid, field: :bid_amount %>
-    </div>
-    <%= form.hidden_field :user_id, value: current_user.id %>
-    <%= form.hidden_field :project_id, value: @project.id %>
-    <%= form.submit 'Create bid', class: 'btn btn-primary' %>
-  <% end %>
+  <%= render partial: 'form', locals: {options: {url: bids_path, button_text: 'Create bid'}, new_record: true} %>
 </div>
