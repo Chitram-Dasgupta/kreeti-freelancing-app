@@ -3,32 +3,13 @@
   <% if @recent_bids.empty? %>
     <p class="text-muted"> You have not submitted any bids </p>
   <% else %>
-    <% @recent_bids.each do |bid| %>
-      <div class="card my-2 mx-1">
-        <div class="card-header">
-          Bid
+    <div class="row">
+      <% @recent_bids.each do |bid| %>
+        <div class="col-lg-4">
+          <%= render 'bid_card', bid: %>
         </div>
-        <div class="card-body">
-          <h5 class="card-title"><%= bid.bid_name %></h5>
-          <p class="card-text"><%= bid.bid_description %></p>
-          <p class="card-text"><%= bid.bid_amount %></p>
-          <p class="card-text"><%= bid.bid_status %></p>
-          <p class="card-text">by <%= bid.username %></p>
-          <%= link_to bid, class: "btn btn-primary" do %>
-            Show <i class="bi bi-arrow-right-circle"></i>
-          <% end %>
-          <% if bid.modifiable? %>
-            <%= link_to edit_bid_path(bid), class: "btn btn-secondary" do %>
-              Edit <i class="bi bi-pencil"></i>
-            <% end %>
-          <% end %>
-          <%= link_to bid_path(bid), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
-            Delete <i class="bi bi-trash"></i>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <p>See more</p>
+      <% end %>
+    </div>
   <% end %>
 </div>
 <hr>

@@ -1,0 +1,47 @@
+<div class="card my-3 mx-1 border-secondary">
+  <div class="card-header bg-info text-white">
+    Bid
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"><%= bid.bid_name %></h5>
+    <p class="card- text-muted"><%= bid.bid_description %></p>
+    <p class="card-text"><strong>Amount: </strong><%= bid.bid_amount %></p>
+    <p class="card-text"><strong>Status: </strong><%= bid.bid_status.titleize %></p>
+    <p class="card-text">by <%= bid.username %></p>
+    <% if freelancer? && params[:controller] == 'bids' %>
+      <hr>
+      <p class="card-text">
+        <strong>Project: </strong>
+        <%= link_to bid.project.title, project_path(bid.project), class: 'text-decoration-none' %>
+      </p>
+      <hr>
+    <% elsif client? %>
+      <hr>
+      <% if admin? || client? %>
+        <% unless bid.awarded? %>
+          <% if bid.accepted? %>
+            <%= link_to 'Award Bid to freelancer', award_bid_path(bid), method: :post, class: 'btn btn-primary mt-2' %>
+            <%= link_to 'Put on hold', hold_bid_path(bid), method: :post, class: 'btn btn-warning mt-2' %>
+          <% else %>
+            <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary mt-2' %>
+            <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger mt-2' %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <hr>
+    <%= link_to bid, class: "btn btn-primary btn-sm" do %>
+      Show <i class="bi bi-arrow-right-circle"></i>
+    <% end %>
+    <% if bid.user == current_user %>
+      <% if bid.modifiable? %>
+        <%= link_to edit_bid_path(bid), class: "btn btn-warning btn-sm" do %>
+          Edit <i class="bi bi-pencil"></i>
+        <% end %>
+      <% end %>
+      <%= link_to bid_path(bid), class: "btn btn-danger btn-sm", method: :delete, data: { confirm: 'Are you sure?' } do %>
+        Delete <i class="bi bi-trash"></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>

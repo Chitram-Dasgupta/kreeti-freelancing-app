@@ -1,8 +1,17 @@
 <div class="mx-2 my-3">
-  <h2><%= @bid.bid_name %></h4>
-  <p><%= @bid.bid_description %></p>
-  <p><%= @bid.bid_amount %></p>
-  <p><%= @bid.bid_status %></p>
-  <p><%= @bid.username %></p>
+  <h1 class="mb-3"><%= @bid.bid_name %></h1>
+  <h5 class="text-muted mb-3"><%= @bid.bid_description %></h5>
+  <hr>
+  <dl class="row mb-3">
+    <dt class="col-sm-3">Amount:</dt>
+    <dd class="col-sm-9"><%= @bid.bid_amount %></dd>
+    <dt class="col-sm-3">Status:</dt>
+    <dd class="col-sm-9"><%= @bid.bid_status %></dd>
+    <dt class="col-sm-3">By:</dt>
+    <dd class="col-sm-9"><%= @bid.username %></dd>
+  </dl>
+  <hr>
+  <%= link_to edit_bid_path(@bid), class: "btn btn-primary mt-2" do %>
+    Edit this bid <i class="bi bi-pencil"></i>
+  <% end %>
 </div>
-<%= link_to 'Edit this bid', edit_bid_path(@bid) %>

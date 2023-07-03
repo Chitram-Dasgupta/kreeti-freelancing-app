@@ -43,22 +43,7 @@
   <h2 class="my-4">Bids:</h2>
   <% @bids.each do |bid| %>
     <% unless bid.rejected? %>
-      <h4><%= bid.bid_name %></h4>
-      <p><%= bid.bid_description %></p>
-      <p><%= bid.bid_amount %></p>
-      <p><%= bid.bid_status %></p>
-      <p>by <%= bid.username %></p>
-      <% if admin? || client? %>
-        <% unless bid.awarded? %>
-          <% if bid.accepted? %>
-            <%= link_to 'Award Bid to freelancer', award_bid_path(bid), method: :post, class: 'btn btn-primary mt-2' %>
-            <%= link_to 'Put on hold', hold_bid_path(bid), method: :post, class: 'btn btn-warning mt-2' %>
-          <% else %>
-            <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary mt-2' %>
-            <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger mt-2' %>
-          <% end %>
-        <% end %>
-      <% end %>
+      <%= render 'bids/bid_card.html.erb', bid: %>
     <% end %>
   <% end %>
 </div>
