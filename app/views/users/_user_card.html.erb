@@ -4,10 +4,12 @@
       <h5 class="card-title"><%= link_to user.username, user, class: 'text-decoration-none' %></h5>
       <h6 class="card-title text-muted"><%= user.email %></h6>
       <p class="text-start">
-        <%= link_to rooms_path(user_id: user.id), method: :post, class: 'btn btn-secondary mt-1' do %>
-          Chat <i class="bi bi-chat-dots-fill"></i>
+        <% unless freelancer? %>
+          <%= link_to rooms_path(user_id: user.id), method: :post, class: 'btn btn-secondary mt-1' do %>
+            Chat <i class="bi bi-chat-dots-fill"></i>
+          <% end %>
         <% end %>
-        <%= render 'shared/profile_picture', user: user %>
+        <%= render 'shared/profile_picture', user: user, size: '320x320' %>
         <% user.categories.each do |cat| %>
           <span class="badge bg-info"><%= cat.name %></span>
         <% end %>

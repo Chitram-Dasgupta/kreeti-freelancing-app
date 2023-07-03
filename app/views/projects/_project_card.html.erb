@@ -10,6 +10,12 @@
       <% project.categories.each do |cat| %>
         <span class="badge bg-secondary"><%= cat.name %></span>
       <% end %>
+      <br>
+      <% unless client? %>
+        <%= link_to rooms_path(user_id: project.user.id), method: :post, class: 'btn btn-info mt-2' do %>
+          Chat <i class="bi bi-chat-dots-fill"></i>
+        <% end %>
+      <% end %>
       <hr>
       <%= link_to project, class: "btn btn-primary mt-2" do %>
         Show <i class="bi bi-arrow-right-circle"></i>

@@ -1,5 +1,11 @@
-<h1>Chat dashboard</h1>
-<% @users.each do |user| %>
-  <%= link_to "Start chat with #{user.username}", rooms_path(user_id: user.id), method: :post %> <br>
-  <br>
+<h1 class="my-3">Chat dashboard</h1>
+<h4 class="my-3">Here you will find your chat history</h4>
+<% if @rooms.empty? %>
+  <div class="alert alert-warning" role="alert">
+    You have no conversations!
+  </div>
+<% else %>
+  <% @rooms.each do |room| %>
+    <%= render 'conversation_card', room: %>
+  <% end %>
 <% end %>

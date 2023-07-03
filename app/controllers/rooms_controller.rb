@@ -1,7 +1,8 @@
 class RoomsController < ApplicationController
   def index
-    @rooms = current_user.rooms
-    @users = User.where.not(id: current_user.id)
+    @rooms = Room.joins(:user_rooms).where('user_rooms.user1_id = ? OR user_rooms.user2_id = ?', current_user.id,
+                                           current_user.id)
+    # @users = User.where.not(id: current_user.id)
   end
 
   def show

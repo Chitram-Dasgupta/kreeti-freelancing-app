@@ -1,0 +1,20 @@
+    <%= link_to room, class: "text-decoration-none text-dark" do %>
+  <div class="card mb-4">
+    <div class="card-header bg-info">
+      Conversation with <%= room.user_rooms.first.other_user(current_user).username %>
+    </div>
+    <div class="row g-0">
+      <div class="col-md-2">
+        <div class="card-img-top p-2">
+          <%= render 'shared/profile_picture', user: room.user_rooms.first.other_user(current_user), size: '50x50' %>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">Last message:</h5>
+          <p class="card-text text-muted"><%= room.messages.last.content %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
