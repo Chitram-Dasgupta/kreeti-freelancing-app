@@ -1,15 +1,26 @@
-<h1>A particular room</h1>
-<%= form_with(model: [ @room, Message.new ], local: true, remote: true, id: "message-form") do |f| %>
-  <%= f.label :content %> <br>
-  <%= f.text_field :content %> <br>
-  <%= f.hidden_field :room_id, value: @room.id %>
-  <br>
-  <%= f.submit %>
-<% end %>
-<div id="messages" data-room-id="<%= @room.id %>">
-  <% @messages.each do |m| %>
-    <p class="<%= m.user == current_user ? 'text-start' : 'text-end' %>">
-      <%= m.content %>
-    </p>
+<div class="d-flex flex-column justify-content-between" style="height: calc(100vh - 90px);">
+  <!-- Messages and Form goes here -->
+  <div id="messages" class="overflow-auto flex-column mb-auto" data-room-id="<%= @room.id %>">
+    <!-- Messages go here -->
+    <% @messages.each do |m| %>
+      <div class="d-flex <%= m.user == current_user ? 'justify-content-start' : 'justify-content-end' %>">
+        <div class="<%= m.user == current_user ? 'bg-primary' : 'bg-secondary' %> text-white rounded-pill px-3 py-1 mb-1">
+          <p class="mb-0">
+            <%= m.content %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= form_with(model: [ @room, Message.new ], local: true, remote: true, id: "message-form", class: "mb-3 mt-1") do |f| %>
+    <div class="input-group">
+      <%= f.text_field :content, class: "form-control", placeholder: "Type your message" %>
+      <div class="input-group-append mx-3">
+        <%= f.button :submit, class: "btn btn-primary" do %>
+          <i class="bi bi-arrow-right-square-fill"></i>
+        <% end %>
+      </div>
+      <%= f.hidden_field :room_id, value: @room.id %>
+    </div>
   <% end %>
 </div>
