@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
     @projects = if params[:search].present?
                   Project.search_projects(params[:search]).records
                 else
-                  Project.all
+                  Project.where(visibility: 'pub')
                 end
   end
 

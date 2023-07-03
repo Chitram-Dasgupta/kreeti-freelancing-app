@@ -40,6 +40,11 @@ class Project < ApplicationRecord
                   }
                 }
               }
+            },
+            {
+              match: {
+                'visibility': 'pub'
+              }
             }
           ]
         }
@@ -51,5 +56,11 @@ class Project < ApplicationRecord
 
   def bid_awarded?
     bids.where(bid_status: :awarded).exists?
+  end
+
+  def visibility_status
+    return 'Public' if visibility == 'pub'
+
+    'Private'
   end
 end

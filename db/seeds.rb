@@ -44,5 +44,5 @@ p3.categories << cat4 << cat5
 p4 = c4.projects.create!(title: 'Project Management project', description: 'lorem ipsum')
 p4.categories << cat6 << cat7 << cat8
 
-p5 = c4.projects.create!(title: 'SEO Service project', description: 'lorem ipsum')
+p5 = c4.projects.create!(title: 'SEO Service project', description: 'lorem ipsum', visibility: 'priv')
 p5.categories << cat9 << cat10
