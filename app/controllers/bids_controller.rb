@@ -8,18 +8,23 @@ class BidsController < ApplicationController
   end
 
   def new
-    @project = Project.find(params[:project_id])
+    @project = Project.find_by(id: params[:project_id])
     @bid = Bid.new
   end
 
   def create
+    @project = Project.find_by(id: params['bid']['project_id'])
     @bid = Bid.new(bid_params)
     if @bid.save
       @bid.current_actor_id = current_user.id
       redirect_to @bid.project, flash: { success: 'Bid was successfully created' }
     else
-      flash.now[:error] = 'Bid could not be created. Please try again.'
-      render :new
+      if @bid.errors.include?(:user_id)
+        flash[:error] = @bid.errors.full_messages.to_sentence
+      else
+        flash.now[:error] = 'Bid could not be created. Please try again.'
+      end
+      render 'new', locals: { project: @project }
     end
   end
 
