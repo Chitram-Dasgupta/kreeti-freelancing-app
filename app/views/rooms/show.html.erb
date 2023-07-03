@@ -4,14 +4,9 @@
       <i class="bi bi-arrow-left"></i> Back
     <% end %>
     <div class="d-flex align-items-center ms-3">
-      <% other_user = @room.user_rooms.first.other_user(current_user) %>
-      <% if other_user.profile_picture.attached? %>
-        <%= image_tag other_user.profile_picture, alt: 'Profile picture', size: '50x50', class: "img-thumbnail mx-auto d-block rounded-circle mr-2" %>
-      <% else %>
-        <%= image_tag 'https://picsum.photos/id/91/240', alt: 'Profile picture', size: '50x50', class: "img-thumbnail mx-auto d-block rounded-circle mr-2" %>
-      <% end %>
-      <%= link_to other_user, class: 'text-decoration-none mb-0 ms-2 fs-5 text-dark' do %>
-        <%= other_user.username %>
+      <%= render 'shared/profile_picture', user: @other_user, size: '50x50' %>
+      <%= link_to @other_user, class: 'text-decoration-none mb-0 ms-2 fs-5 text-dark' do %>
+        <%= @other_user.username %>
       <% end %>
     </div>
   </div>
