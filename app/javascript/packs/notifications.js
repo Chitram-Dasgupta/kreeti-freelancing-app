@@ -4,7 +4,6 @@ function fetchNotificationsCount() {
   fetch("/notifications/count")
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.count);
       notificationBadge.innerText = data.count;
     });
 }

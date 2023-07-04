@@ -4,13 +4,14 @@ document.addEventListener("turbolinks:load", () => {
   const currentUserId = document.querySelector("body").dataset.currentUserId;
   const notificationBadge = document.getElementById("notificationBadge");
 
-  consumer.subscriptions.create("BidNotificationsChannel", {
-    connected() {},
+  consumer.subscriptions.create(
+    { channel: "BidNotificationsChannel", user_id: currentUserId },
+    {
+      connected() {},
 
-    disconnected() {},
+      disconnected() {},
 
-    received(data) {
-      if (data.recipient_id == currentUserId) {
+      received(data) {
         const currentBadgeCount = parseInt(notificationBadge.textContent);
         notificationBadge.textContent = currentBadgeCount + 1;
 
@@ -23,5 +24,5 @@ document.addEventListener("turbolinks:load", () => {
         notificationList.insertBefore(notificationItem, notificationList.firstChild);
       }
     }
-  });
+  );
 });

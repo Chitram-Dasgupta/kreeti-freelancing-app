@@ -1,10 +1,7 @@
 class BidNotificationsChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from "some_channel"
-    stream_from "bid_notifications_channel"
+    stream_from "bid_notifications_channel_#{params[:user_id]}"
   end
 
-  def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
-  end
+  def unsubscribed; end
 end

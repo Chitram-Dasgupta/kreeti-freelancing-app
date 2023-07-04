@@ -52,8 +52,9 @@ class Bid < ApplicationRecord
       message: "Your bid for #{bid_project_title} is #{bid_status}",
       read: false
     )
-    ActionCable.server.broadcast 'bid_notifications_channel',
-                                 { recipient_id: user_id, bid_project_title:, bid_status:, project_id: }
+    ActionCable.server.broadcast "bid_notifications_channel_#{user_id}",
+                                 { recipient_id: user_id, bid_project_title:, bid_status:,
+                                   project_id: }
   end
 
   def bid_status_changed?
