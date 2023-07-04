@@ -12,10 +12,14 @@
     <% else %>
       <h1 class="display-4">Welcome visitor</h1>
     <% end %>
-    <% if client? %>
-      <%= link_to 'My projects', projects_path, class: "btn btn-info btn-lg" %>
-    <% elsif freelancer? %>
-      <%= link_to 'My bids', bids_path, class: "btn btn-primary btn-lg" %>
+    <% if logged_in? %>
+      <%= link_to 'Chat dashboard', rooms_path, class: "btn btn-danger btn-lg" %>
+      <% if client? %>
+        <%= link_to 'My projects', projects_path, class: "btn btn-info btn-lg" %>
+      <% elsif freelancer? %>
+        <%= link_to 'My bids', bids_path, class: "btn btn-primary btn-lg" %>
+      <% end %>
+    <% else %>
     <% end %>
     <hr class="my-4">
     <p class="lead mt-3">
