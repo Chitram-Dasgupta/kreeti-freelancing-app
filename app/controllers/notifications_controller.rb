@@ -23,4 +23,9 @@ class NotificationsController < ApplicationController
     notifications.update_all(read: true)
     render json: { success: true }
   end
+
+  def delete_read
+    Notification.where(read: true).destroy_all
+    render json: { success: true }
+  end
 end

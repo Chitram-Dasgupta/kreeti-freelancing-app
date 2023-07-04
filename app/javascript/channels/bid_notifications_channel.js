@@ -25,6 +25,11 @@ document.addEventListener("turbolinks:load", () => {
           markAllAsReadButton.style.display = "block";
         }
 
+        const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
+        if(notificationBadge.textContent > 0) {
+          deleteReadNotificationsButton.style.display = "block";
+        }
+
         const notificationItem = document.createElement("a");
         notificationItem.classList.add("dropdown-item", "text-wrap");
         notificationItem.href = "/projects/" + data.project_id;

@@ -2,6 +2,7 @@ function fetchNotificationsCount() {
   const notificationBadge = document.getElementById("notificationBadge");
   const showAllButton = document.getElementById("showAllButton");
   const markAllAsReadButton = document.getElementById("markAllAsReadButton");
+  const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
 
   fetch("/notifications/count")
     .then((response) => response.json())
@@ -16,10 +17,16 @@ function fetchNotificationsCount() {
         showAllButton.style.display = "none";
       }
 
-      if(data.full_count > 0) {
+      if (data.full_count > 0) {
         markAllAsReadButton.style.display = "block";
       } else {
         markAllAsReadButton.style.display = "none";
+      }
+
+      if((data.full_count - data.count) > 0) {
+        deleteReadNotificationsButton.style.display = "block";
+      } else {
+        deleteReadNotificationsButton.style.display = "none";
       }
     });
 }
@@ -142,6 +149,42 @@ function fetchNotifications() {
         });
     });
     notificationList.appendChild(markAllAsReadButton);
+
+    const deleteReadNotificationsButton = document.createElement("button");
+    deleteReadNotificationsButton.id = "deleteReadNotificationsButton";
+    deleteReadNotificationsButton.style.display = "none";
+    deleteReadNotificationsButton.classList.add("btn", "btn-danger", "btn-sm", "mx-1", "my-1");
+    deleteReadNotificationsButton.textContent = "Delete Read Notifications";
+    deleteReadNotificationsButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+
+      fetch(`/notifications/delete_read`, {
+        method: "POST",
+        headers: {
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.success) {
+            const notificationItems = document.querySelectorAll(".dropdown-item.text-muted");
+            notificationItems.forEach((item) => {
+              item.remove();
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("There has been a problem with your fetch operation:", error);
+        });
+    });
+    notificationList.appendChild(deleteReadNotificationsButton);
 
     fetchNotificationsCount();
     loadNotifications();
