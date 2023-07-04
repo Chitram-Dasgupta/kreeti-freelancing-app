@@ -22,7 +22,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    return unless @user.visibility == 'priv'
+
+    redirect_to root_path, flash: { error: 'You don\'t have permission to view this profile.' }
+  end
 
   def edit; end
 
