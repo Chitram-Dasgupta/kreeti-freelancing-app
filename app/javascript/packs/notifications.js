@@ -102,6 +102,8 @@ function fetchNotifications() {
       event.stopPropagation();
 
       loadNotifications(true);
+
+      showAllButton.style.display = "none";
     });
     notificationList.appendChild(showAllButton);
 
