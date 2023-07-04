@@ -1,6 +1,13 @@
 class Project < ApplicationRecord
   include Searchable
 
+  def as_indexed_json(_options = {})
+    as_json(
+      include: { categories: { only: :name } },
+      methods: :has_awarded_bid
+    )
+  end
+
   belongs_to :user
 
   has_many :bids, dependent: :destroy
@@ -20,6 +27,10 @@ class Project < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc).limit(5) }
 
+  scope :without_awarded_bids, lambda {
+    where.not(id: Bid.where(bid_status: :awarded).select(:project_id))
+  }
+
   def self.all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
      'Python developer', 'Android developer', 'Java developer', 'Graphic designer',
@@ -30,6 +41,9 @@ class Project < ApplicationRecord
     search_definition = {
       query: {
         bool: {
+          filter: [
+            { term: { has_awarded_bid: false } }
+          ],
           must: [
             {
               nested: {
@@ -50,7 +64,6 @@ class Project < ApplicationRecord
         }
       }
     }
-
     __elasticsearch__.search(search_definition)
   end
 

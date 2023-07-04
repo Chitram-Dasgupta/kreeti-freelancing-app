@@ -1,6 +1,12 @@
 class User < ApplicationRecord
   include Searchable
 
+  def as_indexed_json(_options = {})
+    as_json(
+      include: { categories: { only: :name } }
+    )
+  end
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   has_secure_password

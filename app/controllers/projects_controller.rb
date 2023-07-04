@@ -26,7 +26,7 @@ class ProjectsController < ApplicationController
 
     return unless @project.visibility == 'priv' && @project.user != current_user
 
-    redirect_to root_path, flash: { error: 'You don\'t have permission to view this project.' }
+    redirect_to search_projects_path, flash: { error: 'You don\'t have permission to view this project.' }
   end
 
   def edit
@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
     @projects = if params[:search].present?
                   Project.search_projects(params[:search]).records
                 else
-                  Project.where(visibility: 'pub')
+                  Project.where(visibility: 'pub').without_awarded_bids
                 end
   end
 

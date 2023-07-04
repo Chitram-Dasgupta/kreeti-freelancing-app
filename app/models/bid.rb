@@ -4,7 +4,7 @@ class Bid < ApplicationRecord
   belongs_to :user
   belongs_to :project
 
-  after_save :send_notifications
+  after_save :send_notifications, :update_project
 
   validates :bid_name, presence: true
   validates :bid_amount, presence: true, numericality: { greater_than: 0 }
@@ -58,5 +58,13 @@ class Bid < ApplicationRecord
 
   def bid_status_changed?
     saved_change_to_attribute?(:bid_status)
+  end
+
+  def update_project
+    if bid_status == 'awarded'
+      project.update(has_awarded_bid: true)
+    elsif bid_status_was == 'awarded'
+      project.update(has_awarded_bid: false)
+    end
   end
 end

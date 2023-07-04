@@ -76,7 +76,7 @@ class BidsController < ApplicationController
   def award
     @bid.current_actor_id = current_user.id
     @bid.award
-    redirect_to @bid.project, flash: { sucess: 'Bid accepted' }
+    redirect_to @bid.project, flash: { sucess: 'Bid awarded' }
   end
 
   private

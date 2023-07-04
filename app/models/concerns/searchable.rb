@@ -5,12 +5,6 @@ module Searchable
     include Elasticsearch::Model
     include Elasticsearch::Model::Callbacks
 
-    def as_indexed_json(_options = {})
-      as_json(
-        include: { categories: { only: :name } }
-      )
-    end
-
     settings index: { max_ngram_diff: 10 }, analysis: {
       filter: {
         ngram_filter: {
