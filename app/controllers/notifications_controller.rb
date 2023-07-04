@@ -9,4 +9,10 @@ class NotificationsController < ApplicationController
     render json: notifications.to_json(include: { actor: { only: :email }, project: { only: :title },
                                                   bid: { only: :bid_status } })
   end
+
+  def mark_as_read
+    notification = current_user.notifications.find(params[:id])
+    notification.update!(read: true)
+    render json: { success: true }
+  end
 end

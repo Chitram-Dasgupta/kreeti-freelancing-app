@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get 'count'
       get 'fetch_notifications'
     end
+    post 'mark_as_read', on: :member
   end
 
   resources :sessions, only: %i[index new create destroy]

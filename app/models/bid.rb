@@ -54,7 +54,7 @@ class Bid < ApplicationRecord
     )
     ActionCable.server.broadcast "bid_notifications_channel_#{user_id}",
                                  { recipient_id: user_id, bid_project_title:, bid_status:,
-                                   project_id: }
+                                   project_id:, notification_id: Notification.last.id }
   end
 
   def bid_status_changed?

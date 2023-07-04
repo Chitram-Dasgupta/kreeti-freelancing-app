@@ -20,6 +20,17 @@ document.addEventListener("turbolinks:load", () => {
         notificationItem.href = "/projects/" + data.project_id;
         notificationItem.textContent = `Your bid to ${data.bid_project_title} is ${data.bid_status}`;
 
+        notificationItem.addEventListener("click", function () {
+          fetch(`/notifications/${data.notification_id}/mark_as_read`, {
+            method: "POST",
+            headers: {
+              "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            }
+          });
+        });
+
         const notificationList = document.getElementById("notificationList");
         notificationList.insertBefore(notificationItem, notificationList.firstChild);
       }

@@ -21,6 +21,23 @@ function loadNotifications() {
         notificationItem.href = "/projects/" + notification.project_id;
         notificationItem.textContent = notification.message;
 
+        // Add click event listener
+        // ...
+        // ...
+        notificationItem.addEventListener("click", function () {
+          fetch(`/notifications/${notification.id}/mark_as_read`, {
+            method: "POST",
+            headers: {
+              "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            }
+          });
+        });
+        // ...
+
+        // ...
+
         notificationList.appendChild(notificationItem);
       });
     });
