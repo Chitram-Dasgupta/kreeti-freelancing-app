@@ -1,20 +1,42 @@
 function fetchNotificationsCount() {
   const notificationBadge = document.getElementById("notificationBadge");
+  const showAllButton = document.getElementById("showAllButton");
 
   fetch("/notifications/count")
     .then((response) => response.json())
     .then((data) => {
       notificationBadge.innerText = data.count;
+      console.log(data.count);
+      if (data.count > 5) {
+        showAllButton.style.display = "block";
+        console.log("block display");
+        console.log(showAllButton);
+      } else {
+        showAllButton.style.display = "none";
+      }
     });
 }
 
-function loadNotifications() {
+function loadNotifications(showAll = false) {
   const notificationList = document.getElementById("notificationList");
+  let notificationContainer = document.getElementById("notificationContainer");
 
-  fetch("/notifications/fetch_notifications")
+  if (showAll) {
+    console.log(notificationList);
+    console.log(notificationContainer);
+  }
+
+  if (!notificationContainer) {
+    notificationContainer = document.createElement("div");
+    notificationContainer.id = "notificationContainer";
+    notificationList.insertBefore(notificationContainer, notificationList.firstChild);
+  }
+
+  notificationContainer.innerHTML = "";
+  console.log(`/notifications/fetch_notifications${showAll ? "" : "?limit=5"}`);
+  fetch(`/notifications/fetch_notifications${showAll ? "" : "?limit=5"}`)
     .then((response) => response.json())
     .then((notifications) => {
-      notificationList.innerHTML = "";
       notifications.forEach((notification) => {
         const notificationItem = document.createElement("a");
         notificationItem.classList.add("dropdown-item", "text-wrap");
@@ -52,14 +74,28 @@ function loadNotifications() {
             });
         });
 
-        notificationList.appendChild(notificationItem);
+        notificationContainer.appendChild(notificationItem);
       });
     });
 }
 
 function fetchNotifications() {
   const currentUserId = document.querySelector("body").dataset.currentUserId;
+
   if (currentUserId != "") {
+    const notificationList = document.getElementById("notificationList");
+    const showAllButton = document.createElement("button");
+    showAllButton.id = "showAllButton";
+    showAllButton.style.display = "none";
+    showAllButton.textContent = "Show All";
+    showAllButton.addEventListener("click", function (event) {
+      console.log("Clicked!");
+      event.stopPropagation();
+
+      loadNotifications(true);
+    });
+    notificationList.appendChild(showAllButton);
+
     fetchNotificationsCount();
     loadNotifications();
   }

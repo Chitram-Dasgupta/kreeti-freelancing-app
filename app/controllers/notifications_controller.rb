@@ -5,7 +5,8 @@ class NotificationsController < ApplicationController
   end
 
   def fetch_notifications
-    notifications = current_user.notifications.order('created_at DESC').limit(10)
+    limit = params[:limit] || current_user.notifications.count
+    notifications = current_user.notifications.order('created_at DESC').limit(limit)
     render json: notifications.to_json(include: { actor: { only: :email }, project: { only: :title },
                                                   bid: { only: :bid_status } })
   end

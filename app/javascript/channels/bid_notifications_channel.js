@@ -15,6 +15,11 @@ document.addEventListener("turbolinks:load", () => {
         const currentBadgeCount = parseInt(notificationBadge.textContent);
         notificationBadge.textContent = currentBadgeCount + 1;
 
+        const showAllButton = document.getElementById("showAllButton");
+        if (notificationBadge.textContent > 5) {
+          showAllButton.style.display = "block";
+        }
+
         const notificationItem = document.createElement("a");
         notificationItem.classList.add("dropdown-item", "text-wrap");
         notificationItem.href = "/projects/" + data.project_id;
