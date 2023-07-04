@@ -12,6 +12,7 @@
   <% else %>
     <p>No SRS document attached.</p>
   <% end %>
+  <p><strong>Visibility: </strong><%= @project.visibility_status %></p>
   <div>
     <strong>Skills:</strong>
     <% @project.skills.each do |skill| %>

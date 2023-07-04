@@ -23,6 +23,10 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find_by(id: params[:id])
     @bids = @project.bids
+
+    return unless @project.visibility == 'priv' && @project.user != current_user
+
+    redirect_to root_path, flash: { error: 'You don\'t have permission to view this project.' }
   end
 
   def edit
