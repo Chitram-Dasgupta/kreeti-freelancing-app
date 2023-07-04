@@ -87,6 +87,7 @@ function fetchNotifications() {
     const showAllButton = document.createElement("button");
     showAllButton.id = "showAllButton";
     showAllButton.style.display = "none";
+    showAllButton.classList.add("btn", "btn-primary", "btn-sm", "mx-1", "my-1");
     showAllButton.textContent = "Show All";
     showAllButton.addEventListener("click", function (event) {
       console.log("Clicked!");
