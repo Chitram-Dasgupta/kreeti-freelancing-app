@@ -37,13 +37,10 @@ class Project < ApplicationRecord
      'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
   end
 
-  def self.search_projects(category_name)
+  def self.search_projects(category_name, include_awarded = true)
     search_definition = {
       query: {
         bool: {
-          filter: [
-            { term: { has_awarded_bid: false } }
-          ],
           must: [
             {
               nested: {
@@ -64,6 +61,9 @@ class Project < ApplicationRecord
         }
       }
     }
+
+    search_definition[:query][:bool][:filter] = [{ term: { has_awarded_bid: false } }] unless include_awarded
+
     __elasticsearch__.search(search_definition)
   end
 
