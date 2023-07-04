@@ -2,6 +2,17 @@
 <div class="d-flex justify-content-center">
   <%= form_with model: @user do |f| %>
     <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:profile_picture, 'file'], [:industry, 'text']] %>
+    <div class="mb-3">
+      <%= f.label :visibility, class: 'form-label' %>
+      <div>
+        <%= f.collection_radio_buttons :visibility, [['pub', 'Public'], ['priv', 'Private']], :first, :last do |b| %>
+          <div class="form-check form-check-inline">
+            <%= b.radio_button class: "form-check-input" %>
+            <%= b.label class: "form-check-label" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
     <% if freelancer? %>
       <div class="mb-3">
         <%= f.label :qualification, class: 'form-label' %>

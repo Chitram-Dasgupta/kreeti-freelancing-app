@@ -1,6 +1,6 @@
 <%= render 'shared/profile_picture', user: @user, size: '320x320' %>
 <div class="mt-5">
-  <div class="card shadow-sm mb-5 bg-white rounded">
+  <div class="card shadow-sm mb-2 bg-white rounded">
     <div class="card-header bg-secondary text-white text-center pt-2">
       <h2 class="mb-0 mt-1"><%= @user.role.capitalize %> Profile</h2>
     </div>
@@ -28,7 +28,7 @@
   </div>
 </div>
 <% if current_user == @user %>
-  <%= link_to edit_user_path(@user), class: "btn btn-primary" do %>
+  <%= link_to edit_user_path(@user), class: "btn btn-primary mb-2" do %>
     Edit <i class="bi bi-pencil"></i>
   <% end %>
 <% end %>

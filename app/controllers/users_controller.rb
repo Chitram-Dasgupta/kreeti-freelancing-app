@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    return unless @user.visibility == 'priv'
+    return unless @user.visibility == 'priv' && @user != current_user
 
     redirect_to root_path, flash: { error: 'You don\'t have permission to view this profile.' }
   end
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :role, :username, :qualification, :experience,
-                                 :industry, :profile_picture)
+    params.require(:user).permit(:email, :password, :password_confirmation, :role, :username, :qualification,
+                                 :experience, :industry, :profile_picture, :visibility)
   end
 end
