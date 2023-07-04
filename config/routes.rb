@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     collection do
       get 'count'
       get 'fetch_notifications'
+      post 'mark_all_as_read'
     end
     post 'mark_as_read', on: :member
   end

@@ -17,4 +17,10 @@ class NotificationsController < ApplicationController
     notification.update!(read: true)
     render json: { success: true }
   end
+
+  def mark_all_as_read
+    notifications = current_user.notifications.where(read: false)
+    notifications.update_all(read: true)
+    render json: { success: true }
+  end
 end

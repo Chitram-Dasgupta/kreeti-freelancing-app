@@ -20,6 +20,11 @@ document.addEventListener("turbolinks:load", () => {
           showAllButton.style.display = "block";
         }
 
+        const markAllAsReadButton = document.getElementById("markAllAsReadButton");
+        if(notificationBadge.textContent > 0) {
+          markAllAsReadButton.style.display = "block";
+        }
+
         const notificationItem = document.createElement("a");
         notificationItem.classList.add("dropdown-item", "text-wrap");
         notificationItem.href = "/projects/" + data.project_id;

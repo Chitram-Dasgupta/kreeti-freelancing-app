@@ -1,6 +1,7 @@
 function fetchNotificationsCount() {
   const notificationBadge = document.getElementById("notificationBadge");
   const showAllButton = document.getElementById("showAllButton");
+  const markAllAsReadButton = document.getElementById("markAllAsReadButton");
 
   fetch("/notifications/count")
     .then((response) => response.json())
@@ -13,6 +14,12 @@ function fetchNotificationsCount() {
         console.log(showAllButton);
       } else {
         showAllButton.style.display = "none";
+      }
+
+      if(data.full_count > 0) {
+        markAllAsReadButton.style.display = "block";
+      } else {
+        markAllAsReadButton.style.display = "none";
       }
     });
 }
@@ -84,6 +91,7 @@ function fetchNotifications() {
 
   if (currentUserId != "") {
     const notificationList = document.getElementById("notificationList");
+
     const showAllButton = document.createElement("button");
     showAllButton.id = "showAllButton";
     showAllButton.style.display = "none";
@@ -96,6 +104,42 @@ function fetchNotifications() {
       loadNotifications(true);
     });
     notificationList.appendChild(showAllButton);
+
+    const markAllAsReadButton = document.createElement("button");
+    markAllAsReadButton.id = "markAllAsReadButton";
+    showAllButton.style.display = "none";
+    markAllAsReadButton.classList.add("btn", "btn-warning", "btn-sm", "mx-1", "my-1");
+    markAllAsReadButton.textContent = "Mark All as Read";
+    markAllAsReadButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+
+      fetch(`/notifications/mark_all_as_read`, {
+        method: "POST",
+        headers: {
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.success) {
+            const notificationItems = document.querySelectorAll(".dropdown-item");
+            notificationItems.forEach((item) => {
+              item.classList.add("text-muted");
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("There has been a problem with your fetch operation:", error);
+        });
+    });
+    notificationList.appendChild(markAllAsReadButton);
 
     fetchNotificationsCount();
     loadNotifications();
