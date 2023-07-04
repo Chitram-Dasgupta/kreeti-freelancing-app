@@ -1,7 +1,7 @@
 class AddProfileDetailsToUser < ActiveRecord::Migration[6.1]
   def change
     change_table :users, bulk: true do |t|
-      t.string :username
+      t.string :username, null: false
       t.string :qualification
       t.integer :experience
       t.string :industry

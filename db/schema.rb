@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2023_07_04_074226) do
     t.string "bid_name", null: false
     t.text "bid_description"
     t.integer "bid_status", default: 0
-    t.decimal "bid_amount", precision: 8, scale: 2
+    t.decimal "bid_amount", precision: 8, scale: 2, null: false
     t.string "bid_code_document"
     t.string "bid_design_document"
     t.string "bid_other_document"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2023_07_04_074226) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_bids_on_project_id"
+    t.index ["user_id", "project_id"], name: "index_bids_on_user_id_and_project_id", unique: true
     t.index ["user_id"], name: "index_bids_on_user_id"
   end
 
@@ -63,10 +64,11 @@ ActiveRecord::Schema.define(version: 2023_07_04_074226) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "messages", force: :cascade do |t|
-    t.text "content"
+    t.text "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "room_id", null: false
@@ -80,8 +82,8 @@ ActiveRecord::Schema.define(version: 2023_07_04_074226) do
     t.bigint "actor_id", null: false
     t.bigint "project_id", null: false
     t.bigint "bid_id", null: false
-    t.string "message"
-    t.boolean "read"
+    t.string "message", null: false
+    t.boolean "read", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
@@ -138,13 +140,13 @@ ActiveRecord::Schema.define(version: 2023_07_04_074226) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
-    t.string "password_digest"
+    t.string "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "email_confirmed", default: false
     t.string "confirmation_token"
     t.integer "role", default: 0, null: false
-    t.string "username"
+    t.string "username", null: false
     t.string "qualification"
     t.integer "experience"
     t.string "industry"

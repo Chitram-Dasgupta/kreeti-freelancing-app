@@ -8,6 +8,8 @@ class Project < ApplicationRecord
     )
   end
 
+  enum visibility: { pub: 0, priv: 1 }
+
   belongs_to :user
 
   has_many :bids, dependent: :destroy
@@ -18,8 +20,6 @@ class Project < ApplicationRecord
   has_one_attached :srs_document
 
   validates :title, presence: true
-
-  enum visibility: { pub: 0, priv: 1 }
 
   delegate :username, to: :user
 
