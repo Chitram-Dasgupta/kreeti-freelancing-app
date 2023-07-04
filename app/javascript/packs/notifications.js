@@ -18,13 +18,16 @@ function loadNotifications() {
       notifications.forEach((notification) => {
         const notificationItem = document.createElement("a");
         notificationItem.classList.add("dropdown-item", "text-wrap");
+        if(notification.read) {
+          notificationItem.classList.add("text-muted");
+        }
         notificationItem.href = "/projects/" + notification.project_id;
         notificationItem.textContent = notification.message;
 
-        // Add click event listener
         // ...
-        // ...
-        notificationItem.addEventListener("click", function () {
+        notificationItem.addEventListener("click", function (event) {
+          event.preventDefault();
+
           fetch(`/notifications/${notification.id}/mark_as_read`, {
             method: "POST",
             headers: {
@@ -32,10 +35,26 @@ function loadNotifications() {
               "Content-Type": "application/json",
               Accept: "application/json"
             }
-          });
-        });
-        // ...
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              if (data.success) {
+                // Add a 'read' class to the notification item
+                notificationItem.classList.add("text-muted");
 
+                // Then navigate to the project page
+                window.location.href = notificationItem.href;
+              }
+            })
+            .catch((error) => {
+              console.error("There has been a problem with your fetch operation:", error);
+            });
+        });
         // ...
 
         notificationList.appendChild(notificationItem);
