@@ -7,7 +7,7 @@
       <div>
         <%= f.collection_radio_buttons :visibility, [['pub', 'Public'], ['priv', 'Private']], :first, :last do |b| %>
           <div class="form-check form-check-inline">
-            <%= b.radio_button class: "form-check-input" %>
+            <%= b.radio_button %>
             <%= b.label class: "form-check-label" %>
           </div>
         <% end %>
