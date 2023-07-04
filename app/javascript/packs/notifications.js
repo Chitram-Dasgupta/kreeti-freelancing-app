@@ -7,7 +7,7 @@ function fetchNotificationsCount() {
     .then((data) => {
       notificationBadge.innerText = data.count;
       console.log(data.count);
-      if (data.count > 5) {
+      if (data.full_count > 5) {
         showAllButton.style.display = "block";
         console.log("block display");
         console.log(showAllButton);
