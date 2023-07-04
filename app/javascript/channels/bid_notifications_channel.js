@@ -16,7 +16,7 @@ document.addEventListener("turbolinks:load", () => {
         notificationBadge.textContent = currentBadgeCount + 1;
 
         const notificationItem = document.createElement("a");
-        notificationItem.classList.add("dropdown-item");
+        notificationItem.classList.add("dropdown-item", "text-wrap");
         notificationItem.href = "/projects/" + data.project_id;
         notificationItem.textContent = `Your bid to ${data.bid_project_title} is ${data.bid_status}`;
 

@@ -17,7 +17,7 @@ function loadNotifications() {
       notificationList.innerHTML = "";
       notifications.forEach((notification) => {
         const notificationItem = document.createElement("a");
-        notificationItem.classList.add("dropdown-item");
+        notificationItem.classList.add("dropdown-item", "text-wrap");
         notificationItem.href = "/projects/" + notification.project_id;
         notificationItem.textContent = notification.message;
 
