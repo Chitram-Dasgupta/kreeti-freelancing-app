@@ -1,6 +1,6 @@
-class Bid < ApplicationRecord
-  attr_accessor :current_actor_id
+# frozen_string_literal: true
 
+class Bid < ApplicationRecord
   belongs_to :user
   belongs_to :project
 
@@ -42,19 +42,7 @@ class Bid < ApplicationRecord
   def send_notifications
     return unless bid_status_changed?
 
-    bid_project_title = Project.find_by(id: project_id).title
-
-    Notification.create!(
-      recipient_id: user_id,
-      actor_id: current_actor_id,
-      project_id:,
-      bid_id: id,
-      message: "Your bid for #{bid_project_title} is #{bid_status}",
-      read: false
-    )
-    ActionCable.server.broadcast "bid_notifications_channel_#{user_id}",
-                                 { recipient_id: user_id, bid_project_title:, bid_status:,
-                                   project_id:, notification_id: Notification.last.id }
+    Notification.create_for_bid(self)
   end
 
   def bid_status_changed?

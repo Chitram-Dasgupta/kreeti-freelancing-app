@@ -53,7 +53,8 @@ class ProjectsController < ApplicationController
 
   def search
     @projects = if params[:search].present?
-                  projects = Project.search_projects(params[:search], params[:filter] != 'unawarded').records
+                  projects = Project.search_projects(params[:search],
+                                                     include_awarded: params[:filter] != 'unawarded').records
                   params[:filter] == 'unawarded' ? projects.without_awarded_bids : projects
                 else
                   params[:filter] == 'unawarded' ? Project.where(visibility: 'pub').without_awarded_bids : Project.where(visibility: 'pub')

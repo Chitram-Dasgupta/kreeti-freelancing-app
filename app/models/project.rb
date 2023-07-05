@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Project < ApplicationRecord
   include Searchable
 
@@ -37,7 +39,8 @@ class Project < ApplicationRecord
      'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
   end
 
-  def self.search_projects(category_name, include_awarded = true)
+  # rubocop:disable Metrics/MethodLength
+  def self.search_projects(category_name, include_awarded: true)
     search_definition = {
       query: {
         bool: {
@@ -54,7 +57,7 @@ class Project < ApplicationRecord
             },
             {
               match: {
-                'visibility': 'pub'
+                visibility: 'pub'
               }
             }
           ]
@@ -66,6 +69,7 @@ class Project < ApplicationRecord
 
     __elasticsearch__.search(search_definition)
   end
+  # rubocop:enable Metrics/MethodLength
 
   def bid_awarded?
     bids.where(bid_status: :awarded).exists?

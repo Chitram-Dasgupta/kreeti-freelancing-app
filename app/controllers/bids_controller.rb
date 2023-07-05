@@ -21,7 +21,6 @@ class BidsController < ApplicationController
     @project = Project.find_by(id: params['bid']['project_id'])
     @bid = Bid.new(bid_params)
     if @bid.save
-      @bid.current_actor_id = current_user.id
       redirect_to @bid.project, flash: { success: 'Bid was successfully created' }
     else
       if @bid.errors.include?(:user_id)
@@ -39,7 +38,6 @@ class BidsController < ApplicationController
 
   def update
     if @bid&.update(bid_params)
-      @bid.current_actor_id = current_user.id
       redirect_to bids_path, flash: { success: 'Bid was successfully updated' }
     else
       flash.now[:error] = 'Please enter the information correctly'
@@ -53,25 +51,21 @@ class BidsController < ApplicationController
   end
 
   def accept
-    @bid.current_actor_id = current_user.id
     @bid.accept
     redirect_to @bid.project, flash: { notice: 'Bid accepted' }
   end
 
   def reject
-    @bid.current_actor_id = current_user.id
     @bid.reject
     redirect_to @bid.project, flash: { notice: 'Bid rejected' }
   end
 
   def hold
-    @bid.current_actor_id = current_user.id
     @bid.hold
     redirect_to @bid.project, flash: { notice: 'Bid put on hold' }
   end
 
   def award
-    @bid.current_actor_id = current_user.id
     @bid.award
     redirect_to @bid.project, flash: { sucess: 'Bid awarded' }
   end

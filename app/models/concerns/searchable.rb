@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Searchable
   extend ActiveSupport::Concern
 
@@ -26,7 +28,13 @@ module Searchable
         }
       }
     } do
-      mapping do
+      mapping(&searchable_index_mapping)
+    end
+  end
+
+  class_methods do
+    def searchable_index_mapping
+      lambda do |_|
         indexes :categories, type: 'nested' do
           indexes :name, type: 'text', analyzer: 'index_ngram_analyzer', search_analyzer: 'search_ngram_analyzer'
         end

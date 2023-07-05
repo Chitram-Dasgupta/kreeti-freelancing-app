@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   include Searchable
 
@@ -66,6 +68,7 @@ class User < ApplicationRecord
     !password.nil? || !password_confirmation.nil?
   end
 
+  # rubocop:disable Metrics/MethodLength
   def self.search_freelancer(category_name)
     search_definition = {
       query: {
@@ -86,7 +89,7 @@ class User < ApplicationRecord
             },
             {
               match: {
-                'visibility': 'pub'
+                visibility: 'pub'
               }
             }
           ]
@@ -96,6 +99,7 @@ class User < ApplicationRecord
 
     __elasticsearch__.search(search_definition)
   end
+  # rubocop:enable Metrics/MethodLength
 
   def visibility_status
     return 'Public' if visibility == 'pub'

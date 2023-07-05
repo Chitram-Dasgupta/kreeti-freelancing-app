@@ -1,0 +1,7 @@
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
+
+Style/Documentation:
+  Enabled: false
+

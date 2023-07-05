@@ -79,14 +79,12 @@ ActiveRecord::Schema.define(version: 2023_07_04_074226) do
 
   create_table "notifications", force: :cascade do |t|
     t.bigint "recipient_id", null: false
-    t.bigint "actor_id", null: false
     t.bigint "project_id", null: false
     t.bigint "bid_id", null: false
     t.string "message", null: false
     t.boolean "read", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["actor_id"], name: "index_notifications_on_actor_id"
     t.index ["bid_id"], name: "index_notifications_on_bid_id"
     t.index ["project_id"], name: "index_notifications_on_project_id"
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
@@ -164,7 +162,6 @@ ActiveRecord::Schema.define(version: 2023_07_04_074226) do
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "bids"
   add_foreign_key "notifications", "projects"
-  add_foreign_key "notifications", "users", column: "actor_id"
   add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "project_categories", "categories"
   add_foreign_key "project_categories", "projects"
