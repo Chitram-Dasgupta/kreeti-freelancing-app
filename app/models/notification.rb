@@ -25,12 +25,13 @@ class Notification < ApplicationRecord
 
   def self.broadcast_notification_for_bid(notification, bid, bid_project_title)
     ActionCable.server.broadcast(
-      "bid_notifications_channel_#{bid.user_id}",
-      recipient_id: bid.user_id,
-      bid_project_title:,
-      bid_status: bid.bid_status,
-      project_id: bid.project_id,
-      notification_id: notification.id
+      "bid_notifications_channel_#{bid.user_id}", {
+        recipient_id: bid.user_id,
+        bid_project_title:,
+        bid_status: bid.bid_status,
+        project_id: bid.project_id,
+        notification_id: notification.id
+      }
     )
   end
 end
