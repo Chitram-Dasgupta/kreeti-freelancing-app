@@ -12,8 +12,21 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def show
+    @project = Project.find_by(id: params[:id])
+    @bids = @project.bids
+
+    return unless @project.visibility == 'priv' && @project.user != current_user
+
+    redirect_to search_projects_path, flash: { error: 'You don\'t have permission to view this project.' }
+  end
+
   def new
     @project = current_user.projects.new
+  end
+
+  def edit
+    @categories = Category.all
   end
 
   def create
@@ -24,19 +37,6 @@ class ProjectsController < ApplicationController
       flash.now[:error] = 'Please enter the information correctly'
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def show
-    @project = Project.find_by(id: params[:id])
-    @bids = @project.bids
-
-    return unless @project.visibility == 'priv' && @project.user != current_user
-
-    redirect_to search_projects_path, flash: { error: 'You don\'t have permission to view this project.' }
-  end
-
-  def edit
-    @categories = Category.all
   end
 
   def update

@@ -9,6 +9,10 @@ class CategoriesController < ApplicationController
     @category = Category.new
   end
 
+  def edit
+    @category = Category.find_by(id: params[:id])
+  end
+
   def create
     @category = Category.new(category_params)
     if @category.save
@@ -17,10 +21,6 @@ class CategoriesController < ApplicationController
       flash.now[:error] = 'Please enter the information correctly'
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    @category = Category.find_by(id: params[:id])
   end
 
   def update

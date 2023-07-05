@@ -13,10 +13,14 @@ class BidsController < ApplicationController
     end
   end
 
+  def show; end
+
   def new
     @project = Project.find_by(id: params[:project_id])
     @bid = Bid.new
   end
+
+  def edit; end
 
   def create
     @project = Project.find_by(id: params['bid']['project_id'])
@@ -28,10 +32,6 @@ class BidsController < ApplicationController
       render 'new', locals: { project: @project }
     end
   end
-
-  def show; end
-
-  def edit; end
 
   def update
     if @bid&.update(bid_params)

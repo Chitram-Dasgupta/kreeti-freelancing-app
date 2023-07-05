@@ -14,9 +14,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    return unless @user.visibility == 'priv' && @user != current_user
+
+    redirect_to root_path, flash: { error: 'You don\'t have permission to view this profile.' }
+  end
+
   def new
     @user = User.new
   end
+
+  def edit; end
 
   def create
     @user = User.new(user_params)
@@ -28,14 +36,6 @@ class UsersController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  def show
-    return unless @user.visibility == 'priv' && @user != current_user
-
-    redirect_to root_path, flash: { error: 'You don\'t have permission to view this profile.' }
-  end
-
-  def edit; end
 
   def update
     if @user.update(user_params)
