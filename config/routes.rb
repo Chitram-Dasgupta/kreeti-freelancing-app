@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   resources :rooms, only: %i[index show create] do
     resources :messages, only: %i[create]
@@ -37,3 +40,4 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 end
+# rubocop:enable Metrics/BlockLength
