@@ -4,7 +4,11 @@ class UsersController < ApplicationController
   before_action :require_authorization, only: %i[destroy]
 
   def index
-    redirect_to new_user_path
+    if admin?
+      @users = User.all.order(created_at: :asc)
+    else
+      redirect_to new_user_path
+    end
   end
 
   def new
@@ -31,8 +35,12 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-    if @user.update!(user_params)
-      redirect_to @user, flash: { success: 'Profile updated successfully' }
+    if @user.update(user_params)
+      if admin?
+        redirect_to users_path, flash: { success: 'Profile updated successfully' }
+      else
+        redirect_to @user, flash: { success: 'Profile updated successfully' }
+      end
     else
       flash.now[:error] = 'Please enter the data properly'
       render :edit, status: :unprocessable_entity
@@ -64,7 +72,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to admin_manage_users_path, flash: { success: 'User deleted successfully' }
+    redirect_to users_path, flash: { success: 'User deleted successfully' }
   end
 
   private

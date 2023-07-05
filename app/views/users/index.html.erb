@@ -1,0 +1,6 @@
+<h2>Manage users</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+  <% @users.each do |user| %>
+    <%= render 'user_card', user: %>
+  <% end %>
+</div>

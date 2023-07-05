@@ -2,6 +2,7 @@
   <div class="card h-100">
     <div class="card-body pb-0">
       <h5 class="card-title"><%= link_to user.username, user, class: 'text-decoration-none' %></h5>
+      <h6 class="card-subtitle text-muted"><%= user.role %></h6>
       <h6 class="card-title text-muted"><%= user.email %></h6>
       <p class="text-start">
         <% unless freelancer? %>
@@ -15,6 +16,19 @@
           <span class="badge bg-info"><%= cat.name %></span>
         <% end %>
       </p>
+      <% if admin? %>
+        <div class="mb-2">
+          <%= link_to user, class: "btn btn-primary mt-2" do %>
+            Show <i class="bi bi-arrow-right-circle"></i>
+          <% end %>
+          <%= link_to edit_user_path(user), class: "btn btn-warning mt-2" do %>
+            Edit <i class="bi bi-pencil"></i>
+          <% end %>
+          <%= link_to user_path(user), class: "btn btn-danger mt-2", method: :delete, data: { confirm: 'Are you sure?' } do %>
+            Delete <i class="bi bi-trash"></i>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
