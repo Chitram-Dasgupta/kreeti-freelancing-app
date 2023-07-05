@@ -18,12 +18,6 @@ document.addEventListener("turbolinks:load", () => {
         const showAllButton = document.getElementById("showAllButton");
         showAllButton.style.display = notificationBadge.textContent > 5 ? "block" : "none";
 
-        const markAllAsReadButton = document.getElementById("markAllAsReadButton");
-        markAllAsReadButton.style.display = notificationBadge.textContent > 0 ? "block" : "none";
-
-        const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
-        deleteReadNotificationsButton.style.display = notificationBadge.textContent > 0 ? "block" : "none";
-
         const notificationItem = createNotificationItem(data);
         notificationItem.addEventListener("click", function () {
           fetchWithCsrfToken(`/notifications/${data.notification_id}/mark_as_read`, "POST");
@@ -31,6 +25,8 @@ document.addEventListener("turbolinks:load", () => {
 
         const notificationList = document.getElementById("notificationList");
         notificationList.insertBefore(notificationItem, notificationList.firstChild);
+
+        updateButtons();
       }
     }
   );
@@ -56,5 +52,17 @@ document.addEventListener("turbolinks:load", () => {
       throw new Error("Network response was not ok");
     }
     return await response.json();
+  }
+
+  function updateButtons() {
+    const notificationItems = document.querySelectorAll(".dropdown-item");
+    const readItems = document.querySelectorAll(".dropdown-item.text-muted");
+    const unreadItems = notificationItems.length - readItems.length;
+    const markAllAsReadButton = document.getElementById("markAllAsReadButton");
+    const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
+
+    markAllAsReadButton.style.display = unreadItems > 0 ? "block" : "none";
+
+    deleteReadNotificationsButton.style.display = readItems.length > 0 ? "block" : "none";
   }
 });

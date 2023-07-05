@@ -86,6 +86,7 @@ function fetchNotifications() {
             notificationBadge.innerText = 0;
             markAllAsReadButton.style.display = "none";
           }
+          updateButtons();
         })
         .catch((error) => {
           console.error("There has been a problem with your fetch operation:", error);
@@ -93,7 +94,7 @@ function fetchNotifications() {
     });
 
     const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
-    addClickListener(document.getElementById("deleteReadNotificationsButton"), function () {
+    addClickListener(deleteReadNotificationsButton, function () {
       fetchWithCsrfToken("/notifications/delete_read", "POST")
         .then((data) => {
           if (data.success) {
@@ -101,7 +102,7 @@ function fetchNotifications() {
             notificationItems.forEach((item) => {
               item.remove();
             });
-            deleteReadNotificationsButton.style.display = "none";
+            updateButtons();
           }
         })
         .catch((error) => {
@@ -111,6 +112,8 @@ function fetchNotifications() {
 
     fetchNotificationsCount();
     loadNotifications();
+
+    updateButtons();
   }
 }
 
@@ -156,4 +159,16 @@ function createNotificationItem(notification) {
   notificationItem.href = "/projects/" + notification.project_id;
   notificationItem.textContent = notification.message;
   return notificationItem;
+}
+
+function updateButtons() {
+  const notificationItems = document.querySelectorAll(".dropdown-item");
+  const readItems = document.querySelectorAll(".dropdown-item.text-muted");
+  const unreadItems = notificationItems.length - readItems.length;
+  const markAllAsReadButton = document.getElementById("markAllAsReadButton");
+  const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
+
+  markAllAsReadButton.style.display = unreadItems > 0 ? "block" : "none";
+
+  deleteReadNotificationsButton.style.display = readItems.length > 0 ? "block" : "none";
 }
