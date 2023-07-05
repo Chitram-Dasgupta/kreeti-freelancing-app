@@ -78,9 +78,11 @@ function fetchNotifications() {
         .then((data) => {
           if (data.success) {
             const notificationItems = document.querySelectorAll(".dropdown-item");
+            const notificationBadge = document.getElementById("notificationBadge");
             notificationItems.forEach((item) => {
               item.classList.add("text-muted");
             });
+            notificationBadge.innerText = 0;
           }
         })
         .catch((error) => {

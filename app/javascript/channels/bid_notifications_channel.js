@@ -16,34 +16,17 @@ document.addEventListener("turbolinks:load", () => {
         notificationBadge.textContent = currentBadgeCount + 1;
 
         const showAllButton = document.getElementById("showAllButton");
-        if (notificationBadge.textContent > 5) {
-          showAllButton.style.display = "block";
-        }
+        showAllButton.style.display = notificationBadge.textContent > 5 ? "block" : "none";
 
         const markAllAsReadButton = document.getElementById("markAllAsReadButton");
-        if(notificationBadge.textContent > 0) {
-          markAllAsReadButton.style.display = "block";
-        }
+        markAllAsReadButton.style.display = notificationBadge.textContent > 0 ? "block" : "none";
 
         const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
-        if(notificationBadge.textContent > 0) {
-          deleteReadNotificationsButton.style.display = "block";
-        }
+        deleteReadNotificationsButton.style.display = notificationBadge.textContent > 0 ? "block" : "none";
 
-        const notificationItem = document.createElement("a");
-        notificationItem.classList.add("dropdown-item", "text-wrap");
-        notificationItem.href = "/projects/" + data.project_id;
-        notificationItem.textContent = `Your bid to ${data.bid_project_title} is ${data.bid_status}`;
-
+        const notificationItem = createNotificationItem(data);
         notificationItem.addEventListener("click", function () {
-          fetch(`/notifications/${data.notification_id}/mark_as_read`, {
-            method: "POST",
-            headers: {
-              "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-              "Content-Type": "application/json",
-              Accept: "application/json"
-            }
-          });
+          fetchWithCsrfToken(`/notifications/${data.notification_id}/mark_as_read`, "POST");
         });
 
         const notificationList = document.getElementById("notificationList");
@@ -51,4 +34,27 @@ document.addEventListener("turbolinks:load", () => {
       }
     }
   );
+
+  function createNotificationItem(data) {
+    const notificationItem = document.createElement("a");
+    notificationItem.classList.add("dropdown-item", "text-wrap");
+    notificationItem.href = "/projects/" + data.project_id;
+    notificationItem.textContent = `Your bid to ${data.bid_project_title} is ${data.bid_status}`;
+    return notificationItem;
+  }
+
+  async function fetchWithCsrfToken(url, method) {
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    });
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return await response.json();
+  }
 });
