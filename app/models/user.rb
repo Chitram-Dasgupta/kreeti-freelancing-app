@@ -17,9 +17,9 @@ class User < ApplicationRecord
   has_many :bids, dependent: :destroy
   has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
-  has_many :notifications, foreign_key: :recipient_id
-  has_many :user_rooms, foreign_key: :user1_id, dependent: :destroy
-  has_many :user_rooms, foreign_key: :user2_id, dependent: :destroy
+  has_many :notifications, foreign_key: :recipient_id, dependent: :destroy, inverse_of: :recipient
+  has_many :user1_rooms, foreign_key: :user1_id, class_name: 'UserRoom', dependent: :destroy, inverse_of: :user1
+  has_many :user2_rooms, foreign_key: :user2_id, class_name: 'UserRoom', dependent: :destroy, inverse_of: :user2
   has_many :rooms, through: :user_rooms
   has_many :messages, dependent: :destroy
 

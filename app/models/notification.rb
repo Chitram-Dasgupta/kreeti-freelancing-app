@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
-  belongs_to :recipient, class_name: 'User'
+  belongs_to :recipient, class_name: 'User', inverse_of: :notifications
   belongs_to :project
   belongs_to :bid
 

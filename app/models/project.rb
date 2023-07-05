@@ -72,7 +72,7 @@ class Project < ApplicationRecord
   # rubocop:enable Metrics/MethodLength
 
   def bid_awarded?
-    bids.where(bid_status: :awarded).exists?
+    bids.exists?(bid_status: :awarded)
   end
 
   def visibility_status
