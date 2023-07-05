@@ -33,7 +33,7 @@
     <%= link_to bid, class: "btn btn-primary btn-sm" do %>
       Show <i class="bi bi-arrow-right-circle"></i>
     <% end %>
-    <% if bid.user == current_user %>
+    <% if bid.user == current_user || admin? %>
       <% if bid.modifiable? %>
         <%= link_to edit_bid_path(bid), class: "btn btn-warning btn-sm" do %>
           Edit <i class="bi bi-pencil"></i>

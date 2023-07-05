@@ -34,7 +34,6 @@ Rails.application.routes.draw do
   end
 
   get 'admin/manage_users', to: 'admins#manage_users'
-  get 'admin/manage_bids', to: 'admins#manage_bids'
   get 'admin/manage_categories', to: 'admins#manage_categories'
 
   resources :categories, only: %i[new create edit update destroy]

@@ -3,8 +3,13 @@ class BidsController < ApplicationController
   before_action :set_bid, only: %i[show edit update destroy accept reject hold award]
 
   def index
-    @recent_bids = Bid.recent_by_user(current_user)
-    @recent_projects = Project.recent
+    if admin?
+      @bids = Bid.all.order(created_at: :asc)
+    else
+      @recent_bids = Bid.recent_by_user(current_user)
+      @recent_projects = Project.recent
+    end
+
   end
 
   def new
@@ -35,11 +40,7 @@ class BidsController < ApplicationController
   def update
     if @bid&.update(bid_params)
       @bid.current_actor_id = current_user.id
-      if admin?
-        redirect_to admin_manage_bids_path, flash: { success: 'Bid was successfully updated' }
-      else
-        redirect_to bids_path, flash: { success: 'Bid was successfully updated' }
-      end
+      redirect_to bids_path, flash: { success: 'Bid was successfully updated' }
     else
       flash.now[:error] = 'Please enter the information correctly'
       render :edit, status: :unprocessable_entity
@@ -48,11 +49,7 @@ class BidsController < ApplicationController
 
   def destroy
     @bid.destroy
-    if admin?
-      redirect_to admin_manage_bids_path, flash: { notice: 'Bid was successfully deleted' }
-    else
-      redirect_to bids_path, flash: { notice: 'Bid was successfully deleted' }
-    end
+    redirect_to bids_path, flash: { notice: 'Bid was successfully deleted' }
   end
 
   def accept
