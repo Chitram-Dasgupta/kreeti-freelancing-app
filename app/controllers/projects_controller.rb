@@ -3,7 +3,11 @@ class ProjectsController < ApplicationController
   before_action :current_user_project, only: %i[edit update destroy]
 
   def index
-    @recent_projects = Project.recent_by_user(current_user)
+    if admin?
+      @projects = Project.all.order(created_at: :asc)
+    else
+      @recent_projects = Project.recent_by_user(current_user)
+    end
   end
 
   def new
@@ -35,11 +39,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(project_params)
-      if admin?
-        redirect_to admin_manage_projects_path, flash: { notice: 'Project was successfully updated!' }
-      else
-        redirect_to projects_path, flash: { notice: 'Project was successfully updated!' }
-      end
+      redirect_to projects_path, flash: { notice: 'Project was successfully updated!' }
     else
       flash.now[:error] = 'Please enter the information correctly'
       render :edit, status: :unprocessable_entity
@@ -48,11 +48,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project.destroy
-    if admin?
-      redirect_to admin_manage_projects_path, flash: { notice: 'Project was successfully deleted!' }
-    else
-      redirect_to projects_path, flash: { notice: 'Project was successfully deleted!' }
-    end
+    redirect_to projects_path, flash: { notice: 'Project was successfully deleted!' }
   end
 
   def search
@@ -62,7 +58,7 @@ class ProjectsController < ApplicationController
                 else
                   params[:filter] == 'unawarded' ? Project.where(visibility: 'pub').without_awarded_bids : Project.where(visibility: 'pub')
                 end
-  end  
+  end
 
   private
 

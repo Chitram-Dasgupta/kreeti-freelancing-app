@@ -26,7 +26,7 @@
           New Bid <i class="bi bi-plus-circle-dotted"></i>
         <% end %>
       <% end %>
-      <% if current_user == project.user %>
+      <% if current_user == project.user || admin? %>
         <%= link_to edit_project_path(project), class: "btn btn-warning mt-2" do %>
           Edit <i class="bi bi-pencil"></i>
         <% end %>

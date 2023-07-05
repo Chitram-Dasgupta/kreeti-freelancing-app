@@ -1,62 +1,81 @@
-<main class="container mt-5">
-  <div class="jumbotron text-center">
-    <% if logged_in? %>
-      <% if client? %>
-        <h1 class="display-4">Welcome client</h1>
-      <% elsif freelancer? %>
-        <h1 class="display-4">Welcome freelancer</h1>
+<% if admin? %>
+  <main>
+    <div class="my-3">
+      <div class="card align-items-center">
+        <div class="card-body">
+          <h1 class="card-title text-center">Welcome admin</h1>
+          <hr>
+          <div class="d-flex flex-column align-items-center">
+            <%= link_to 'Manage users', admin_manage_users_path, class: "btn btn-success mb-2 w-50 fs-4 mb-4" %>
+            <%= link_to 'All projects', projects_path, class: "btn btn-warning mb-2 w-50 fs-4 mb-4" %>
+            <%= link_to 'Manage bids', admin_manage_bids_path, class: "btn btn-primary mb-2 w-50 fs-4 mb-4" %>
+            <%= link_to 'Manage categories', admin_manage_categories_path, class: "btn btn-info mb-2 w-50 fs-4 mb-4" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+<% else %>
+  <main class="container mt-5">
+    <div class="jumbotron text-center">
+      <% if logged_in? %>
+        <% if client? %>
+          <h1 class="display-4">Welcome client</h1>
+        <% elsif freelancer? %>
+          <h1 class="display-4">Welcome freelancer</h1>
+        <% else %>
+          <h1 class="display-4">Welcome admin</h1>
+        <% end %>
+        <h2><%= current_user.username %></h2>
       <% else %>
-        <h1 class="display-4">Welcome admin</h1>
+        <h1 class="display-4">Welcome visitor</h1>
       <% end %>
-      <h2><%= current_user.username %></h2>
-    <% else %>
-      <h1 class="display-4">Welcome visitor</h1>
-    <% end %>
-    <% if logged_in? %>
-      <%= link_to 'Chat dashboard', rooms_path, class: "btn btn-danger btn-lg" %>
-      <% if client? %>
-        <%= link_to 'My projects', projects_path, class: "btn btn-info btn-lg" %>
-      <% elsif freelancer? %>
-        <%= link_to 'My bids', bids_path, class: "btn btn-primary btn-lg" %>
+      <% if logged_in? %>
+        <%= link_to 'Chat dashboard', rooms_path, class: "btn btn-danger btn-lg" %>
+        <% if client? %>
+          <%= link_to 'My projects', projects_path, class: "btn btn-info btn-lg" %>
+        <% elsif freelancer? %>
+          <%= link_to 'My bids', bids_path, class: "btn btn-primary btn-lg" %>
+        <% end %>
+      <% else %>
       <% end %>
-    <% else %>
-    <% end %>
-    <hr class="my-4">
-    <p class="lead mt-3">
-      <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success" %>
-      <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning" %>
-    </p>
-    <hr class="my-4">
-    <p class="lead">
-      As a visitor, you can look at public profiles of freelancers and the projects posted by clients. To post your freelancing projects, register as a client. Or, if you are looking for freelancing work, register as a freelancer.
-    </p>
-  </div>
-</main>
-<hr class="my-4">
-<section class="my-5">
-  <div class="row">
-    <div class="col-md-6">
-      <h2 class="display-6">Post Your Projects</h2>
+      <hr class="my-4">
+      <p class="lead mt-3">
+        <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success" %>
+        <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning" %>
+      </p>
+      <hr class="my-4">
       <p class="lead">
-        As a client, you have the ability to post projects and get things done. Whether it's a small task or a big project, you'll find the right freelancer to work on it.
+        As a visitor, you can look at public profiles of freelancers and the projects posted by clients. To post your freelancing projects, register as a client. Or, if you are looking for freelancing work, register as a freelancer.
       </p>
     </div>
-    <div class="col-md-6">
-      <h2 class="display-6">Freelancers from All Over the World</h2>
-      <p class="lead">
-        Our platform hosts freelancers from all around the globe. No matter what your project requires, you will find a freelancer with the right skills and background.
-      </p>
+  </main>
+  <hr class="my-4">
+  <section class="my-5">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="display-6">Post Your Projects</h2>
+        <p class="lead">
+          As a client, you have the ability to post projects and get things done. Whether it's a small task or a big project, you'll find the right freelancer to work on it.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <h2 class="display-6">Freelancers from All Over the World</h2>
+        <p class="lead">
+          Our platform hosts freelancers from all around the globe. No matter what your project requires, you will find a freelancer with the right skills and background.
+        </p>
+      </div>
     </div>
-  </div>
-</section>
-<hr class="my-4">
-<section class="my-5 bg-light p-5 rounded">
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <h2 class="display-6">Chat and Collaborate</h2>
-      <p class="lead">
-        Collaborate with freelancers through our built-in chat system. Discuss projects, share ideas and get updates in real time.
-      </p>
+  </section>
+  <hr class="my-4">
+  <section class="my-5 bg-light p-5 rounded">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h2 class="display-6">Chat and Collaborate</h2>
+        <p class="lead">
+          Collaborate with freelancers through our built-in chat system. Discuss projects, share ideas and get updates in real time.
+        </p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+<% end %>

@@ -1,19 +1,30 @@
-<div class="mt-3">
-  <% if client? %>
-    <%= link_to new_project_path, class: "btn btn-info mb-2" do %>
-      <i class="bi bi-plus-circle-dotted"></i> New project
+<% if admin? %>
+  <h2>Manage projects</h2>
+  <div class="row">
+    <% @projects.each do |p| %>
+      <div class="col-lg-4">
+        <%= render 'project_card', project: p %>
+      </div>
     <% end %>
-    <h3 class="my-3">Your recently submitted projects</h3>
-  <% end %>
-  <% if @recent_projects.empty? %>
-    <div class="alert alert-info">You have not submitted any projects.</div>
-  <% else %>
-    <div class="row">
-      <% @recent_projects.each do |project| %>
-        <div class="col-lg-4">
-          <%= render 'project_card', project: project %>
-        </div>
+  </div>
+<% else %>
+  <div class="mt-3">
+    <% if client? %>
+      <%= link_to new_project_path, class: "btn btn-info mb-2" do %>
+        <i class="bi bi-plus-circle-dotted"></i> New project
       <% end %>
-    </div>
-  <% end %>
-</div>
+      <h3 class="my-3">Your recently submitted projects</h3>
+    <% end %>
+    <% if @recent_projects.empty? %>
+      <div class="alert alert-info">You have not submitted any projects.</div>
+    <% else %>
+      <div class="row">
+        <% @recent_projects.each do |project| %>
+          <div class="col-lg-4">
+            <%= render 'project_card', project: project %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
