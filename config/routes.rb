@@ -33,9 +33,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'admin/manage_categories', to: 'admins#manage_categories'
-
-  resources :categories, only: %i[new create edit update destroy]
+  resources :categories
 
   root 'welcome#index'
 end

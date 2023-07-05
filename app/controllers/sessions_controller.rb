@@ -41,7 +41,7 @@ class SessionsController < ApplicationController
     elsif freelancer?
       redirect_to bids_path, flash: { notice: 'Logged in as freelancer!' }
     else
-      redirect_to admins_path, flash: { notice: 'Logged in as admin!' }
+      redirect_to root_path, flash: { notice: 'Logged in as admin!' }
     end
   end
 end
