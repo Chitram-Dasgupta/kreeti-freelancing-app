@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProjectsController < ApplicationController
   skip_before_action :require_authorization, only: %i[show search]
   before_action :current_user_project, only: %i[edit update destroy]
@@ -53,15 +55,21 @@ class ProjectsController < ApplicationController
 
   def search
     @projects = if params[:search].present?
-                  projects = Project.search_projects(params[:search],
-                                                     include_awarded: params[:filter] != 'unawarded').records
-                  params[:filter] == 'unawarded' ? projects.without_awarded_bids : projects
+                  projects = Project.search_projects(params[:search], include_awarded: params[:filter] != 'unawarded')
+                                    .records
+                  filter_projects(projects)
+                elsif params[:filter] == 'unawarded'
+                  Project.where(visibility: 'pub').without_awarded_bids
                 else
-                  params[:filter] == 'unawarded' ? Project.where(visibility: 'pub').without_awarded_bids : Project.where(visibility: 'pub')
+                  Project.where(visibility: 'pub')
                 end
   end
 
   private
+
+  def filter_projects(projects)
+    params[:filter] == 'unawarded' ? projects.without_awarded_bids : projects
+  end
 
   def current_user_project
     @project = if admin?
@@ -72,7 +80,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:title, :description, :visibility, :design_document, :srs_document, skills: [],
-                                                                                                        category_ids: [])
+    params.require(:project).permit(:title, :description, :visibility, :design_document, :srs_document,
+                                    skills: [], category_ids: [])
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BidsController < ApplicationController
   before_action :check_rejected_or_awarded, only: %i[edit update]
   before_action :set_bid, only: %i[show edit update destroy accept reject hold award]
@@ -9,7 +11,6 @@ class BidsController < ApplicationController
       @recent_bids = Bid.recent_by_user(current_user)
       @recent_projects = Project.recent
     end
-
   end
 
   def new
@@ -23,11 +24,7 @@ class BidsController < ApplicationController
     if @bid.save
       redirect_to @bid.project, flash: { success: 'Bid was successfully created' }
     else
-      if @bid.errors.include?(:user_id)
-        flash[:error] = @bid.errors.full_messages.to_sentence
-      else
-        flash.now[:error] = 'Bid could not be created. Please try again.'
-      end
+      flash.now[:error] = 'Bid could not be created.'
       render 'new', locals: { project: @project }
     end
   end

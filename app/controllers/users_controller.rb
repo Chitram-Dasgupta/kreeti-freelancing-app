@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   skip_before_action :require_authorization, only: %i[new create show confirm_email search]
   before_action :set_user, only: %i[show edit update destroy]
   before_action :require_authorization, only: %i[destroy]
+  before_action :find_user_by_confirmation_token, only: %i[confirm_email]
 
   def index
     if admin?
@@ -48,14 +51,12 @@ class UsersController < ApplicationController
   end
 
   def confirm_email
-    user = User.find_by(confirmation_token: params[:token])
     if user
       user.email_activate
       if user.errors[:confirmation_token].any?
-        user.destroy
-        redirect_to new_user_path, flash: { error: 'Confirmation token expired. Please sign up again.' }
+        handle_unsuccessful_confirmation(user)
       else
-        redirect_to new_session_path, flash: { success: 'Your email has been confirmed. Please sign in to continue.' }
+        handle_successful_confirmation
       end
     else
       redirect_to root_path, flash: { error: 'Sorry. User does not exist' }
@@ -76,6 +77,19 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def find_user_by_confirmation_token(token)
+    User.find_by(confirmation_token: token)
+  end
+
+  def handle_successful_confirmation
+    redirect_to new_session_path, flash: { success: 'Your email has been confirmed. Please sign in to continue.' }
+  end
+
+  def handle_unsuccessful_confirmation(user)
+    user.destroy
+    redirect_to new_user_path, flash: { error: 'Confirmation token expired. Please sign up again.' }
+  end
 
   def set_user
     @user = User.find_by(id: params[:id])

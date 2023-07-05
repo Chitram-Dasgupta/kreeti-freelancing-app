@@ -10,7 +10,7 @@ class Bid < ApplicationRecord
 
   validates :bid_name, presence: true
   validates :bid_amount, presence: true, numericality: { greater_than: 0, less_than: 1_000_000 }
-  validates :user_id, uniqueness: { scope: :project_id, message: 'has already placed a bid for this project' }
+  validates :user_id, uniqueness: { scope: :project_id }
 
   delegate :username, to: :user
 
