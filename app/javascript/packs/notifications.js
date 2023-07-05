@@ -7,10 +7,10 @@ function fetchNotificationsCount() {
   fetch("/notifications/count")
     .then((response) => response.json())
     .then((data) => {
-      notificationBadge.innerText = data.count;
+      notificationBadge.innerText = data.unread_count;
       showAllButton.style.display = data.full_count > 5 ? "block" : "none";
       markAllAsReadButton.style.display = data.full_count > 0 ? "block" : "none";
-      deleteReadNotificationsButton.style.display = data.full_count - data.count > 0 ? "block" : "none";
+      deleteReadNotificationsButton.style.display = data.full_count - data.unread_count > 0 ? "block" : "none";
     });
 }
 
@@ -73,7 +73,8 @@ function fetchNotifications() {
       showAllButton.style.display = "none";
     });
 
-    addClickListener(document.getElementById("markAllAsReadButton"), function () {
+    const markAllAsReadButton = document.getElementById("markAllAsReadButton");
+    addClickListener(markAllAsReadButton, function () {
       fetchWithCsrfToken("/notifications/mark_all_as_read", "POST")
         .then((data) => {
           if (data.success) {
@@ -83,6 +84,7 @@ function fetchNotifications() {
               item.classList.add("text-muted");
             });
             notificationBadge.innerText = 0;
+            markAllAsReadButton.style.display = "none";
           }
         })
         .catch((error) => {
@@ -90,6 +92,7 @@ function fetchNotifications() {
         });
     });
 
+    const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
     addClickListener(document.getElementById("deleteReadNotificationsButton"), function () {
       fetchWithCsrfToken("/notifications/delete_read", "POST")
         .then((data) => {
@@ -98,6 +101,7 @@ function fetchNotifications() {
             notificationItems.forEach((item) => {
               item.remove();
             });
+            deleteReadNotificationsButton.style.display = "none";
           }
         })
         .catch((error) => {

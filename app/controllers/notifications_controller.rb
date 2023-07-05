@@ -3,7 +3,7 @@ class NotificationsController < ApplicationController
     notifications = current_user.notifications
     full_count = notifications.count
     unread_count = notifications.where(read: false).count
-    render json: { count: unread_count, full_count: }
+    render json: { unread_count:, full_count: }
   end
 
   def fetch_notifications
