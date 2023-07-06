@@ -7,6 +7,8 @@
     <dd class="col-sm-9"><%= @bid.bid_amount %></dd>
     <dt class="col-sm-3">Status:</dt>
     <dd class="col-sm-9"><%= @bid.bid_status %></dd>
+    <dt class="col-sm-3">Project:</dt>
+    <dd class="col-sm-9"><%= link_to @bid.project.title, @bid.project, class: 'text-decoration-none text-white btn btn-primary' %></dd>
     <dt class="col-sm-3">By:</dt>
     <dd class="col-sm-9"><%= @bid.username %></dd>
   </dl>

@@ -18,12 +18,21 @@
         <td><%= bid.user.username %></td>
         <td>
           <% unless bid.accepted? %>
-            <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary' %>
-            <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger' %>
           <% else %>
+          <% end %>
+          <% if bid.accepted? %>
             <div class="alert alert-success">
-              This bid is awarded the project
+              This bid is awarded
             </div>
+          <% else %>
+            <% if bid.project.user == current_user %>
+              <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary mb-1' %>
+              <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger' %>
+            <% else %>
+              <div class="alert alert-warning">
+                This bid is pending
+              </div>
+            <% end %>
           <% end %>
         </td>
         <td>
