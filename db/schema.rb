@@ -69,8 +69,8 @@ ActiveRecord::Schema.define(version: 2023_07_06_165653) do
     t.text "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "room_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "room_id"
+    t.bigint "user_id"
     t.index ["room_id"], name: "index_messages_on_room_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2023_07_06_165653) do
     t.bigint "project_id", null: false
     t.bigint "bid_id", null: false
     t.string "message", null: false
-    t.boolean "read", default: false
+    t.boolean "read", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["bid_id"], name: "index_notifications_on_bid_id"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 2023_07_06_165653) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "skills", default: [], array: true
-    t.boolean "has_awarded_bid", default: false
+    t.boolean "has_awarded_bid", default: false, null: false
     t.boolean "project_completed", default: false, null: false
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 2023_07_06_165653) do
     t.string "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "email_confirmed", default: false
+    t.boolean "email_confirmed", default: false, null: false
     t.string "confirmation_token"
     t.integer "role", default: 0, null: false
     t.string "username", null: false
