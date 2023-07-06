@@ -7,11 +7,14 @@ document.addEventListener("turbolinks:load", () => {
   consumer.subscriptions.create(
     { channel: "BidNotificationsChannel", user_id: currentUserId },
     {
-      connected() {},
+      connected() {
+        console.log(currentUserId);
+      },
 
       disconnected() {},
 
       received(data) {
+        console.log(data);
         const currentBadgeCount = parseInt(notificationBadge.textContent);
         notificationBadge.textContent = currentBadgeCount + 1;
 
@@ -35,7 +38,7 @@ document.addEventListener("turbolinks:load", () => {
     const notificationItem = document.createElement("a");
     notificationItem.classList.add("dropdown-item", "text-wrap");
     notificationItem.href = "/projects/" + data.project_id;
-    notificationItem.textContent = `Your bid to ${data.bid_project_title} is ${data.bid_status}`;
+    notificationItem.textContent = data.message;
     return notificationItem;
   }
 

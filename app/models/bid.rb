@@ -41,16 +41,26 @@ class Bid < ApplicationRecord
     bid_status == 'rejected'
   end
 
+  def upload_project_files
+    update(project_files_uploaded: true)
+  end
+
   private
 
   def send_notifications
-    return unless bid_status_changed?
-
-    Notification.create_for_bid(self)
+    if bid_status_changed?
+      Notification.create_for_bid(self)
+    elsif project_files_uploaded_changed?
+      Notification.create_for_project_files_upload(self)
+    end
   end
 
   def bid_status_changed?
     saved_change_to_attribute?(:bid_status)
+  end
+
+  def project_files_uploaded_changed?
+    saved_change_to_attribute?(:project_files_uploaded)
   end
 
   def update_project
