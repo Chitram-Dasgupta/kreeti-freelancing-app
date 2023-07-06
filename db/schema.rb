@@ -48,9 +48,6 @@ ActiveRecord::Schema.define(version: 2023_07_06_165653) do
     t.text "bid_description"
     t.integer "bid_status", default: 0
     t.decimal "bid_amount", precision: 8, scale: 2, null: false
-    t.string "bid_code_document"
-    t.string "bid_design_document"
-    t.string "bid_other_document"
     t.bigint "project_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -109,7 +106,6 @@ ActiveRecord::Schema.define(version: 2023_07_06_165653) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "skills", default: [], array: true
     t.boolean "has_awarded_bid", default: false
-    t.boolean "mark_as_complete", default: false, null: false
     t.boolean "project_completed", default: false, null: false
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
