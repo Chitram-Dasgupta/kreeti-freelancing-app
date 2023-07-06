@@ -38,13 +38,45 @@
         New Bid <i class="bi bi-plus-circle-dotted"></i>
       <% end %>
     <% else %>
-      <div class="alert alert-warning">You cannot bid on this project! Project has already been awarded</div>
+      <div class="alert alert-warning">Project has already been awarded</div>
     <% end %>
   <% end%>
   <h2 class="my-4">Bids:</h2>
-  <% @bids.each do |bid| %>
-    <% unless bid.rejected? %>
-      <%= render 'bids/bid_card.html.erb', bid: %>
-    <% end %>
-  <% end %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Bid Name</th>
+        <th>Bid Description</th>
+        <th>Bid Amount</th>
+        <th>By</th>
+        <th>Actions</th>
+        <th>Show</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bids.each do |bid| %>
+        <tr>
+          <td><%= bid.bid_name %></td>
+          <td><%= bid.bid_description %></td>
+          <td><%= bid.bid_amount %></td>
+          <td><%= bid.user.username %></td>
+          <td>
+            <% unless bid.accepted? %>
+              <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary' %>
+              <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger' %>
+            <% else %>
+              <div class="alert alert-success">
+                This bid is awarded the project
+              </div>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to bid, class: "btn btn-primary btn-sm" do %>
+              <i class="bi bi-arrow-right-circle"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

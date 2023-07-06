@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find_by(id: params[:id])
-    @bids = @project.bids
+    @bids = @project.bids.where.not(bid_status: 'rejected')
 
     return unless @project.visibility == 'priv' && @project.user != current_user
 
