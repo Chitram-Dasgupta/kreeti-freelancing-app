@@ -4,6 +4,10 @@ class Bid < ApplicationRecord
   belongs_to :user
   belongs_to :project
 
+  has_one_attached :bid_code_document
+  has_one_attached :bid_design_document
+  has_one_attached :bid_other_document
+
   after_save :send_notifications, :update_project
 
   enum bid_status: { pending: 0, accepted: 1, rejected: 2 }
@@ -31,6 +35,10 @@ class Bid < ApplicationRecord
 
   def accepted?
     bid_status == 'accepted'
+  end
+
+  def rejected?
+    bid_status == 'rejected'
   end
 
   private

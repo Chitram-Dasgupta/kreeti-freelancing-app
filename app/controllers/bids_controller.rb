@@ -2,7 +2,7 @@
 
 class BidsController < ApplicationController
   before_action :check_rejected, only: %i[edit update]
-  before_action :set_bid, only: %i[show edit update destroy accept reject]
+  before_action :set_bid, only: %i[show edit update destroy accept reject files_upload]
 
   def index
     if admin?
@@ -57,6 +57,15 @@ class BidsController < ApplicationController
     redirect_to @bid.project, flash: { notice: 'Bid rejected' }
   end
 
+  def files_upload
+    if files_present?
+      attach_files
+      redirect_to @bid, flash: { success: 'Files uploaded successfully' }
+    else
+      redirect_to @bid, flash: { error: 'Please upload at least one file' }
+    end
+  end
+
   private
 
   def set_bid
@@ -67,12 +76,26 @@ class BidsController < ApplicationController
            end
   end
 
+  def files_present?
+    return false if params[:bid].nil?
+
+    [params[:bid][:bid_code_document], params[:bid][:bid_design_document], params[:bid][:bid_other_document]]
+      .count(&:present?).positive?
+  end
+
+  def attach_files
+    @bid.bid_code_document.attach(params[:bid][:bid_code_document])
+    @bid.bid_design_document.attach(params[:bid][:bid_design_document])
+    @bid.bid_other_document.attach(params[:bid][:bid_other_document])
+  end
+
   def check_rejected
     @bid = Bid.find_by(id: params[:id])
-    redirect_to bids_path, flash: { error: 'Bid cannot be modified' } unless @bid.modifiable?
+    redirect_to bids_path, flash: { error: 'Bid cannot be modified' } if @bid.rejected?
   end
 
   def bid_params
-    params.require(:bid).permit(:bid_name, :bid_description, :bid_amount, :project_id, :user_id)
+    params.require(:bid).permit(:bid_name, :bid_description, :bid_amount, :project_id, :user_id, :bid_code_document,
+                                :bid_design_document, :bid_other_document)
   end
 end

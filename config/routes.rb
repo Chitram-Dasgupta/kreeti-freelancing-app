@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     member do
       post 'accept'
       post 'reject'
+      patch 'files_upload'
     end
   end
 
