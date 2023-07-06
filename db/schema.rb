@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_06_152500) do
+ActiveRecord::Schema.define(version: 2023_07_06_165653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(version: 2023_07_06_152500) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "skills", default: [], array: true
     t.boolean "has_awarded_bid", default: false
+    t.boolean "mark_as_complete", default: false, null: false
+    t.boolean "project_completed", default: false, null: false
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 

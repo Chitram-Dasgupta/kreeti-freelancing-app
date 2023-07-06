@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     get :search, to: 'projects#search', on: :collection
+    get 'complete', on: :member
   end
 
   resources :bids do

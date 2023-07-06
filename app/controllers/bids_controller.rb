@@ -58,13 +58,15 @@ class BidsController < ApplicationController
   end
 
   def files_upload
-    if files_present?
+    if @bid.project.completed?
+      redirect_to @bid, flash: { error: 'Cannot upload files to a completed project' }
+    elsif files_present?
       attach_files
       redirect_to @bid, flash: { success: 'Files uploaded successfully' }
     else
       redirect_to @bid, flash: { error: 'Please upload at least one file' }
     end
-  end
+  end  
 
   private
 

@@ -26,6 +26,7 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    redirect_to @project, notice: 'Cannot edit a completed project.' if @project.completed?
     @categories = Category.all
   end
 
@@ -40,6 +41,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    redirect_to @project, notice: 'Cannot update a completed project.' if @project.completed?
     if @project.update(project_params)
       redirect_to projects_path, flash: { notice: 'Project was successfully updated!' }
     else
@@ -63,6 +65,12 @@ class ProjectsController < ApplicationController
                 else
                   Project.where(visibility: 'pub')
                 end
+  end
+
+  def complete
+    @project = Project.find(params[:id])
+    @project.complete
+    redirect_to @project, notice: 'Project marked as complete.'
   end
 
   private

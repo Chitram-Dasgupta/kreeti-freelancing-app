@@ -1,6 +1,9 @@
 <div class="container mt-3">
   <h1 class="mb-3"><%= @project.title %></h1>
   <h5 class="text-muted mb-3"><%= @project.description %></h5>
+  <% if @project.completed? %>
+    <div class="alert alert-danger">Project is completed</div>
+  <% end %>
   <hr>
   <% if @project.design_document.attached? %>
     <p>Design Document: <%= link_to 'Download', url_for(@project.design_document), class: 'btn btn-primary mt-2' %></p>
@@ -27,8 +30,13 @@
   </div>
   <hr>
   <% if current_user == @project.user %>
-    <%= link_to edit_project_path(@project), class: "btn btn-warning mt-2" do %>
-      Edit <i class="bi bi-pencil"></i>
+    <% unless @project.completed? %>
+      <%= link_to edit_project_path(@project), class: "btn btn-warning mt-2 mx-2" do %>
+        Edit <i class="bi bi-pencil"></i>
+      <% end %>
+      <%= link_to complete_project_path(@project), class: "btn btn-danger mt-2" do %>
+        Mark as complete <i class="bi bi-stars"></i>
+      <% end %>
     <% end %>
   <% end %>
   <% if freelancer? %>
@@ -38,7 +46,9 @@
         New Bid <i class="bi bi-plus-circle-dotted"></i>
       <% end %>
     <% else %>
-      <div class="alert alert-warning">Project has already been awarded</div>
+      <% unless @project.completed? %>
+        <div class="alert alert-warning">Project has already been awarded</div>
+      <% end %>
     <% end %>
   <% end%>
   <h2 class="my-4">Bids:</h2>

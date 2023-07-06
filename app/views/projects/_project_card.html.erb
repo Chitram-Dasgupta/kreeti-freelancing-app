@@ -17,6 +17,9 @@
           Chat <i class="bi bi-chat-dots-fill"></i>
         <% end %>
       <% end %>
+      <% if project.completed? %>
+        <div class="alert alert-danger m-3">Project is completed</div>
+      <% end %>
       <hr>
       <%= link_to project, class: "btn btn-primary mt-2" do %>
         Show <i class="bi bi-arrow-right-circle"></i>
@@ -27,8 +30,10 @@
         <% end %>
       <% end %>
       <% if current_user == project.user || admin? %>
-        <%= link_to edit_project_path(project), class: "btn btn-warning mt-2" do %>
-          Edit <i class="bi bi-pencil"></i>
+        <% unless project.completed? %>
+          <%= link_to edit_project_path(project), class: "btn btn-warning mt-2" do %>
+            Edit <i class="bi bi-pencil"></i>
+          <% end %>
         <% end %>
         <%= link_to project_path(project), class: "btn btn-danger mt-2", method: :delete, data: { confirm: 'Are you sure?' } do %>
           Delete <i class="bi bi-trash"></i>
