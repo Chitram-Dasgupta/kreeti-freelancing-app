@@ -51,10 +51,10 @@ class UsersController < ApplicationController
   end
 
   def confirm_email
-    if user
-      user.email_activate
-      if user.errors[:confirmation_token].any?
-        handle_unsuccessful_confirmation(user)
+    if @user
+      @user.email_activate
+      if @user.errors[:confirmation_token].any?
+        handle_unsuccessful_confirmation(@user)
       else
         handle_successful_confirmation
       end
@@ -78,8 +78,8 @@ class UsersController < ApplicationController
 
   private
 
-  def find_user_by_confirmation_token(token)
-    User.find_by(confirmation_token: token)
+  def find_user_by_confirmation_token
+    @user = User.find_by(confirmation_token: params[:token])
   end
 
   def handle_successful_confirmation

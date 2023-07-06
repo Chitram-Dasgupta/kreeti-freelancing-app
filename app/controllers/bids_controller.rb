@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class BidsController < ApplicationController
-  before_action :check_rejected_or_awarded, only: %i[edit update]
-  before_action :set_bid, only: %i[show edit update destroy accept reject hold award]
+  before_action :check_rejected, only: %i[edit update]
+  before_action :set_bid, only: %i[show edit update destroy accept reject]
 
   def index
     if admin?
@@ -57,16 +57,6 @@ class BidsController < ApplicationController
     redirect_to @bid.project, flash: { notice: 'Bid rejected' }
   end
 
-  def hold
-    @bid.hold
-    redirect_to @bid.project, flash: { notice: 'Bid put on hold' }
-  end
-
-  def award
-    @bid.award
-    redirect_to @bid.project, flash: { sucess: 'Bid awarded' }
-  end
-
   private
 
   def set_bid
@@ -77,7 +67,7 @@ class BidsController < ApplicationController
            end
   end
 
-  def check_rejected_or_awarded
+  def check_rejected
     @bid = Bid.find_by(id: params[:id])
     redirect_to bids_path, flash: { error: 'Bid cannot be modified' } unless @bid.modifiable?
   end

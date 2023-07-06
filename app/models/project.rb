@@ -30,7 +30,7 @@ class Project < ApplicationRecord
   scope :recent, -> { order(created_at: :desc).limit(5) }
 
   scope :without_awarded_bids, lambda {
-    where.not(id: Bid.where(bid_status: :awarded).select(:project_id))
+    where.not(id: Bid.where(bid_status: :accepted).select(:project_id))
   }
 
   def self.all_skills
@@ -72,7 +72,7 @@ class Project < ApplicationRecord
   # rubocop:enable Metrics/MethodLength
 
   def bid_awarded?
-    bids.exists?(bid_status: :awarded)
+    bids.exists?(bid_status: 'accepted')
   end
 
   def visibility_status

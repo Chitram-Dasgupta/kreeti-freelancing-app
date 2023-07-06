@@ -31,8 +31,6 @@ Rails.application.routes.draw do
     member do
       post 'accept'
       post 'reject'
-      post 'hold'
-      post 'award'
     end
   end
 

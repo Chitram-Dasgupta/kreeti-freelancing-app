@@ -6,7 +6,7 @@ class Bid < ApplicationRecord
 
   after_save :send_notifications, :update_project
 
-  enum bid_status: { pending: 0, accepted: 1, rejected: 2, awarded: 3 }
+  enum bid_status: { pending: 0, accepted: 1, rejected: 2 }
 
   validates :bid_name, presence: true
   validates :bid_amount, presence: true, numericality: { greater_than: 0, less_than: 1_000_000 }
@@ -18,23 +18,19 @@ class Bid < ApplicationRecord
 
   def accept
     update(bid_status: 'accepted')
+    project.bids.where.not(id:).find_each { |b| b.update(bid_status: 'rejected') }
   end
 
   def reject
     update(bid_status: 'rejected')
   end
 
-  def hold
-    update(bid_status: 'pending')
-  end
-
-  def award
-    update(bid_status: 'awarded')
-    project.bids.where.not(id:).find_each { |b| b.update(bid_status: :rejected) }
-  end
-
   def modifiable?
-    bid_status == 'pending' || bid_status == 'accepted'
+    bid_status != 'rejected'
+  end
+
+  def accepted?
+    bid_status == 'accepted'
   end
 
   private
@@ -50,10 +46,8 @@ class Bid < ApplicationRecord
   end
 
   def update_project
-    if bid_status == 'awarded'
-      project.update(has_awarded_bid: true)
-    elsif bid_status_was == 'awarded'
-      project.update(has_awarded_bid: false)
-    end
+    return unless bid_status == 'accepted'
+
+    project.update(has_awarded_bid: true)
   end
 end
