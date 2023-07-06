@@ -66,7 +66,7 @@ class BidsController < ApplicationController
     else
       redirect_to @bid, flash: { error: 'Please upload at least one file' }
     end
-  end  
+  end
 
   private
 

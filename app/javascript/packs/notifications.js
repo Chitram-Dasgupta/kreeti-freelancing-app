@@ -119,15 +119,6 @@ function fetchNotifications() {
 
 document.addEventListener("turbolinks:load", fetchNotifications);
 
-function createButton(id, textContent, btnClass) {
-  const button = document.createElement("button");
-  button.id = id;
-  button.style.display = "none";
-  button.classList.add("btn", btnClass, "btn-sm", "mx-1", "my-1");
-  button.textContent = textContent;
-  return button;
-}
-
 async function fetchWithCsrfToken(url, method) {
   const response = await fetch(url, {
     method: method,

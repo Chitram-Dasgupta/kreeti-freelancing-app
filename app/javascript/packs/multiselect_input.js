@@ -1,6 +1,6 @@
 document.addEventListener("turbolinks:load", () => {
   document.querySelectorAll(".dropdown").forEach(function (element) {
-    element.addEventListener("hide.bs.dropdown", function (event) {
+    element.addEventListener("hide.bs.dropdown", function () {
       return false;
     });
   });

@@ -1,19 +1,19 @@
-window.addEventListener("DOMContentLoaded", (event) => {
+window.addEventListener("DOMContentLoaded", () => {
   var form = document.getElementById("message-form");
 
   if (!form) {
     return;
   }
 
-  var submitButton = form.querySelector('button[type="submit"]'); // Select the submit button
-  var messageInput = form.querySelector('input[name="message[content]"]'); // Select the text input field
+  var submitButton = form.querySelector('button[type="submit"]');
+  var messageInput = form.querySelector('input[name="message[content]"]');
 
   form.addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent the form from being submitted normally
+    event.preventDefault();
 
     var formData = new FormData(form);
 
-    messageInput.value = ""; // Clear the text input field
+    messageInput.value = "";
 
     fetch(form.action, {
       method: "POST",
@@ -27,15 +27,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "ok") {
-          submitButton.disabled = false; // Re-enable the submit button
+          submitButton.disabled = false;
         } else {
           console.error("Error:", data.errors);
-          submitButton.disabled = false; // Re-enable the submit button in case of an error
+          submitButton.disabled = false;
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        submitButton.disabled = false; // Re-enable the submit button in case of an error
+        submitButton.disabled = false;
       });
 
     submitButton.disabled = true;
