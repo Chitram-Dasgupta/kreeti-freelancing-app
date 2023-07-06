@@ -11,6 +11,24 @@
     <dd class="col-sm-9"><%= link_to @bid.project.title, @bid.project, class: 'text-decoration-none text-white btn btn-primary' %></dd>
     <dt class="col-sm-3">By:</dt>
     <dd class="col-sm-9"><%= @bid.username %></dd>
+    <% if @bid.bid_code_document.attached? %>
+      <dt>Code Document:</dt>
+      <dd><%= link_to @bid.bid_code_document.filename, url_for(@bid.bid_code_document), class: 'btn btn-secondary mt-2' %></dd>
+    <% else %>
+      <dd>No code document attached.</dd>
+    <% end %>
+    <% if @bid.bid_design_document.attached? %>
+      <dt>Code Document:</dt>
+      <dd><%= link_to @bid.bid_design_document.filename, url_for(@bid.bid_design_document), class: 'btn btn-secondary mt-2' %></dd>
+    <% else %>
+      <dd>No design document attached.</dd>
+    <% end %>
+    <% if @bid.bid_other_document.attached? %>
+      <dt>Code Document:</dt>
+      <dd><%= link_to @bid.bid_other_document.filename, url_for(@bid.bid_other_document), class: 'btn btn-secondary mt-2' %></dd>
+    <% else %>
+      <dd>No other document attached.</dd>
+    <% end %>
   </dl>
   <hr>
   <% if (current_user == @bid.user || admin?) %>

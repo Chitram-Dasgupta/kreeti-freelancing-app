@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_04_074226) do
+ActiveRecord::Schema.define(version: 2023_07_06_152500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2023_07_04_074226) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "project_files_uploaded", default: false, null: false
     t.index ["project_id"], name: "index_bids_on_project_id"
     t.index ["user_id", "project_id"], name: "index_bids_on_user_id_and_project_id", unique: true
     t.index ["user_id"], name: "index_bids_on_user_id"

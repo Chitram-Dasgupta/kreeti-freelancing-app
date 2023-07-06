@@ -87,6 +87,7 @@ class BidsController < ApplicationController
     @bid.bid_code_document.attach(params[:bid][:bid_code_document])
     @bid.bid_design_document.attach(params[:bid][:bid_design_document])
     @bid.bid_other_document.attach(params[:bid][:bid_other_document])
+    @bid.project_files_uploaded = true
   end
 
   def check_rejected
