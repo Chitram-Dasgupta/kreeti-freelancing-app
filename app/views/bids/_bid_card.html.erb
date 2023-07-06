@@ -1,21 +1,22 @@
-<div class="card my-3 mx-1 border-secondary">
-  <div class="card-header bg-info text-white">
-    Bid
-  </div>
-  <div class="card-body">
-    <h5 class="card-title"><%= bid.bid_name %></h5>
-    <p class="card- text-muted"><%= bid.bid_description %></p>
-    <p class="card-text"><strong>Amount: </strong><%= bid.bid_amount %></p>
-    <p class="card-text"><strong>Status: </strong><%= bid.bid_status.titleize %></p>
-    <p class="card-text">by <%= bid.username %></p>
-    <% if freelancer? && params[:controller] == 'bids' %>
-      <hr>
-      <p class="card-text">
-        <strong>Project: </strong>
-        <%= link_to bid.project.title, project_path(bid.project), class: 'text-decoration-none' %>
-      </p>
-      <hr>
-    <% elsif client? %>
+<%= link_to bid, class: 'text-decoration-none text-dark' do %>
+  <div class="card my-3 mx-1 border-secondary">
+    <div class="card-header bg-info text-white">
+      Bid
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><%= bid.bid_name %></h5>
+      <p class="card- text-muted"><%= bid.bid_description %></p>
+      <p class="card-text"><strong>Amount: </strong><%= bid.bid_amount %></p>
+      <p class="card-text"><strong>Status: </strong><%= bid.bid_status.titleize %></p>
+      <p class="card-text">by <%= bid.username %></p>
+      <% if freelancer? && params[:controller] == 'bids' %>
+        <hr>
+        <p class="card-text">
+          <strong>Project: </strong>
+          <%= link_to bid.project.title, project_path(bid.project), class: 'text-decoration-none' %>
+        </p>
+        <hr>
+      <% end %>
       <hr>
       <% if (admin? || client?) && !bid.accepted? %>
         <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary mt-2' %>
@@ -35,6 +36,6 @@
           Delete <i class="bi bi-trash"></i>
         <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>

@@ -11,7 +11,9 @@
     <dd class="col-sm-9"><%= @bid.username %></dd>
   </dl>
   <hr>
-  <%= link_to edit_bid_path(@bid), class: "btn btn-primary mt-2" do %>
-    Edit this bid <i class="bi bi-pencil"></i>
+  <% if (current_user == @bid.user || admin?) && @bid.modifiable? %>
+    <%= link_to edit_bid_path(@bid), class: "btn btn-primary mt-2" do %>
+      Edit this bid <i class="bi bi-pencil"></i>
+    <% end %>
   <% end %>
 </div>

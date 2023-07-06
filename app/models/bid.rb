@@ -26,7 +26,7 @@ class Bid < ApplicationRecord
   end
 
   def modifiable?
-    bid_status != 'rejected'
+    bid_status == 'pending'
   end
 
   def accepted?
