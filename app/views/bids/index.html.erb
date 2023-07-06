@@ -9,20 +9,13 @@
   </div>
 <% else %>
   <div class="mx-2 mb-4">
-    <h3>Your recently submitted bids</h3>
-    <% if @recent_bids.empty? %>
+    <h3 class="mb-4">Your recently submitted bids</h3>
+    <% if @bids.empty? %>
       <p class="text-muted"> You have not submitted any bids </p>
     <% else %>
-      <div class="row">
-        <% @recent_bids.each do |bid| %>
-          <div class="col-lg-4">
-            <%= render 'bid_card', bid: %>
-          </div>
-        <% end %>
-      </div>
+      <%= render 'shared/bid_table', bids: @bids %>
     <% end %>
   </div>
-  <hr>
   <div>
     <%= link_to 'Search for projects to bid', search_projects_path, class: "btn btn-primary" %>
   </div>

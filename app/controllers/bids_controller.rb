@@ -8,7 +8,7 @@ class BidsController < ApplicationController
     if admin?
       @bids = Bid.all.order(created_at: :asc)
     else
-      @recent_bids = Bid.recent_by_user(current_user)
+      @bids = Bid.recent_by_user(current_user)
       @recent_projects = Project.recent
     end
   end
