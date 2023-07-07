@@ -1,11 +1,22 @@
 <div class="col">
   <div class="card h-100">
     <div class="card-body pb-0">
-      <h5 class="card-title"><%= link_to user.username, user, class: 'text-decoration-none' %></h5>
+      <% if user.status == 'pending' && admin? %>
+        <div class="alert alert-danger">User's registration is pending</div>
+        <div>
+          <%= link_to approve_user_path(user), method: :post, class: 'btn btn-success mt-1' do %>
+            Approve <i class="bi bi-check-lg"></i>
+          <% end %>
+          <%= link_to reject_user_path(user), method: :post, class: 'btn btn-danger mt-1' do %>
+            Reject <i class="bi bi-x-lg"></i>
+          <% end %>
+        </div>
+      <% end %>
+      <h5 class="card-title mt-2"><%= link_to user.username, user, class: 'text-decoration-none' %></h5>
       <h6 class="card-subtitle text-muted"><%= user.role %></h6>
       <h6 class="card-title text-muted"><%= user.email %></h6>
       <p class="text-start">
-        <% unless freelancer? %>
+        <% if !freelancer? && user.status != 'pending' && user.status != 'rejected' %>
           <%= link_to rooms_path(user_id: user.id), method: :post, class: 'btn btn-secondary mt-1' do %>
             Chat <i class="bi bi-chat-dots-fill"></i>
           <% end %>
@@ -18,11 +29,13 @@
       </p>
       <% if admin? %>
         <div class="mb-2">
-          <%= link_to user, class: "btn btn-primary mt-2" do %>
-            Show <i class="bi bi-arrow-right-circle"></i>
-          <% end %>
-          <%= link_to edit_user_path(user), class: "btn btn-warning mt-2" do %>
-            Edit <i class="bi bi-pencil"></i>
+          <% if user.status == 'approved' %>
+            <%= link_to user, class: "btn btn-primary mt-2" do %>
+              Show <i class="bi bi-arrow-right-circle"></i>
+            <% end %>
+            <%= link_to edit_user_path(user), class: "btn btn-warning mt-2" do %>
+              Edit <i class="bi bi-pencil"></i>
+            <% end %>
           <% end %>
           <%= link_to user_path(user), class: "btn btn-danger mt-2", method: :delete, data: { confirm: 'Are you sure?' } do %>
             Delete <i class="bi bi-trash"></i>

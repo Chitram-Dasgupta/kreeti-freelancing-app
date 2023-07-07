@@ -19,8 +19,12 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[index new create destroy]
 
   resources :users do
-    get :confirm_email, to: 'users#confirm_email', on: :member
     get :search, to: 'users#search', on: :collection
+    member do
+      get :confirm_email, to: 'users#confirm_email'
+      post :approve
+      post :reject
+    end
   end
 
   resources :projects do
@@ -37,6 +41,8 @@ Rails.application.routes.draw do
   end
 
   resources :categories
+
+  get 'admin/manage_registrations', to: 'admin#manage_registrations'
 
   root 'welcome#index'
 end

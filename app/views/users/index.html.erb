@@ -1,4 +1,11 @@
-<h2>Manage users</h2>
+<h2>Pending users:</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+  <% @pending_users.each do |user| %>
+    <%= render 'user_card', user: %>
+  <% end %>
+</div>
+<hr>
+<h2>All approved users:</h2>
 <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
   <% @users.each do |user| %>
     <%= render 'user_card', user: %>

@@ -45,10 +45,16 @@ class User < ApplicationRecord
 
   enum role: { client: 0, freelancer: 1, admin: 2 }
   enum visibility: { pub: 0, priv: 1 }
+  enum status: { pending: 0, approved: 1, rejected: 2 }
+
+  scope :pending, -> { where(status: 'pending') }
+  scope :approved, -> { where(status: 'approved') }
 
   default_scope { order(:created_at) }
 
   def email_activate
+    return errors.add(:base, 'Account not approved yet') unless status == 'approved'
+
     if confirmation_token_created_at < 30.minutes.ago
       errors.add(:confirmation_token, 'expired')
     else

@@ -2,13 +2,14 @@
 
 class UsersController < ApplicationController
   skip_before_action :require_authorization, only: %i[new create show confirm_email search]
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy approve reject]
   before_action :require_authorization, only: %i[destroy]
   before_action :find_user_by_confirmation_token, only: %i[confirm_email]
 
   def index
     if admin?
-      @users = User.all.order(created_at: :asc)
+      @users = User.approved
+      @pending_users = User.pending
     else
       redirect_to new_user_path
     end
@@ -28,9 +29,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      UserMailer.account_activation(@user).deliver_later
-      redirect_to root_path, flash: { notice: 'Please check your email for activation link' }
+    if User.where(email: @user.email, status: 'rejected').any?
+      redirect_to new_user_path, flash: { error: 'This email was previously rejected.' }
+    elsif @user.save
+      redirect_to root_path,
+                  flash: { notice: 'Registration successful. Please wait for an admin to approve your account.' }
     else
       flash.now[:error] = 'Please enter the data properly'
       render :new, status: :unprocessable_entity
@@ -61,6 +64,19 @@ class UsersController < ApplicationController
     else
       redirect_to root_path, flash: { error: 'Sorry. User does not exist' }
     end
+  end
+
+  def approve
+    @user = User.find(params[:id])
+    @user.update(status: 'approved')
+    UserMailer.account_activation(@user).deliver_later
+    redirect_to users_path, flash: { success: 'User approved.' }
+  end
+
+  def reject
+    @user = User.find(params[:id])
+    @user.update(status: 'rejected', confirmation_token: nil)
+    redirect_to users_path, flash: { success: 'User rejected.' }
   end
 
   def search
