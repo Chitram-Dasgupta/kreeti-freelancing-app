@@ -33,6 +33,8 @@ class Project < ApplicationRecord
     where.not(id: Bid.where(bid_status: :accepted).select(:project_id))
   }
 
+  default_scope { order(:created_at) }
+
   def self.all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
      'Python developer', 'Android developer', 'Java developer', 'Graphic designer',

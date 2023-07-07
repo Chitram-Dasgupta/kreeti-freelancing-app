@@ -46,6 +46,8 @@ class User < ApplicationRecord
   enum role: { client: 0, freelancer: 1, admin: 2 }
   enum visibility: { pub: 0, priv: 1 }
 
+  default_scope { order(:created_at) }
+
   def email_activate
     if confirmation_token_created_at < 30.minutes.ago
       errors.add(:confirmation_token, 'expired')
