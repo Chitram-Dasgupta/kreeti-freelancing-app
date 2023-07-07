@@ -42,7 +42,7 @@ class Bid < ApplicationRecord
   end
 
   def upload_project_files
-    update(project_files_uploaded: true)
+    project.complete
   end
 
   private

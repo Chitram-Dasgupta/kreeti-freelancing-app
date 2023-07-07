@@ -14,8 +14,12 @@ class RoomsController < ApplicationController
 
   def create
     other_user = User.find(params[:user_id])
-    @room = find_or_create_room(other_user)
-    redirect_to @room
+    if current_user.role == other_user.role
+      redirect_to root_path, flash: { error: 'This chat cannot be initiated' }
+    else
+      @room = find_or_create_room(other_user)
+      redirect_to @room
+    end
   end
 
   private
