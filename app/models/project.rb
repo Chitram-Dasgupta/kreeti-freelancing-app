@@ -42,7 +42,7 @@ class Project < ApplicationRecord
   end
 
   # rubocop:disable Metrics/MethodLength
-  def self.search_projects(category_name, include_awarded: true)
+  def self.search_projects(category_name)
     search_definition = {
       query: {
         bool: {
@@ -66,8 +66,6 @@ class Project < ApplicationRecord
         }
       }
     }
-
-    search_definition[:query][:bool][:filter] = [{ term: { has_awarded_bid: false } }] unless include_awarded
 
     __elasticsearch__.search(search_definition)
   end

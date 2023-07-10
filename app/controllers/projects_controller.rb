@@ -57,21 +57,13 @@ class ProjectsController < ApplicationController
 
   def search
     @projects = if params[:search].present?
-                  projects = Project.search_projects(params[:search], include_awarded: params[:filter] != 'unawarded')
-                                    .records
-                  filter_projects(projects)
-                elsif params[:filter] == 'unawarded'
-                  Project.where(visibility: 'pub').without_awarded_bids
+                  Project.search_projects(params[:search]).records
                 else
                   Project.where(visibility: 'pub')
                 end
   end
 
   private
-
-  def filter_projects(projects)
-    params[:filter] == 'unawarded' ? projects.without_awarded_bids : projects
-  end
 
   def current_user_project
     @project = if admin?
