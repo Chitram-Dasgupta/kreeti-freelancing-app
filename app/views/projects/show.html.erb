@@ -15,17 +15,20 @@
   <% else %>
     <p>No SRS document attached.</p>
   <% end %>
-  <p><strong>Visibility: </strong><%= @project.visibility_status %></p>
   <div>
     <strong>Skills:</strong>
-    <% @project.skills.each do |skill| %>
-      <span class="badge bg-success"><%= skill %></span>
+    <% if @project.skills.empty? %>
+      No skills available
+    <% else %>
+      <% @project.skills.each do |skill| %>
+        <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= skill %></span>
+      <% end %>
     <% end %>
   </div>
   <div class="mt-2">
     <strong class="mt-4">Categories:</strong>
     <% @project.categories.each do |cat| %>
-      <span class="badge bg-secondary"><%= cat.name %></span>
+      <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
     <% end %>
   </div>
   <hr>

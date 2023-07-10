@@ -18,7 +18,7 @@
             <% if project.skills.empty? %>
               No skills available
             <% else %>
-              <% project.skills.each_with_index do |skill, index| %>
+              <% project.skills.each do |skill| %>
                 <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= skill %></span>
               <% end %>
             <% end %>
