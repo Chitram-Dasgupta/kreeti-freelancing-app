@@ -1,23 +1,42 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Project Title</th>
-      <th>Project Description</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% projects.each do |project| %>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= project.title %></td>
-        <td><%= project.description %></td>
-        <td>
-          <%= link_to project, class: "btn btn-primary btn-sm" do %>
-            <i class="bi bi-arrow-right-circle"></i>
-          <% end %>
-        </td>
+        <th>Project Title</th>
+        <th>Project Description</th>
+        <th>Skills</th>
+        <th>Has awarded bid?</th>
+        <th>Show</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
+    </thead>
+    <tbody>
+      <% projects.each do |project| %>
+        <tr>
+          <td><%= project.title %></td>
+          <td><%= project.description %></td>
+          <td>
+            <% if project.skills.empty? %>
+              No skills available
+            <% else %>
+              <% project.skills.each_with_index do |skill, index| %>
+                <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= skill %></span>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <% if project.has_awarded_bid %>
+              <i class="bi bi-check-circle"></i>
+            <% else %>
+              <i class="bi bi-x-circle"></i>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to project, class: "btn btn-primary btn-sm" do %>
+              <i class="bi bi-arrow-right-circle"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
