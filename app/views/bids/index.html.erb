@@ -8,15 +8,17 @@
     <% end %>
   </div>
 <% else %>
+  <div>
+    <%= link_to search_projects_path, class: 'btn btn-primary mb-2' do %>
+      Search for projects to bid on <i class="bi bi-search"></i>
+    <% end %>
+  </div>
   <div class="mx-2 mb-4">
-    <h3 class="mb-4">Your recently submitted bids</h3>
+    <h3 class="my-3">Your submitted bids</h3>
     <% if @bids.empty? %>
       <p class="text-muted"> You have not submitted any bids </p>
     <% else %>
       <%= render 'shared/bid_table', bids: @bids %>
     <% end %>
-  </div>
-  <div>
-    <%= link_to 'Search for projects to bid', search_projects_path, class: "btn btn-primary" %>
   </div>
 <% end %>

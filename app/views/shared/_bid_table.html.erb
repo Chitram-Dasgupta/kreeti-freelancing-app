@@ -1,51 +1,53 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Bid Description</th>
-      <th>Bid Amount</th>
-      <th>By</th>
-      <th>Actions</th>
-      <th>Show</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @bids.each do |bid| %>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= bid.bid_description %></td>
-        <td><%= bid.bid_amount %></td>
-        <td><%= bid.user.username %></td>
-        <td>
-          <% if bid.accepted? %>
-            <% if bid.project_files_uploaded? %>
-              <div class="alert alert-success">
-                Project files successfully submitted
-              </div>
-            <% else %>
-              <div class="alert alert-info">
-                This bid is awarded. Submit the project files
-              </div>
-            <% end %>
-          <% elsif bid.rejected? %>
-            <div class="alert alert-danger">
-              This bid is rejected
-            </div>
-          <% else %>
-            <% if bid.project.user == current_user %>
-              <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-success m-1' %>
-              <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger m-1' %>
-            <% else %>
-              <div class="alert alert-warning">
-                This bid is pending
-              </div>
-            <% end %>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to bid, class: "btn btn-primary btn-sm" do %>
-            <i class="bi bi-arrow-right-circle"></i>
-          <% end %>
-        </td>
+        <th>Bid Description</th>
+        <th>Bid Amount</th>
+        <th>By</th>
+        <th>Actions</th>
+        <th>Show</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @bids.each do |bid| %>
+        <tr>
+          <td><%= bid.bid_description %></td>
+          <td><%= bid.bid_amount %></td>
+          <td><%= bid.user.username %></td>
+          <td>
+            <% if bid.accepted? %>
+              <% if bid.project_files_uploaded? %>
+                <div class="alert alert-success">
+                  Project files successfully submitted
+                </div>
+              <% else %>
+                <div class="alert alert-info">
+                  This bid is awarded. Submit the project files
+                </div>
+              <% end %>
+            <% elsif bid.rejected? %>
+              <div class="alert alert-danger">
+                This bid is rejected
+              </div>
+            <% else %>
+              <% if bid.project.user == current_user %>
+                <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-success m-1' %>
+                <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger m-1' %>
+              <% else %>
+                <div class="alert alert-warning">
+                  This bid is pending
+                </div>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to bid, class: "btn btn-primary btn-sm" do %>
+              <i class="bi bi-arrow-right-circle"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
