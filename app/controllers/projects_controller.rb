@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
 
   def index
     if admin?
-      @projects = Project.all.order(created_at: :asc)
+      @projects = Project.all
     else
       @recent_projects = Project.recent_by_user(current_user)
     end

@@ -13,18 +13,12 @@
       <%= link_to new_project_path, class: "btn btn-info mb-2" do %>
         <i class="bi bi-plus-circle-dotted"></i> New project
       <% end %>
-      <h3 class="my-3">Your recently submitted projects</h3>
+      <h3 class="my-3">Your submitted projects</h3>
     <% end %>
     <% if @recent_projects.empty? %>
       <div class="alert alert-info">You have not submitted any projects.</div>
     <% else %>
-      <div class="row">
-        <% @recent_projects.each do |project| %>
-          <div class="col-lg-4">
-            <%= render 'project_card', project: project %>
-          </div>
-        <% end %>
-      </div>
+      <%= render 'shared/project_table', projects: @recent_projects %>
     <% end %>
   </div>
 <% end %>

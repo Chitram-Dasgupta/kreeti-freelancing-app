@@ -1,0 +1,23 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Project Title</th>
+      <th>Project Description</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% projects.each do |project| %>
+      <tr>
+        <td><%= project.title %></td>
+        <td><%= project.description %></td>
+        <td>
+          <%= link_to project, class: "btn btn-primary btn-sm" do %>
+            <i class="bi bi-arrow-right-circle"></i>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
