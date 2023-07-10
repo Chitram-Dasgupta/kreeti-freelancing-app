@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_07_093001) do
+ActiveRecord::Schema.define(version: 2023_07_10_063752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 2023_07_07_093001) do
   end
 
   create_table "bids", force: :cascade do |t|
-    t.string "bid_name", null: false
     t.text "bid_description"
     t.integer "bid_status", default: 0
     t.decimal "bid_amount", precision: 8, scale: 2, null: false
@@ -106,7 +105,6 @@ ActiveRecord::Schema.define(version: 2023_07_07_093001) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "skills", default: [], array: true
     t.boolean "has_awarded_bid", default: false, null: false
-    t.boolean "project_completed", default: false, null: false
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 

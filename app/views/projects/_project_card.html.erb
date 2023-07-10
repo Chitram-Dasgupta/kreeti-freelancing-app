@@ -17,8 +17,8 @@
           Chat <i class="bi bi-chat-dots-fill"></i>
         <% end %>
       <% end %>
-      <% if project.completed? %>
-        <div class="alert alert-danger m-3">Project is completed</div>
+      <% if project.has_awarded_bid? %>
+        <div class="alert alert-danger m-3">Project has awarded bid</div>
       <% end %>
       <hr>
       <%= link_to project, class: "btn btn-primary mt-2" do %>
@@ -30,7 +30,7 @@
         <% end %>
       <% end %>
       <% if current_user == project.user || admin? %>
-        <% unless project.completed? %>
+        <% unless project.has_awarded_bid? %>
           <%= link_to edit_project_path(project), class: "btn btn-warning mt-2" do %>
             Edit <i class="bi bi-pencil"></i>
           <% end %>

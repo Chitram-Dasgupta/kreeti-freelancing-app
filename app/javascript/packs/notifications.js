@@ -1,16 +1,9 @@
 function fetchNotificationsCount() {
   const notificationBadge = document.getElementById("notificationBadge");
-  const showAllButton = document.getElementById("showAllButton");
-  const markAllAsReadButton = document.getElementById("markAllAsReadButton");
-  const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
-
   fetch("/notifications/count")
     .then((response) => response.json())
     .then((data) => {
       notificationBadge.innerText = data.unread_count;
-      showAllButton.style.display = data.full_count > 5 ? "block" : "none";
-      markAllAsReadButton.style.display = data.full_count > 0 ? "block" : "none";
-      deleteReadNotificationsButton.style.display = data.full_count - data.unread_count > 0 ? "block" : "none";
     });
 }
 
@@ -52,6 +45,7 @@ function loadNotifications(showAll = false) {
               if (data.success) {
                 notificationItem.classList.add("text-muted");
                 window.location.href = notificationItem.href;
+                updateButtons();
               }
             })
             .catch((error) => {
@@ -61,6 +55,7 @@ function loadNotifications(showAll = false) {
 
         notificationContainer.appendChild(notificationItem);
       });
+      updateButtons();
     });
 }
 
@@ -84,9 +79,8 @@ function fetchNotifications() {
               item.classList.add("text-muted");
             });
             notificationBadge.innerText = 0;
-            markAllAsReadButton.style.display = "none";
+            updateButtons();
           }
-          updateButtons();
         })
         .catch((error) => {
           console.error("There has been a problem with your fetch operation:", error);
@@ -112,7 +106,6 @@ function fetchNotifications() {
 
     fetchNotificationsCount();
     loadNotifications();
-
     updateButtons();
   }
 }
@@ -143,11 +136,8 @@ function addClickListener(button, callback) {
 
 function createNotificationItem(notification) {
   const notificationItem = document.createElement("a");
-  notificationItem.classList.add("dropdown-item", "text-wrap");
-  if (notification.read) {
-    notificationItem.classList.add("text-muted");
-  }
-  notificationItem.href = "/projects/" + notification.project_id;
+  notificationItem.classList.add("dropdown-item", "text-wrap", notification.read ? "text-muted" : "");
+  notificationItem.href = `/projects/${notification.project_id}`;
   notificationItem.textContent = notification.message;
   return notificationItem;
 }
@@ -158,8 +148,9 @@ function updateButtons() {
   const unreadItems = notificationItems.length - readItems.length;
   const markAllAsReadButton = document.getElementById("markAllAsReadButton");
   const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
+  const showAllButton = document.getElementById("showAllButton");
 
   markAllAsReadButton.style.display = unreadItems > 0 ? "block" : "none";
-
   deleteReadNotificationsButton.style.display = readItems.length > 0 ? "block" : "none";
+  showAllButton.style.display = notificationItems.length > 5 ? "block" : "none";
 }

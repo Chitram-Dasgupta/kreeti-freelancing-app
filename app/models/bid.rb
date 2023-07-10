@@ -42,10 +42,6 @@ class Bid < ApplicationRecord
     bid_status == 'rejected'
   end
 
-  def upload_project_files
-    project.complete
-  end
-
   private
 
   def send_notifications

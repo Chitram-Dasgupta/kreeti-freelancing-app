@@ -77,14 +77,6 @@ class Project < ApplicationRecord
     bids.exists?(bid_status: 'accepted')
   end
 
-  def complete
-    update(project_completed: true)
-  end
-
-  def completed?
-    project_completed
-  end
-
   def visibility_status
     return 'Public' if visibility == 'pub'
 

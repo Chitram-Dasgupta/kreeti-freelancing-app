@@ -19,10 +19,14 @@
             <div class="alert alert-success">
               This bid is awarded
             </div>
+          <% elsif bid.rejected? %>
+            <div class="alert alert-danger">
+              This bid is rejected
+            </div>
           <% else %>
             <% if bid.project.user == current_user %>
-              <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-success' %>
-              <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger' %>
+              <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-success m-1' %>
+              <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger m-1' %>
             <% else %>
               <div class="alert alert-warning">
                 This bid is pending

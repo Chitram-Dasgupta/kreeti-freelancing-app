@@ -1,17 +1,17 @@
 <div class="container mt-3">
   <h1 class="mb-3"><%= @project.title %></h1>
   <h5 class="text-muted mb-3"><%= @project.description %></h5>
-  <% if @project.completed? %>
-    <div class="alert alert-danger">Project is completed</div>
+  <% if @project.has_awarded_bid? %>
+    <div class="alert alert-warning">Project has awarded bid</div>
   <% end %>
   <hr>
   <% if @project.design_document.attached? %>
-    <p>Design Document: <%= link_to 'Download', url_for(@project.design_document), class: 'btn btn-primary mt-2' %></p>
+    <p>Design Document: <%= link_to @project.design_document.filename, url_for(@project.design_document), class: 'btn btn-primary mt-2' %></p>
   <% else %>
     <p>No design document attached.</p>
   <% end %>
   <% if @project.srs_document.attached? %>
-    <p>SRS Document: <%= link_to 'Download', url_for(@project.srs_document), class: 'btn btn-primary mt-2' %></p>
+    <p>SRS Document: <%= link_to @project.srs_document.filename, url_for(@project.srs_document), class: 'btn btn-primary mt-2' %></p>
   <% else %>
     <p>No SRS document attached.</p>
   <% end %>
@@ -32,16 +32,9 @@
     <% end %>
   </div>
   <hr>
-  <% if current_user == @project.user %>
-    <% unless @project.completed? %>
-      <%= link_to edit_project_path(@project), class: "btn btn-warning mt-2 mx-2" do %>
-        Edit <i class="bi bi-pencil"></i>
-      <% end %>
-      <% if @project.has_awarded_bid %>
-        <%= link_to complete_project_path(@project), class: "btn btn-danger mt-2" do %>
-          Mark as complete <i class="bi bi-stars"></i>
-        <% end %>
-      <% end %>
+  <% if current_user == @project.user && !@project.has_awarded_bid? %>
+    <%= link_to edit_project_path(@project), class: "btn btn-warning mt-2 mx-2" do %>
+      Edit <i class="bi bi-pencil"></i>
     <% end %>
   <% end %>
   <% if freelancer? %>
@@ -51,7 +44,7 @@
         New Bid <i class="bi bi-plus-circle-dotted"></i>
       <% end %>
     <% else %>
-      <% unless @project.completed? %>
+      <% unless @project.has_awarded_bid? %>
         <div class="alert alert-warning">Project has already been awarded</div>
       <% end %>
     <% end %>

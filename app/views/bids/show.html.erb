@@ -32,18 +32,16 @@
     <% end %>
   </dl>
   <hr>
-  <% unless @bid.project.completed? %>
-    <% if (current_user == @bid.user || admin?) %>
-      <% if @bid.modifiable? %>
-        <%= link_to edit_bid_path(@bid), class: "btn btn-primary mt-2" do %>
-          Edit this bid <i class="bi bi-pencil"></i>
-        <% end %>
-      <% elsif @bid.accepted? %>
-        <%= link_to edit_bid_path(@bid), class: "btn btn-info mt-2" do %>
-          Submit project files <i class="bi bi-upload"></i>
-        <% end %>
-      <% else %>
+  <% if (current_user == @bid.user || admin?) %>
+    <% if @bid.modifiable? %>
+      <%= link_to edit_bid_path(@bid), class: "btn btn-primary mt-2" do %>
+        Edit this bid <i class="bi bi-pencil"></i>
       <% end %>
+    <% elsif @bid.accepted? %>
+      <%= link_to edit_bid_path(@bid), class: "btn btn-info mt-2" do %>
+        Submit project files <i class="bi bi-upload"></i>
+      <% end %>
+    <% else %>
     <% end %>
   <% end %>
 </div>
