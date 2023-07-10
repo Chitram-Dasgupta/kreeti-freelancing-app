@@ -1,12 +1,23 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
-  include Searchable
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   def as_indexed_json(_options = {})
     as_json(
+      only: %i[id title description user_id created_at updated_at visibility has_awarded_bid],
       include: { categories: { only: :name } }
     )
+  end
+
+  settings index: { number_of_shards: 1 } do
+    mapping dynamic: 'false' do
+      indexes :visibility
+      indexes :categories, type: :nested do
+        indexes :name, type: :text
+      end
+    end
   end
 
   enum visibility: { pub: 0, priv: 1 }
@@ -32,7 +43,7 @@ class Project < ApplicationRecord
     where.not(id: Bid.where(bid_status: :accepted).select(:project_id))
   }
 
-  default_scope { order(:created_at) }
+  # default_scope { order(:created_at) }
 
   def self.all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
@@ -40,7 +51,6 @@ class Project < ApplicationRecord
      'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
   end
 
-  # rubocop:disable Metrics/MethodLength
   def self.search_projects(category_name)
     search_definition = {
       query: {
@@ -68,7 +78,6 @@ class Project < ApplicationRecord
 
     __elasticsearch__.search(search_definition)
   end
-  # rubocop:enable Metrics/MethodLength
 
   def bid_awarded?
     bids.exists?(bid_status: 'accepted')
