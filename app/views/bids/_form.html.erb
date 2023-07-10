@@ -1,10 +1,5 @@
 <%= form_with(model: @bid, url: options[:url], local: true) do |form| %>
   <div class="mb-3">
-    <%= form.label :bid_name, class: 'form-label' %>
-    <%= form.text_field :bid_name, class: 'form-control' %>
-    <%= render 'shared/field_errors', object: @bid, field: :bid_name %>
-  </div>
-  <div class="mb-3">
     <%= form.label :bid_description, class: 'form-label' %>
     <%= form.text_area :bid_description, class: 'form-control' %>
   </div>

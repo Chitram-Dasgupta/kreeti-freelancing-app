@@ -12,7 +12,6 @@ class Bid < ApplicationRecord
 
   enum bid_status: { pending: 0, accepted: 1, rejected: 2 }
 
-  validates :bid_name, presence: true
   validates :bid_amount, presence: true, numericality: { greater_than: 0, less_than: 1_000_000 }
   validates :user_id, uniqueness: { scope: :project_id }
 

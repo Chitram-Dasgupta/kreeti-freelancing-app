@@ -98,7 +98,7 @@ class BidsController < ApplicationController
   end
 
   def bid_params
-    params.require(:bid).permit(:bid_name, :bid_description, :bid_amount, :project_id, :user_id, :bid_code_document,
+    params.require(:bid).permit(:bid_description, :bid_amount, :project_id, :user_id, :bid_code_document,
                                 :bid_design_document, :bid_other_document)
   end
 end

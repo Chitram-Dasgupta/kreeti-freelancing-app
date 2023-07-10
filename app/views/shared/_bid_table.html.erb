@@ -1,7 +1,6 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Bid Name</th>
       <th>Bid Description</th>
       <th>Bid Amount</th>
       <th>By</th>
@@ -12,7 +11,6 @@
   <tbody>
     <% @bids.each do |bid| %>
       <tr>
-        <td><%= bid.bid_name %></td>
         <td><%= bid.bid_description %></td>
         <td><%= bid.bid_amount %></td>
         <td><%= bid.user.username %></td>
