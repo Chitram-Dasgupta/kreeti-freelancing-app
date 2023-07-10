@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include Searchable
 
   def as_indexed_json(_options = {})
     as_json(
-      only: %i[id username email role created_at updated_at visibility],
+      only: %i[id username email role visibility],
       include: { categories: { only: :name } }
     )
   end

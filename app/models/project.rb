@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include Searchable
 
   def as_indexed_json(_options = {})
     as_json(
-      only: %i[id title description user_id created_at updated_at visibility has_awarded_bid],
+      only: %i[id title description user_id visibility has_awarded_bid],
       include: { categories: { only: :name } }
     )
   end
@@ -51,6 +50,7 @@ class Project < ApplicationRecord
      'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
   end
 
+  # rubocop:disable Metrics/MethodLength
   def self.search_projects(category_name)
     search_definition = {
       query: {
@@ -78,6 +78,7 @@ class Project < ApplicationRecord
 
     __elasticsearch__.search(search_definition)
   end
+  # rubocop:enable Metrics/MethodLength
 
   def bid_awarded?
     bids.exists?(bid_status: 'accepted')
