@@ -5,8 +5,7 @@ class Project < ApplicationRecord
 
   def as_indexed_json(_options = {})
     as_json(
-      include: { categories: { only: :name } },
-      methods: :has_awarded_bid
+      include: { categories: { only: :name } }
     )
   end
 
