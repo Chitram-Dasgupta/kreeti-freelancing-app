@@ -15,7 +15,7 @@ class Project < ApplicationRecord
     mapping dynamic: 'false' do
       indexes :visibility
       indexes :categories, type: :nested do
-        indexes :name, type: :text
+        indexes :name
       end
     end
   end
@@ -43,7 +43,7 @@ class Project < ApplicationRecord
     where.not(id: Bid.where(bid_status: :accepted).select(:project_id))
   }
 
-  # default_scope { order(:created_at) }
+  default_scope { order(:created_at) }
 
   def self.all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
@@ -60,7 +60,7 @@ class Project < ApplicationRecord
               nested: {
                 path: 'categories',
                 query: {
-                  match: {
+                  match_phrase: {
                     'categories.name': category_name
                   }
                 }
