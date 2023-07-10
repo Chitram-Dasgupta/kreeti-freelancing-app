@@ -16,9 +16,15 @@
         <td><%= bid.user.username %></td>
         <td>
           <% if bid.accepted? %>
-            <div class="alert alert-success">
-              This bid is awarded
-            </div>
+            <% if bid.project_files_uploaded? %>
+              <div class="alert alert-success">
+                Project files successfully submitted
+              </div>
+            <% else %>
+              <div class="alert alert-info">
+                This bid is awarded. Submit the project files
+              </div>
+            <% end %>
           <% elsif bid.rejected? %>
             <div class="alert alert-danger">
               This bid is rejected
