@@ -2,7 +2,7 @@
   <div class="mb-3">
     <%= form.label :search, 'Search by category:', class: 'form-label' %>
     <div class="col-sm-6">
-      <%= form.text_field :search, class: 'form-control' %>
+      <%= form.select :search, Category.all.collect {|c| [c.name, c.name]}, {}, class: 'form-control' %>
     </div>
   </div>
   <div class="mt-3">
