@@ -1,12 +1,24 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Searchable
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   def as_indexed_json(_options = {})
     as_json(
+      only: %i[id username email role created_at updated_at visibility],
       include: { categories: { only: :name } }
     )
+  end
+
+  settings index: { number_of_shards: 1 } do
+    mapping dynamic: 'false' do
+      indexes :visibility
+      indexes :role
+      indexes :categories, type: :nested do
+        indexes :name
+      end
+    end
   end
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -89,7 +101,7 @@ class User < ApplicationRecord
               nested: {
                 path: 'categories',
                 query: {
-                  match: {
+                  match_phrase: {
                     'categories.name': category_name
                   }
                 }
