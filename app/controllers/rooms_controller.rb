@@ -2,8 +2,9 @@
 
 class RoomsController < ApplicationController
   def index
-    @rooms = Room.joins(:user_rooms).where('user_rooms.user1_id = ? OR user_rooms.user2_id = ?', current_user.id,
-                                           current_user.id).page params[:page]
+    current_user_id = current_user.id
+    @rooms = Room.joins(:user_rooms).where('user_rooms.user1_id = ? OR user_rooms.user2_id = ?', current_user_id,
+                                           current_user_id).page params[:page]
   end
 
   def show

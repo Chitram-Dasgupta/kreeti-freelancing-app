@@ -2,20 +2,22 @@
 
 class UsersController < ApplicationController
   skip_before_action :require_authorization, only: %i[new create show confirm_email search]
-  before_action :set_user, only: %i[show edit update destroy approve reject]
+  before_action :set_user, only: %i[show edit update destroy approve reject approve reject]
   before_action :require_authorization, only: %i[destroy]
   before_action :find_user_by_confirmation_token, only: %i[confirm_email]
+  before_action :require_admin, only: %i[approve reject manage_registrations]
 
   def index
     if admin?
-      @users = User.approved_users.page params[:page]
+      @users = User.approved_users.where.not(role: 'admin').page params[:page]
     else
       redirect_to new_user_path
     end
   end
 
   def show
-    return unless @user.visibility == 'priv' && @user != current_user
+    @user = User.visible_to(current_user).find_by(id: params[:id])
+    return if @user.present?
 
     redirect_to root_path, flash: { error: 'You don\'t have permission to view this profile.' }
   end
@@ -66,24 +68,24 @@ class UsersController < ApplicationController
   end
 
   def approve
-    @user = User.find(params[:id])
     @user.update(status: 'approved')
     UserMailer.account_activation(@user).deliver_later
     redirect_to users_path, flash: { success: 'User approved.' }
   end
 
   def reject
-    @user = User.find(params[:id])
     @user.update(status: 'rejected', confirmation_token: nil)
     redirect_to users_path, flash: { success: 'User rejected.' }
   end
 
   def search
-    @users = if params[:search].present?
-               User.search_freelancer(params[:search]).records.page params[:page]
+    search_term = params[:search]
+    @users = if search_term.present?
+               User.search_freelancer(search_term).records
              else
-               User.where(role: 'freelancer', visibility: 'pub').page params[:page]
+               User.where(role: 'freelancer', visibility: 'pub')
              end
+    @users = @users.page params[:page]
   end
 
   def manage_registrations

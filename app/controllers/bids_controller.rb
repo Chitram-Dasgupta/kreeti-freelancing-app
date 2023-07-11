@@ -6,10 +6,11 @@ class BidsController < ApplicationController
 
   def index
     @bids = if admin?
-              Bid.all.order(created_at: :asc).page params[:page]
+              Bid.all
             else
-              Bid.recent_by_user(current_user).page params[:page]
+              current_user.bids
             end
+    @bids = @bids.page params[:page]
   end
 
   def show; end
@@ -68,24 +69,27 @@ class BidsController < ApplicationController
   private
 
   def set_bid
+    id_param = params[:id]
     @bid = if freelancer?
-             current_user.bids.find_by(id: params[:id])
+             current_user.bids.find_by(id: id_param)
            else
-             Bid.find_by(id: params[:id])
+             Bid.find_by(id: id_param)
            end
   end
 
   def files_present?
-    return false if params[:bid].nil?
+    bid = params[:bid]
+    return false if bid.nil?
 
-    [params[:bid][:bid_code_document], params[:bid][:bid_design_document], params[:bid][:bid_other_document]]
+    [bid[:bid_code_document], bid[:bid_design_document], bid[:bid_other_document]]
       .count(&:present?).positive?
   end
 
   def attach_files
-    @bid.bid_code_document.attach(params[:bid][:bid_code_document])
-    @bid.bid_design_document.attach(params[:bid][:bid_design_document])
-    @bid.bid_other_document.attach(params[:bid][:bid_other_document])
+    bid = params[:bid]
+    @bid.bid_code_document.attach(bid[:bid_code_document])
+    @bid.bid_design_document.attach(bid[:bid_design_document])
+    @bid.bid_other_document.attach(bid[:bid_other_document])
     @bid.upload_project_files
   end
 

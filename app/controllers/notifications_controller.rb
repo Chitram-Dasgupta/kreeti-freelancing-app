@@ -9,8 +9,9 @@ class NotificationsController < ApplicationController
   end
 
   def fetch_notifications
-    limit = params[:limit] || current_user.notifications.count
-    notifications = current_user.notifications.includes(:project, :bid).order(created_at: :desc).limit(limit)
+    current_notifications = current_user.notifications
+    limit = params[:limit] || current_notifications.count
+    notifications = current_notifications.includes(:project, :bid).limit(limit)
     render json: notifications.to_json(include: { project: { only: :title },
                                                   bid: { only: :bid_status } })
   end

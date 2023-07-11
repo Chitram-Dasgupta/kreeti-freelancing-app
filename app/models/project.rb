@@ -36,13 +36,7 @@ class Project < ApplicationRecord
 
   delegate :username, to: :user
 
-  scope :recent_by_user, ->(user) { where(user:).order(created_at: :desc).limit(6) }
-
-  scope :recent, -> { order(created_at: :desc).limit(5) }
-
-  scope :without_awarded_bids, lambda {
-    where.not(id: Bid.where(bid_status: :accepted).select(:project_id))
-  }
+  scope :visible_to, ->(user) { where.not(visibility: 'priv').or(where(user:)) }
 
   default_scope { order(:created_at) }
 

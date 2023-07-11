@@ -8,11 +8,11 @@
       <% end %>
       <h3 class="my-3">Your submitted projects</h3>
     <% end %>
-    <% if @recent_projects.empty? %>
+    <% if @user_projects.empty? %>
       <div class="alert alert-info">You have not submitted any projects.</div>
     <% else %>
-      <%= render 'shared/project_table', projects: @recent_projects %>
+      <%= render 'shared/project_table', projects: @user_projects %>
     <% end %>
-    <%= paginate @recent_projects %>
+    <%= paginate @user_projects %>
   </div>
 <% end %>

@@ -18,14 +18,13 @@ class Bid < ApplicationRecord
   validates :user_id, uniqueness: { scope: :project_id }
 
   delegate :username, to: :user
-
-  scope :recent_by_user, ->(user) { where(user_id: user.id).order(created_at: :desc).limit(5) }
+  delegate :title, to: :project, prefix: true
 
   default_scope { order(:created_at) }
 
   def accept
     update(bid_status: 'accepted')
-    project.bids.where.not(id:).find_each { |b| b.update(bid_status: 'rejected') }
+    project.bids.where.not(id:).find_each { |other_bid| other_bid.update(bid_status: 'rejected') }
   end
 
   def reject

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :messages, only: %i[create]
   end
 
-  resources :notifications do
+  resources :notifications, only: [] do
     collection do
       get 'count'
       get 'fetch_notifications'
@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :categories
+  resources :categories, except: %i[show]
 
   get 'admin/manage_registrations', to: 'admin#manage_registrations'
 

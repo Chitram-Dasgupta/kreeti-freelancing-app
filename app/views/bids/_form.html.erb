@@ -1,4 +1,4 @@
-<%= form_with(model: @bid, url: options[:url], local: true) do |form| %>
+<%= form_with(model: bid, local: true) do |form| %>
   <div class="mb-3">
     <%= form.label :bid_description, class: 'form-label' %>
     <%= form.text_area :bid_description, class: 'form-control' %>
@@ -6,9 +6,9 @@
   <div class="mb-3">
     <%= form.label :bid_amount, class: 'form-label' %>
     <%= form.number_field :bid_amount, step: 0.01, class: 'form-control' %>
-    <%= render 'shared/field_errors', object: @bid, field: :bid_amount %>
+    <%= render 'shared/field_errors', object: bid, field: :bid_amount %>
   </div>
-  <% if options[:new_record] %>
+  <% if new_record %>
     <%= form.hidden_field :user_id, value: current_user.id %>
     <%= form.hidden_field :project_id, value: @project.id %>
   <% end %>

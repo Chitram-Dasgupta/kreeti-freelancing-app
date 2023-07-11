@@ -1,5 +1,5 @@
 <div class="mx-2">
   <h1>Create a new bid</h1>
   <p>Go ahead and create a new bid to find freelancers from around the world!</p>
-  <%= render partial: 'form', locals: {options: {url: bids_path, new_record: true}} %>
+  <%= render 'form', bid: @bid, new_record: true %>
 </div>

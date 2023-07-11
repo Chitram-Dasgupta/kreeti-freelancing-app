@@ -10,11 +10,11 @@
       </tr>
     </thead>
     <tbody>
-      <% @bids.each do |bid| %>
+      <% bids.each do |bid| %>
         <tr>
           <td><%= bid.bid_description %></td>
           <td><%= bid.bid_amount %></td>
-          <td><%= bid.user.username %></td>
+          <td><%= bid.username %></td>
           <td>
             <% if bid.accepted? %>
               <% if bid.project_files_uploaded? %>

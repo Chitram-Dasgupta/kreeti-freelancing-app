@@ -54,7 +54,7 @@ class User < ApplicationRecord
 
   validates :experience, numericality: { only_integer: true, allow_nil: true, less_than_or_equal_to: 100 }
 
-  validates :role, presence: true
+  validates :role, presence: true, inclusion: { in: %w[freelancer client] }
 
   enum role: { client: 0, freelancer: 1, admin: 2 }
   enum visibility: { pub: 0, priv: 1 }
@@ -62,6 +62,7 @@ class User < ApplicationRecord
 
   scope :pending_users, -> { where(status: 'pending') }
   scope :approved_users, -> { where(status: 'approved') }
+  scope :visible_to, ->(user) { where.not(visibility: 'priv').or(where(id: user.id)) }
 
   default_scope { order(:created_at) }
 

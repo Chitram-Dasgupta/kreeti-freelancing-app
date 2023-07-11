@@ -8,15 +8,15 @@ class ProjectsController < ApplicationController
     if admin?
       @projects = Project.all.page params[:page]
     else
-      @recent_projects = Project.recent_by_user(current_user).page params[:page]
+      @user_projects = current_user.projects.page params[:page]
     end
   end
 
   def show
-    @project = Project.find_by(id: params[:id])
+    @project = Project.visible_to(current_user).find_by(id: params[:id])
     @bids = @project.bids.where.not(bid_status: 'rejected').page params[:page]
 
-    return unless @project.visibility == 'priv' && @project.user != current_user
+    return if @project.present?
 
     redirect_to search_projects_path, flash: { error: 'You don\'t have permission to view this project.' }
   end
@@ -56,20 +56,23 @@ class ProjectsController < ApplicationController
   end
 
   def search
-    @projects = if params[:search].present?
-                  Project.search_projects(params[:search]).records.page params[:page]
+    search_term = params[:search]
+    @projects = if search_term.present?
+                  Project.search_projects(search_term).records
                 else
-                  Project.where(visibility: 'pub').page params[:page]
+                  Project.where(visibility: 'pub')
                 end
+    @projects = @projects.page params[:page]
   end
 
   private
 
   def current_user_project
+    id_param = params[:id]
     @project = if admin?
-                 Project.find_by(id: params[:id])
+                 Project.find_by(id: id_param)
                else
-                 current_user.projects.find(params[:id])
+                 current_user.projects.find_by(id: id_param)
                end
   end
 

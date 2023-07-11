@@ -1,7 +1,7 @@
 <% unless @bid.accepted? %>
   <div class="mx-2">
     <h2>Edit your bid</h2>
-    <%= render partial: 'form', locals: {options: {url: bid_path(@bid), new_record: false}} %>
+    <%= render 'form', bid: @bid, new_record: false %>
   </div>
 <% else %>
   <h2>Submit your project files</h2>
