@@ -25,11 +25,15 @@
       <% end %>
     <% end %>
   </div>
-  <div class="mt-2">
+  <div class="my-2">
     <strong class="mt-4">Categories:</strong>
     <% @project.categories.each do |cat| %>
       <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
     <% end %>
+  </div>
+  <div>
+    <strong>By: </strong>
+    <%= @project.user.username %>
   </div>
   <hr>
   <% if current_user == @project.user && !@project.has_awarded_bid? %>

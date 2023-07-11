@@ -2,36 +2,28 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Project Title</th>
-        <th>Project Description</th>
+        <th>Username</th>
+        <th>Email</th>
         <th>Categories</th>
-        <th>Has awarded bid?</th>
         <th>Show</th>
       </tr>
     </thead>
     <tbody>
-      <% projects.each do |project| %>
+      <% users.each do |user| %>
         <tr>
-          <td><%= project.title %></td>
-          <td><%= project.description %></td>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
           <td>
-            <% if project.categories.empty? %>
+            <% if user.categories.empty? %>
               No categories available
             <% else %>
-              <% project.categories.each do |cat| %>
+              <% user.categories.each do |cat| %>
                 <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
               <% end %>
             <% end %>
           </td>
           <td>
-            <% if project.has_awarded_bid %>
-              <i class="bi bi-check-circle"></i>
-            <% else %>
-              <i class="bi bi-x-circle"></i>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to project, class: "btn btn-primary btn-sm" do %>
+            <%= link_to user, class: "btn btn-primary btn-sm" do %>
               <i class="bi bi-arrow-right-circle"></i>
             <% end %>
           </td>

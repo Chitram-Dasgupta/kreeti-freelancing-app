@@ -1,6 +1,4 @@
 <%= render 'shared/search_form', search_path: search_users_path %>
-<div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
-  <% @users.each do |u| %>
-    <%= render 'user_card', user: u %>
-  <% end %>
+<div class="my-3">
+<%= render 'user_table', users: @users %>
 </div>
