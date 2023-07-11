@@ -20,8 +20,6 @@ This app was created with:
 
 * **elasticsearch 7.17.7**
 
-* **redis 7.0.11**
-
 So, it is absolutely necessary that you have the correct version of the above
 mentioned software installed on your local system.
 
@@ -106,5 +104,3 @@ Project.import force: true
 ```sh
 rails s
 ```
-
-Open the browser and navigate to `localhost:3000`
