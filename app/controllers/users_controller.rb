@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def index
     if admin?
-      @users = User.approved
+      @users = User.approved.page params[:page]
       @pending_users = User.pending
     else
       redirect_to new_user_path

@@ -16,11 +16,6 @@
       <h6 class="card-subtitle text-muted"><%= user.role %></h6>
       <h6 class="card-title text-muted"><%= user.email %></h6>
       <p class="text-start">
-        <% if !freelancer? && user.status != 'pending' && user.status != 'rejected' %>
-          <%= link_to rooms_path(user_id: user.id), method: :post, class: 'btn btn-secondary mt-1' do %>
-            Chat <i class="bi bi-chat-dots-fill"></i>
-          <% end %>
-        <% end %>
         <%= render 'shared/profile_picture', user:, size: '320x320' %>
         <p class="card-text"><%= user.visibility_status %></p>
         <% user.categories.each do |cat| %>

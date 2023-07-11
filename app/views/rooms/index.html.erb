@@ -8,4 +8,5 @@
   <% @rooms.each do |room| %>
     <%= render 'conversation_card', room: %>
   <% end %>
+  <%= paginate @rooms %>
 <% end %>

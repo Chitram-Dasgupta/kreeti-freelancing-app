@@ -6,6 +6,7 @@
         <%= render 'project_card', project: p %>
       </div>
     <% end %>
+    <%= paginate @projects %>
   </div>
 <% else %>
   <div class="mt-3">
@@ -20,5 +21,6 @@
     <% else %>
       <%= render 'shared/project_table', projects: @recent_projects %>
     <% end %>
+    <%= paginate @recent_projects %>
   </div>
 <% end %>

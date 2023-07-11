@@ -20,5 +20,6 @@
     <% else %>
       <%= render 'shared/bid_table', bids: @bids %>
     <% end %>
+    <%= paginate @bids %>
   </div>
 <% end %>

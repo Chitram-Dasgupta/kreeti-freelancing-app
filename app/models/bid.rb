@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Bid < ApplicationRecord
+  paginates_per 12
+
   belongs_to :user
   belongs_to :project
 

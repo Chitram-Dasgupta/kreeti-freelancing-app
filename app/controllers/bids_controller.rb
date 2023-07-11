@@ -5,12 +5,11 @@ class BidsController < ApplicationController
   before_action :set_bid, only: %i[show edit update destroy accept reject files_upload]
 
   def index
-    if admin?
-      @bids = Bid.all.order(created_at: :asc)
-    else
-      @bids = Bid.recent_by_user(current_user)
-      @recent_projects = Project.recent
-    end
+    @bids = if admin?
+              Bid.all.order(created_at: :asc).page params[:page]
+            else
+              Bid.recent_by_user(current_user).page params[:page]
+            end
   end
 
   def show; end

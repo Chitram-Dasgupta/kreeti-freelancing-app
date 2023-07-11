@@ -20,7 +20,7 @@ class User < ApplicationRecord
     end
   end
 
-  paginates_per 15
+  paginates_per 12
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

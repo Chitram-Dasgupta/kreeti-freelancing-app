@@ -19,7 +19,7 @@ class Project < ApplicationRecord
     end
   end
 
-  paginates_per 15
+  paginates_per 12
 
   enum visibility: { pub: 0, priv: 1 }
 

@@ -6,15 +6,15 @@ class ProjectsController < ApplicationController
 
   def index
     if admin?
-      @projects = Project.all
+      @projects = Project.all.page params[:page]
     else
-      @recent_projects = Project.recent_by_user(current_user)
+      @recent_projects = Project.recent_by_user(current_user).page params[:page]
     end
   end
 
   def show
     @project = Project.find_by(id: params[:id])
-    @bids = @project.bids.where.not(bid_status: 'rejected')
+    @bids = @project.bids.where.not(bid_status: 'rejected').page params[:page]
 
     return unless @project.visibility == 'priv' && @project.user != current_user
 

@@ -17,11 +17,11 @@
         <hr>
       <% end %>
       <hr>
-      <% if (admin? || client?) && !bid.accepted? %>
+      <% if client? && !bid.accepted? %>
         <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-primary mt-2' %>
         <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger mt-2' %>
+        <hr>
       <% end %>
-      <hr>
       <%= link_to bid, class: "btn btn-primary btn-sm" do %>
         Show <i class="bi bi-arrow-right-circle"></i>
       <% end %>

@@ -12,4 +12,5 @@
   <% @users.each do |user| %>
     <%= render 'user_card', user: %>
   <% end %>
+  <%= paginate @users %>
 </div>

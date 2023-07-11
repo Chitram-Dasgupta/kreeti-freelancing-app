@@ -1,41 +1,5 @@
-<div class="container mt-3">
-  <h1 class="mb-3"><%= @project.title %></h1>
-  <h5 class="text-muted mb-3"><%= @project.description %></h5>
-  <% if @project.has_awarded_bid? %>
-    <div class="alert alert-warning">Project has awarded bid</div>
-  <% end %>
-  <hr>
-  <% if @project.design_document.attached? %>
-    <p>Design Document: <%= link_to @project.design_document.filename, url_for(@project.design_document), class: 'btn btn-primary mt-2' %></p>
-  <% else %>
-    <p>No design document attached.</p>
-  <% end %>
-  <% if @project.srs_document.attached? %>
-    <p>SRS Document: <%= link_to @project.srs_document.filename, url_for(@project.srs_document), class: 'btn btn-primary mt-2' %></p>
-  <% else %>
-    <p>No SRS document attached.</p>
-  <% end %>
-  <div>
-    <strong>Skills:</strong>
-    <% if @project.skills.empty? %>
-      No skills available
-    <% else %>
-      <% @project.skills.each do |skill| %>
-        <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= skill %></span>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="my-2">
-    <strong class="mt-4">Categories:</strong>
-    <% @project.categories.each do |cat| %>
-      <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
-    <% end %>
-  </div>
-  <div>
-    <strong>By: </strong>
-    <%= @project.user.username %>
-  </div>
-  <hr>
+<div class="mt-3">
+  <%= render 'project_display', project: @project %>
   <% if current_user == @project.user && !@project.has_awarded_bid? %>
     <%= link_to edit_project_path(@project), class: "btn btn-warning mt-2 mx-2" do %>
       Edit <i class="bi bi-pencil"></i>
@@ -55,4 +19,5 @@
   <% end%>
   <h2 class="my-4">Bids:</h2>
   <%= render 'shared/bid_table', bids: @bids %>
+  <%= paginate @bids %>
 </div>
