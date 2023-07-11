@@ -1,0 +1,7 @@
+<% unless project.bid_awarded? %>
+  <%= display_project_action('New Bid', new_bid_path(project_id: project.id), 'plus-circle-dotted', 'primary') %>
+<% else %>
+  <% unless project.has_awarded_bid? %>
+    <div class="alert alert-warning">Project has already been awarded</div>
+  <% end %>
+<% end %>

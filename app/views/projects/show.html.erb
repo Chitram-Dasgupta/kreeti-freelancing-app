@@ -1,28 +1,15 @@
 <div class="mt-3">
   <%= render 'project_display', project: @project %>
   <% if current_user == @project.user && !@project.has_awarded_bid? %>
-    <%= link_to edit_project_path(@project), class: "btn btn-warning mt-2 mx-2" do %>
-      Edit <i class="bi bi-pencil"></i>
-    <% end %>
+    <%= display_project_action('Edit', edit_project_path(@project), 'pencil', 'warning') %>
   <% end %>
   <% if freelancer? %>
     <p class="card-text">by <%= @project.username %></p>
-    <% unless @project.bid_awarded? %>
-      <%= link_to new_bid_path(project_id: @project.id), class: 'btn btn-primary mt-2' do %>
-        New Bid <i class="bi bi-plus-circle-dotted"></i>
-      <% end %>
-    <% else %>
-      <% unless @project.has_awarded_bid? %>
-        <div class="alert alert-warning">Project has already been awarded</div>
-      <% end %>
-    <% end %>
+    <%= render 'freelancer_actions', project: @project %>
   <% end%>
   <% if @project.has_awarded_bid? && current_user == @project.user %>
-    <%= link_to rooms_path(user_id: @project.accepted_bid_freelancer.id), method: :post, class: 'btn btn-info mt-2' do %>
-      Chat <i class="bi bi-chat-dots"></i>
-    <% end %>
+    <%= display_project_action('Chat', rooms_path(user_id: @project.accepted_bid_freelancer.id), 'chat-dots', 'info') %>
   <% end %>
-  <h2 class="my-4">Bids:</h2>
   <%= render 'shared/bid_table', bids: @bids %>
   <%= paginate @bids %>
 </div>
