@@ -17,6 +17,11 @@
       <% end %>
     <% end %>
   <% end%>
+  <% if @project.has_awarded_bid? && current_user == @project.user %>
+    <%= link_to rooms_path(user_id: @project.accepted_bid_freelancer.id), method: :post, class: 'btn btn-info mt-2' do %>
+      Chat <i class="bi bi-chat-dots"></i>
+    <% end %>
+  <% end %>
   <h2 class="my-4">Bids:</h2>
   <%= render 'shared/bid_table', bids: @bids %>
   <%= paginate @bids %>

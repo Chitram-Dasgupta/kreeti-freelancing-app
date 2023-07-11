@@ -91,4 +91,8 @@ class Project < ApplicationRecord
 
     'Private'
   end
+
+  def accepted_bid_freelancer
+    bids.where(bid_status: :accepted).first&.user
+  end
 end
