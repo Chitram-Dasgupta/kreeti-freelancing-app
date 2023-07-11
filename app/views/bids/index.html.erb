@@ -1,12 +1,5 @@
 <% if admin? %>
-  <h2>Manage bids</h2>
-  <div class="row">
-    <% @bids.each do |bid| %>
-      <div class="col-lg-4">
-        <%= render 'bid_card', bid: %>
-      </div>
-    <% end %>
-  </div>
+  <%= render 'manage_bids', bids: @bids %>
 <% else %>
   <div>
     <%= link_to search_projects_path, class: 'btn btn-primary mb-2' do %>

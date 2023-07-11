@@ -1,0 +1,9 @@
+<h2>Manage bids</h2>
+<div class="row">
+  <% bids.each do |bid| %>
+    <div class="col-lg-4">
+      <%= render 'bid_card', bid: %>
+    </div>
+  <% end %>
+</div>
+<%= paginate bids %>
