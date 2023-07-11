@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveProjectCompletedFromProjects < ActiveRecord::Migration[6.1]
   def change
     remove_column :projects, :project_completed, :boolean
