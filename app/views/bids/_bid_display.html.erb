@@ -1,33 +1,12 @@
 <h5 class="text-muted mb-3"><%= bid.bid_description %></h5>
 <hr>
-<dl class="row mb-3">
-  <dt class="col-sm-3">Amount:</dt>
-  <dd class="col-sm-9"><%= bid.bid_amount %></dd>
-  <dt class="col-sm-3">Status:</dt>
-  <dd class="col-sm-9"><%= bid.bid_status %></dd>
-  <dt class="col-sm-3">Project:</dt>
-  <dd class="col-sm-9"><%= link_to bid.project_title, bid.project, class: 'text-decoration-none text-white btn btn-primary' %></dd>
-  <dt class="col-sm-3">By:</dt>
-  <dd class="col-sm-9"><%= bid.username %></dd>
-  <% if bid.project.user == current_user || bid.user == current_user %>
-    <% if bid.bid_code_document.attached? %>
-      <dt>Code Document:</dt>
-      <dd><%= link_to bid.bid_code_document.filename, url_for(bid.bid_code_document), class: 'btn btn-secondary mt-2' %></dd>
-    <% else %>
-      <dd>No code document attached.</dd>
-    <% end %>
-    <% if bid.bid_design_document.attached? %>
-      <dt>Code Document:</dt>
-      <dd><%= link_to bid.bid_design_document.filename, url_for(bid.bid_design_document), class: 'btn btn-secondary mt-2' %></dd>
-    <% else %>
-      <dd>No design document attached.</dd>
-    <% end %>
-    <% if bid.bid_other_document.attached? %>
-      <dt>Code Document:</dt>
-      <dd><%= link_to bid.bid_other_document.filename, url_for(bid.bid_other_document), class: 'btn btn-secondary mt-2' %></dd>
-    <% else %>
-      <dd>No other document attached.</dd>
-    <% end %>
-  <% end %>
-</dl>
+<%= render 'row', label: 'Amount', value: bid.bid_amount %>
+<%= render 'row', label: 'Status', value: bid.bid_status %>
+<%= render 'row', label: 'Project', value: link_to(bid.project_title, bid.project, class: 'text-decoration-none text-white btn btn-primary') %>
+<%= render 'row', label: 'By', value: bid.username %>
+<% if bid.project.user == current_user || bid.user == current_user %>
+  <%= display_document(bid, :code) %>
+  <%= display_document(bid, :design) %>
+  <%= display_document(bid, :other) %>
+<% end %>
 <hr>

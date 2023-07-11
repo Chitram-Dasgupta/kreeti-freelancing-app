@@ -4,20 +4,5 @@
     <%= render 'form', bid: @bid, new_record: false %>
   </div>
 <% else %>
-  <h2>Submit your project files</h2>
-  <%= form_with model: @bid, url: files_upload_bid_path(@bid), local: true, multipart: true do |form| %>
-    <div class="mb-3">
-      <%= form.label :bid_code_document, class: 'form-label' %>
-      <%= form.file_field :bid_code_document, class: 'form-control' %>
-    </div>
-    <div class="mb-3">
-      <%= form.label :bid_design_document, class: 'form-label' %>
-      <%= form.file_field :bid_design_document, class: 'form-control' %>
-    </div>
-    <div class="mb-3">
-      <%= form.label :bid_other_document, class: 'form-label' %>
-      <%= form.file_field :bid_other_document, class: 'form-control' %>
-    </div>
-    <%= form.submit class: 'btn btn-primary' %>
-  <% end %>
+  <%= render 'file_upload_form', bid: @bid %>
 <% end %>

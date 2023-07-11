@@ -1,17 +1,4 @@
 <div class="mx-2 my-3">
   <%= render 'bid_display', bid: @bid %>
-  <% if (current_user == @bid.user || admin?) %>
-    <% if @bid.modifiable? %>
-      <%= link_to edit_bid_path(@bid), class: "btn btn-warning mt-2" do %>
-        Edit this bid <i class="bi bi-pencil"></i>
-      <% end %>
-    <% elsif @bid.accepted? %>
-      <%= link_to edit_bid_path(@bid), class: "btn btn-info mt-2" do %>
-        Submit project files <i class="bi bi-upload"></i>
-      <% end %>
-      <%= link_to rooms_path(user_id: @bid.project.user_id), method: :post, class: 'btn btn-primary ms-1 mt-2' do %>
-        Chat <i class="bi bi-chat-dots"></i>
-      <% end %>
-    <% end %>
-  <% end %>
+  <%= display_bid_actions(@bid) %>
 </div>
