@@ -19,6 +19,8 @@ class Project < ApplicationRecord
     end
   end
 
+  paginates_per 15
+
   enum visibility: { pub: 0, priv: 1 }
 
   belongs_to :user

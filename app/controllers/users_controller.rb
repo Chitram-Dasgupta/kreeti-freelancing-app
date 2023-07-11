@@ -81,9 +81,9 @@ class UsersController < ApplicationController
 
   def search
     @users = if params[:search].present?
-               User.search_freelancer(params[:search]).records
+               User.search_freelancer(params[:search]).records.page params[:page]
              else
-               User.where(role: 'freelancer', visibility: 'pub')
+               User.where(role: 'freelancer', visibility: 'pub').page params[:page]
              end
   end
 
