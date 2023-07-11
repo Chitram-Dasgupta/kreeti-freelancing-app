@@ -4,12 +4,8 @@
       <% if user.status == 'pending' && admin? %>
         <div class="alert alert-danger">User's registration is pending</div>
         <div>
-          <%= link_to approve_user_path(user), method: :post, class: 'btn btn-success mt-1' do %>
-            Approve <i class="bi bi-check-lg"></i>
-          <% end %>
-          <%= link_to reject_user_path(user), method: :post, class: 'btn btn-danger mt-1' do %>
-            Reject <i class="bi bi-x-lg"></i>
-          <% end %>
+          <%= display_bid_action('Approve', approve_user_path(user), 'check-lg', 'success') %>
+          <%= display_bid_action('Reject', reject_user_path(user), 'x-lg', 'danger') %>
         </div>
       <% end %>
       <h5 class="card-title mt-2"><%= link_to user.username, user, class: 'text-decoration-none' %></h5>
@@ -25,15 +21,9 @@
       <% if admin? %>
         <div class="mb-2">
           <% if user.status == 'approved' %>
-            <%= link_to user, class: "btn btn-primary mt-2" do %>
-              Show <i class="bi bi-arrow-right-circle"></i>
-            <% end %>
-            <%= link_to edit_user_path(user), class: "btn btn-warning mt-2" do %>
-              Edit <i class="bi bi-pencil"></i>
-            <% end %>
-          <% end %>
-          <%= link_to user_path(user), class: "btn btn-danger mt-2", method: :delete, data: { confirm: 'Are you sure?' } do %>
-            Delete <i class="bi bi-trash"></i>
+            <%= display_bid_action('Show', user, 'arrow-right-circle', 'primary') %>
+            <%= display_bid_action('Edit', edit_user_path(user), 'pencil', 'warning') %>
+            <%= display_bid_action('Delete', user_path(user), 'trash', 'danger') %>
           <% end %>
         </div>
       <% end %>
