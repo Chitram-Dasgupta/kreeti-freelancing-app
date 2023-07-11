@@ -8,8 +8,7 @@ class UsersController < ApplicationController
 
   def index
     if admin?
-      @users = User.approved.page params[:page]
-      @pending_users = User.pending
+      @users = User.approved_users.page params[:page]
     else
       redirect_to new_user_path
     end
@@ -85,6 +84,10 @@ class UsersController < ApplicationController
              else
                User.where(role: 'freelancer', visibility: 'pub').page params[:page]
              end
+  end
+
+  def manage_registrations
+    @pending_users = User.pending_users.page params[:page]
   end
 
   def destroy

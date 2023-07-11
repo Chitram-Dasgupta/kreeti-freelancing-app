@@ -60,8 +60,8 @@ class User < ApplicationRecord
   enum visibility: { pub: 0, priv: 1 }
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
-  scope :pending, -> { where(status: 'pending') }
-  scope :approved, -> { where(status: 'approved') }
+  scope :pending_users, -> { where(status: 'pending') }
+  scope :approved_users, -> { where(status: 'approved') }
 
   default_scope { order(:created_at) }
 

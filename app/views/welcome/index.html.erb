@@ -1,55 +1,52 @@
 <% if admin? %>
-  <main>
-    <div class="my-3">
-      <div class="card align-items-center">
-        <div class="card-body">
-          <h1 class="card-title text-center">Welcome admin</h1>
-          <hr>
-          <div class="d-flex flex-column align-items-center">
-            <%= link_to 'All users', users_path, class: "btn btn-success mb-2 w-50 fs-4 mb-4" %>
-            <%= link_to 'All projects', projects_path, class: "btn btn-warning mb-2 w-50 fs-4 mb-4" %>
-            <%= link_to 'All bids', bids_path, class: "btn btn-primary mb-2 w-50 fs-4 mb-4" %>
-            <%= link_to 'All categories', categories_path, class: "btn btn-info mb-2 w-50 fs-4 mb-4" %>
-          </div>
+  <div class="my-3">
+    <div class="card align-items-center">
+      <div class="card-body">
+        <h1 class="card-title text-center">Welcome admin</h1>
+        <hr>
+        <div class="d-flex flex-column align-items-center">
+          <%= link_to 'All registration requiests', manage_registrations_users_path, class: "btn btn-secondary mb-2 w-50 fs-4 mb-4 w-100" %>
+          <%= link_to 'All users', users_path, class: "btn btn-success mb-2 w-50 fs-4 mb-4 w-100" %>
+          <%= link_to 'All projects', projects_path, class: "btn btn-warning mb-2 w-50 fs-4 mb-4 w-100" %>
+          <%= link_to 'All bids', bids_path, class: "btn btn-primary mb-2 w-50 fs-4 mb-4 w-100" %>
+          <%= link_to 'All categories', categories_path, class: "btn btn-info mb-2 w-50 fs-4 mb-4 w-100" %>
         </div>
       </div>
     </div>
-  </main>
+  </div>
 <% else %>
-  <main class="container mt-5">
-    <div class="jumbotron text-center">
-      <% if logged_in? %>
-        <% if client? %>
-          <h1 class="display-4">Welcome client</h1>
-        <% elsif freelancer? %>
-          <h1 class="display-4">Welcome freelancer</h1>
-        <% else %>
-          <h1 class="display-4">Welcome admin</h1>
-        <% end %>
-        <h2><%= current_user.username %></h2>
+  <div class="jumbotron text-center mt-5">
+    <% if logged_in? %>
+      <% if client? %>
+        <h1 class="display-4">Welcome client</h1>
+      <% elsif freelancer? %>
+        <h1 class="display-4">Welcome freelancer</h1>
       <% else %>
-        <h1 class="display-4">Welcome visitor</h1>
+        <h1 class="display-4">Welcome admin</h1>
       <% end %>
-      <% if logged_in? %>
-        <%= link_to 'Chat dashboard', rooms_path, class: "btn btn-danger btn-lg" %>
-        <% if client? %>
-          <%= link_to 'My projects', projects_path, class: "btn btn-info btn-lg" %>
-        <% elsif freelancer? %>
-          <%= link_to 'My bids', bids_path, class: "btn btn-primary btn-lg" %>
-        <% end %>
-      <% else %>
+      <h2><%= current_user.username %></h2>
+    <% else %>
+      <h1 class="display-4">Welcome visitor</h1>
+    <% end %>
+    <% if logged_in? %>
+      <%= link_to 'Chat dashboard', rooms_path, class: "btn btn-danger btn-lg" %>
+      <% if client? %>
+        <%= link_to 'My projects', projects_path, class: "btn btn-info btn-lg" %>
+      <% elsif freelancer? %>
+        <%= link_to 'My bids', bids_path, class: "btn btn-primary btn-lg" %>
       <% end %>
-      <hr class="my-4">
-      <p class="lead mt-3">
-        <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success" %>
-        <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning" %>
-      </p>
-      <hr class="my-4">
-      <p class="lead">
-        As a visitor, you can look at public profiles of freelancers and the projects posted by clients. To post your freelancing projects, register as a client. Or, if you are looking for freelancing work, register as a freelancer.
-      </p>
-    </div>
-  </main>
+    <% else %>
+    <% end %>
+    <hr class="my-4">
+    <p class="lead mt-3">
+      <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success" %>
+      <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning" %>
+    </p>
+    <hr class="my-4">
+    <p class="lead">
+      As a visitor, you can look at public profiles of freelancers and the projects posted by clients. To post your freelancing projects, register as a client. Or, if you are looking for freelancing work, register as a freelancer.
+    </p>
+  </div>
   <hr class="my-4">
   <section class="my-5">
     <div class="row">

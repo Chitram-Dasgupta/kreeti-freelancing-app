@@ -9,9 +9,8 @@
       <p class="card-text"><%= project.description %></p>
       <p class="card-text"><%= project.visibility_status %></p>
       <% project.categories.each do |cat| %>
-        <span class="badge bg-secondary"><%= cat.name %></span>
+        <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
       <% end %>
-      <br>
       <% if project.has_awarded_bid? %>
         <div class="alert alert-danger m-3">Project has awarded bid</div>
       <% end %>

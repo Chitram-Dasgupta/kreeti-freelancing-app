@@ -19,7 +19,11 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[index new create destroy]
 
   resources :users do
-    get :search, to: 'users#search', on: :collection
+    collection do
+      get :search, to: 'users#search'
+      get :manage_registrations, to: 'users#manage_registrations'
+    end
+
     member do
       get :confirm_email, to: 'users#confirm_email'
       post :approve
