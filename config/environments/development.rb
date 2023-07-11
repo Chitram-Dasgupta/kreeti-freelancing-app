@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'active_support/core_ext/integer/time'
 
+# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -16,7 +19,7 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+  if (Rails.root / 'tmp' / 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
@@ -35,7 +38,6 @@ Rails.application.configure do
 
   # Default Mailer Host
   Rails.application.routes.default_url_options[:host] = 'localhost:3000'
-
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -82,3 +84,4 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 end
+# rubocop:enable Metrics/BlockLength
