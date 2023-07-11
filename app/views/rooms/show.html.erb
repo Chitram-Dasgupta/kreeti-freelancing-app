@@ -1,35 +1,5 @@
 <div class="d-flex flex-column justify-content-between" style="height: calc(100vh - 90px);">
-  <div class="d-flex align-items-center mb-3 bg-light">
-    <%= link_to rooms_path, class: 'btn btn-warning mr-auto' do %>
-      <i class="bi bi-arrow-left"></i> Back
-    <% end %>
-    <div class="d-flex align-items-center ms-3">
-      <%= render 'shared/profile_picture', user: @other_user, size: '50x50' %>
-      <%= link_to @other_user, class: 'text-decoration-none mb-0 ms-2 fs-5 text-dark' do %>
-        <%= @other_user.username %>
-      <% end %>
-    </div>
-  </div>
-  <div id="messages" class="overflow-auto flex-column mb-auto" data-room-id="<%= @room.id %>">
-    <% @messages.each do |m| %>
-      <div class="d-flex <%= m.user == current_user ? 'justify-content-start' : 'justify-content-end' %>">
-        <div class="<%= m.user == current_user ? 'bg-primary' : 'bg-secondary' %> text-white rounded-pill px-3 py-1 mb-1 mx-2">
-          <p class="mb-0">
-            <%= m.content %>
-          </p>
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <%= form_with(model: [ @room, Message.new ], local: true, remote: true, id: "message-form", class: "mb-3 mt-1") do |f| %>
-    <div class="input-group">
-      <%= f.text_field :content, class: "form-control", placeholder: "Type your message" %>
-      <div class="input-group-append mx-3">
-        <%= f.button :submit, class: "btn btn-primary" do %>
-          <i class="bi bi-arrow-right-square-fill"></i>
-        <% end %>
-      </div>
-      <%= f.hidden_field :room_id, value: @room.id %>
-    </div>
-  <% end %>
+  <%= render 'header', other_user: @other_user %>
+  <%= render 'messages', room: @room, messages: @messages %>
+  <%= render 'message_form', room: @room %>
 </div>

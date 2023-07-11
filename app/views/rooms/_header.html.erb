@@ -1,0 +1,11 @@
+<div class="d-flex align-items-center mb-3 bg-light">
+  <%= link_to rooms_path, class: 'btn btn-warning mr-auto' do %>
+    <i class="bi bi-arrow-left"></i> Back
+  <% end %>
+  <div class="d-flex align-items-center ms-3">
+    <%= render 'shared/profile_picture', user: other_user, size: '50x50' %>
+    <%= link_to other_user, class: 'text-decoration-none mb-0 ms-2 fs-5 text-dark' do %>
+      <%= other_user.username %>
+    <% end %>
+  </div>
+</div>

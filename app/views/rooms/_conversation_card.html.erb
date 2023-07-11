@@ -1,4 +1,4 @@
-    <%= link_to room, class: "text-decoration-none text-dark" do %>
+<%= link_to room, class: "text-decoration-none text-dark" do %>
   <div class="card mb-4">
     <div class="card-header bg-info">
       Conversation with <%= room.user_rooms.first.other_user(current_user).username %>
