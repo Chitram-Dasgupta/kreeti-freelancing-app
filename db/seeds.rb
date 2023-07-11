@@ -1,48 +1,39 @@
-cat1 = Category.create!(name: 'Web Design')
-cat2 = Category.create!(name: 'Web Development')
-cat3 = Category.create!(name: 'Content Writing')
-cat4 = Category.create!(name: 'Project Management')
-cat5 = Category.create!(name: 'SEO Service')
-cat6 = Category.create!(name: 'Marketing')
-cat7 = Category.create!(name: 'Business Analysis')
-cat8 = Category.create!(name: 'Android Development')
-cat9 = Category.create!(name: 'iOS Development')
-cat10 = Category.create!(name: 'Technical Support')
+# frozen_string_literal: true
 
-User.create!(username: 'admin', email: 'admin@example.com', password: '123456', password_confirmation: '123456', role: 'admin',
-             email_confirmed: true, confirmation_token: nil, status: 'approved')
+category_names = ['Web Design', 'Web Development', 'Content Writing', 'Project Management', 'SEO Service', 'Marketing',
+                  'Business Analysis', 'Android Development', 'iOS Development', 'Technical Support', 'Graphic Design',
+                  'UI/UX Design', 'Copywriting', 'Social Media Marketing', 'Email Marketing', 'Data Analysis', 'Game Development']
 
-c1 = User.create!(username: 'c1', email: 'c1@email.com', password: '123456', password_confirmation: '123456', role: 'client',
-                  email_confirmed: true, confirmation_token: nil, status: 'approved')
+category_names.each do |name|
+  Category.create!(name:)
+end
 
-c2 = User.create!(username: 'c2', email: 'c2@email.com', password: '123456', password_confirmation: '123456', role: 'client',
-                  email_confirmed: true, confirmation_token: nil, status: 'approved')
+User.create!(username: 'admin', email: 'admin@email.com', password: '123456', password_confirmation: '123456',
+             role: 'admin', email_confirmed: true, confirmation_token: nil, status: 'approved')
 
-c3 = User.create!(username: 'c3', email: 'c3@email.com', password: '123456', password_confirmation: '123456', role: 'client',
-                  email_confirmed: true, confirmation_token: nil, status: 'approved')
+(1..25).each do |i|
+  client = User.create!(username: "c#{i}", email: "c#{i}@email.com", password: '123456', password_confirmation: '123456',
+                        role: 'client', email_confirmed: true, confirmation_token: nil, status: 'approved')
 
-c4 = User.create!(username: 'c4', email: 'c4@email.com', password: '123456', password_confirmation: '123456', role: 'client',
-                  email_confirmed: true, confirmation_token: nil, status: 'approved')
+  rand(4..6).times do |j|
+    project_visibility = i > 20 && j == 5 ? 'priv' : 'pub'
+    project = client.projects.create!(title: "Project #{j} for Client #{i}",
+                                      description: 'lorem ipsum', visibility: project_visibility)
 
-f1 = User.create!(username: 'f1', email: 'f1@email.com', password: '123456', password_confirmation: '123456', role: 'freelancer',
-                  email_confirmed: true, confirmation_token: nil, status: 'approved')
-f1.categories << cat1 << cat2 << cat10
+    project.categories << Category.all.sample(rand(1..3))
+  end
+end
 
-f2 = User.create!(username: 'f2', email: 'f2@email.com', password: '123456', password_confirmation: '123456', role: 'freelancer',
-                  email_confirmed: true, confirmation_token: nil, visibility: 'priv', status: 'approved')
-f2.categories << cat2 << cat4 << cat5 << cat6 << cat7
+(1..75).each do |i|
+  freelancer_visibility = i > 70 ? 'priv' : 'pub'
+  freelancer = User.create!(username: "f#{i}", email: "f#{i}@email.com", password: '123456', password_confirmation: '123456', role: 'freelancer',
+                            email_confirmed: true, confirmation_token: nil, visibility: freelancer_visibility, status: 'approved')
 
-p1 = c1.projects.create!(title: 'Web Design project', description: 'lorem ipsum')
-p1.categories << cat1 << cat2
+  freelancer.categories << Category.all.sample(rand(1..5))
+end
 
-p2 = c2.projects.create!(title: 'Web Development project', description: 'lorem ipsum')
-p2.categories << cat2 << cat3
+User.where(role: 'freelancer').each do |freelancer|
+  project = Project.all.sample
 
-p3 = c3.projects.create!(title: 'Content Writing project', description: 'lorem ipsum')
-p3.categories << cat4 << cat5
-
-p4 = c4.projects.create!(title: 'Project Management project', description: 'lorem ipsum')
-p4.categories << cat6 << cat7 << cat8
-
-p5 = c4.projects.create!(title: 'SEO Service project', description: 'lorem ipsum', visibility: 'priv')
-p5.categories << cat9 << cat10
+  project.bids.create!(bid_description: 'lorem ipsum dolor', bid_amount: rand(10_000..25_000), user_id: freelancer.id)
+end
