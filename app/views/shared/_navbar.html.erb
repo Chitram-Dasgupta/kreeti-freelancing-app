@@ -21,18 +21,18 @@
           </li>
           <% unless admin? %>
             <li class="nav-item"><%= link_to "Profile(#{current_user.username})", user_path(current_user), class: "nav-link" %></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="bi bi-bell-fill"></i>
+                <span class="badge rounded-pill bg-danger" id="notificationBadge" style="position: absolute; top: 0; right: 13px;">0</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end overflow-auto" aria-labelledby="notificationDropdown" id="notificationList" style="width: 300px; max-height: 300px;">
+                <%= content_tag :button, "Show All", id: "showAllButton", class: "btn btn-primary btn-sm mx-1 my-1" %>
+                <%= content_tag :button, "Mark All as Read", id: "markAllAsReadButton", class: "btn btn-warning btn-sm mx-1 my-1" %>
+                <%= content_tag :button, "Delete Read Notifications", id: "deleteReadNotificationsButton", class: "btn btn-danger btn-sm mx-1 my-1" %>
+              </div>
+            </li>
           <% end %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="bi bi-bell-fill"></i>
-              <span class="badge rounded-pill bg-danger" id="notificationBadge" style="position: absolute; top: 0; right: 13px;">0</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end overflow-auto" aria-labelledby="notificationDropdown" id="notificationList" style="width: 300px; max-height: 300px;">
-              <%= content_tag :button, "Show All", id: "showAllButton", class: "btn btn-primary btn-sm mx-1 my-1" %>
-              <%= content_tag :button, "Mark All as Read", id: "markAllAsReadButton", class: "btn btn-warning btn-sm mx-1 my-1" %>
-              <%= content_tag :button, "Delete Read Notifications", id: "deleteReadNotificationsButton", class: "btn btn-danger btn-sm mx-1 my-1" %>
-            </div>
-          </li>
         <% end %>
       </ul>
     </div>
