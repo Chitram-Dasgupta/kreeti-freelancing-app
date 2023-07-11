@@ -1,9 +1,5 @@
 <h2>Manage projects</h2>
 <div class="row">
-  <% projects.each do |p| %>
-    <div class="col-lg-4">
-      <%= render 'projects/project_card', project: p %>
-    </div>
-  <% end %>
+  <%= render 'shared/project_table', projects: %>
   <%= paginate projects %>
 </div>

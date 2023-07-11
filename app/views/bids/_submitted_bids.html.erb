@@ -6,7 +6,7 @@
   <% if bids.empty? %>
     <p class="text-muted"> You have not submitted any bids </p>
   <% else %>
-    <%= render 'shared/bid_table', bids: bids %>
+    <%= render 'shared/bid_table', bids: %>
   <% end %>
   <%= paginate bids %>
 </div>
