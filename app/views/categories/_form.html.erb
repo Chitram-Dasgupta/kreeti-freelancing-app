@@ -1,0 +1,8 @@
+<%= form_with model: category do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+    <%= render 'shared/field_errors', object: category, field: :name %>
+  </div>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

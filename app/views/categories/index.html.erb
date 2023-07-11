@@ -1,19 +1,6 @@
 <h2 class="mb-3">Manage categories</h2>
-<%= link_to new_category_path, class: "btn btn-info mb-3" do %>
-  New category <i class="bi bi-plus-circle-dotted"></i>
-<% end %>
-<div class="list-group">
-  <% @categories.each do |c| %>
-    <div class="list-group-item d-flex justify-content-between align-items-center">
-      <p class="mb-1"><%= c.name %></p>
-      <div>
-        <%= link_to edit_category_path(c), class: "btn btn-primary me-2" do %>
-          Edit <i class="bi bi-pencil"></i>
-        <% end %>
-        <%= link_to category_path(c), class: "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } do %>
-          Delete <i class="bi bi-trash"></i>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+<%= display_category_action('New category', new_category_path, 'plus-circle-dotted', 'primary') %>
+<%= render 'category_list', categories: @categories %>
+<div class="mt-3">
+  <%= paginate @categories %>
 </div>

@@ -9,4 +9,6 @@ class Category < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   default_scope { order(:name) }
+
+  paginates_per 12
 end
