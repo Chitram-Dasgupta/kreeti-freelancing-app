@@ -13,7 +13,7 @@
       <h6 class="card-title text-muted"><%= user.email %></h6>
       <p class="text-start">
         <%= render 'shared/profile_picture', user:, size: '320x320' %>
-        <p class="card-text"><%= user.visibility_status %></p>
+        <p class="card-text"><%= visibility_status(user) %></p>
         <% user.categories.each do |cat| %>
           <span class="badge bg-info"><%= cat.name %></span>
         <% end %>

@@ -80,12 +80,6 @@ class Project < ApplicationRecord
     bids.exists?(bid_status: 'accepted')
   end
 
-  def visibility_status
-    return 'Public' if visibility == 'pub'
-
-    'Private'
-  end
-
   def accepted_bid_freelancer
     bids.where(bid_status: :accepted).first&.user
   end

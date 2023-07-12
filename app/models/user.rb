@@ -122,10 +122,4 @@ class User < ApplicationRecord
     __elasticsearch__.search(search_definition)
   end
   # rubocop:enable Metrics/MethodLength
-
-  def visibility_status
-    return 'Public' if visibility == 'pub'
-
-    'Private'
-  end
 end

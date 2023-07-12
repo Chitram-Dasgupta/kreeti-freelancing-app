@@ -22,4 +22,10 @@ module UsersHelper
   def icon(name)
     content_tag(:i, '', class: "bi bi-#{name}")
   end
+
+  def visibility_status(user)
+    return 'Public' if user.visibility == 'pub'
+
+    'Private'
+  end
 end

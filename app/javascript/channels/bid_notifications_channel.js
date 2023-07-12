@@ -7,14 +7,11 @@ document.addEventListener("turbolinks:load", () => {
   consumer.subscriptions.create(
     { channel: "BidNotificationsChannel", user_id: currentUserId },
     {
-      connected() {
-        console.log(currentUserId);
-      },
+      connected() {},
 
       disconnected() {},
 
       received(data) {
-        console.log(data);
         const currentBadgeCount = parseInt(notificationBadge.textContent);
         notificationBadge.textContent = currentBadgeCount + 1;
 
