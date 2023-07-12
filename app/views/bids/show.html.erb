@@ -4,8 +4,8 @@
     <%= display_bid_action('Edit this bid', edit_bid_path(@bid), 'pencil', 'warning') %>
     <%= display_bid_action('Delete this bid', bid_path(@bid), 'trash', 'danger') %>
   <% elsif current_user == @bid.user && @bid.accepted? %>
-    <%= display_bid_action('Submit project files', edit_bid_path(@bid), 'upload', 'info') %>
-    <%= display_bid_action('Chat', rooms_path(user_id: @bid.project.user_id), 'chat-dots', 'primary') %>
+    <%= display_bid_action('Submit project files', edit_bid_path(@bid), 'upload', 'primary') %>
+    <%= display_bid_action('Chat with client', rooms_path(user_id: @bid.project.user_id), 'chat-dots', 'info') %>
   <% end %>
 </div>
 <%= render 'shared/footer', previous_page: bids_path %>
