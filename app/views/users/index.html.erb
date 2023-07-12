@@ -3,5 +3,6 @@
   <% @users.each do |user| %>
     <%= render 'user_card', user: %>
   <% end %>
-  <%= paginate @users %>
 </div>
+<%= paginate @users %>
+<%= render 'shared/footer', previous_page: root_path %>

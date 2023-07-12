@@ -36,9 +36,9 @@ class Project < ApplicationRecord
 
   delegate :username, to: :user
 
-  scope :visible_to, ->(user) { where.not(visibility: 'priv').or(where(user:)) }
+  scope :visible_to, ->(user) { user&.role == 'admin' ? all : where.not(visibility: 'priv').or(where(user:)) }
 
-  default_scope { order(:created_at) }
+  default_scope { order(created_at: :desc) }
 
   def self.all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',

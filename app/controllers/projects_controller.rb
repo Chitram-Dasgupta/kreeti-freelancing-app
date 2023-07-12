@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
   def update
     redirect_to @project, notice: 'Cannot update an awarded project.' if @project.has_awarded_bid?
     if @project.update(project_params)
-      redirect_to projects_path, flash: { notice: 'Project was successfully updated!' }
+      redirect_to @project, flash: { notice: 'Project was successfully updated!' }
     else
       flash.now[:error] = 'Please enter the information correctly'
       render :edit, status: :unprocessable_entity

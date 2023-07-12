@@ -35,7 +35,7 @@ class BidsController < ApplicationController
 
   def update
     if @bid&.update(bid_params)
-      redirect_to bids_path, flash: { success: 'Bid was successfully updated' }
+      redirect_to @bid, flash: { success: 'Bid was successfully updated' }
     else
       flash.now[:error] = 'Please enter the information correctly'
       render :edit, status: :unprocessable_entity

@@ -1,4 +1,11 @@
 <div class="mx-2 my-3">
   <%= render 'bid_display', bid: @bid %>
-  <%= display_bid_actions(@bid) %>
+  <% if (current_user == @bid.user || admin?) && @bid.modifiable? %>
+    <%= display_bid_action('Edit this bid', edit_bid_path(@bid), 'pencil', 'warning') %>
+    <%= display_bid_action('Delete this bid', bid_path(@bid), 'trash', 'danger') %>
+  <% elsif current_user == @bid.user && @bid.accepted? %>
+    <%= display_bid_action('Submit project files', edit_bid_path(@bid), 'upload', 'info') %>
+    <%= display_bid_action('Chat', rooms_path(user_id: @bid.project.user_id), 'chat-dots', 'primary') %>
+  <% end %>
 </div>
+<%= render 'shared/footer', previous_page: bids_path %>

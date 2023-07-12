@@ -3,3 +3,4 @@
 <% elsif client? %>
   <%= render 'submitted_projects', user_projects: @user_projects %>
 <% end %>
+<%= render 'shared/footer', previous_page: root_path %>

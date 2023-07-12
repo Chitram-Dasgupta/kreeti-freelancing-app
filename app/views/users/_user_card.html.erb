@@ -4,8 +4,8 @@
       <% if user.status == 'pending' && admin? %>
         <div class="alert alert-danger">User's registration is pending</div>
         <div>
-          <%= display_bid_action('Approve', approve_user_path(user), 'check-lg', 'success') %>
-          <%= display_bid_action('Reject', reject_user_path(user), 'x-lg', 'danger') %>
+          <%= display_user_action('Approve', approve_user_path(user), 'check-lg', 'success') %>
+          <%= display_user_action('Reject', reject_user_path(user), 'x-lg', 'danger') %>
         </div>
       <% end %>
       <h5 class="card-title mt-2"><%= link_to user.username, user, class: 'text-decoration-none' %></h5>
@@ -21,9 +21,9 @@
       <% if admin? %>
         <div class="mb-2">
           <% if user.status == 'approved' %>
-            <%= display_bid_action('Show', user, 'arrow-right-circle', 'primary') %>
-            <%= display_bid_action('Edit', edit_user_path(user), 'pencil', 'warning') %>
-            <%= display_bid_action('Delete', user_path(user), 'trash', 'danger') %>
+            <%= display_user_action('Show', user, 'arrow-right-circle', 'primary') %>
+            <%= display_user_action('Edit', edit_user_path(user), 'pencil', 'warning') %>
+            <%= display_user_action('Delete', user_path(user), 'trash', 'danger') %>
           <% end %>
         </div>
       <% end %>

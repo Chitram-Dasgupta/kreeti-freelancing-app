@@ -39,8 +39,12 @@
     <% end %>
     <hr class="my-4">
     <p class="lead mt-3">
-      <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success" %>
-      <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning" %>
+      <% if client? || !logged_in? %>
+        <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success" %>
+      <% end %>
+      <% if freelancer? || !logged_in? %>
+        <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning" %>
+      <% end %>
     </p>
     <hr class="my-4">
     <p class="lead">

@@ -1,0 +1,11 @@
+<footer class="fixed-bottom">
+  <% if previous_page.present? %>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <%= link_to previous_page do %>
+          <i class="bi bi-arrow-left"></i> Previous
+        <% end %>
+      </li>
+    </ul>
+  <% end %>
+</footer>

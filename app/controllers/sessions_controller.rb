@@ -2,6 +2,7 @@
 
 class SessionsController < ApplicationController
   skip_before_action :require_authorization, only: %i[index new create activation]
+  before_action :redirect_logged_in_users, only: [:new, :create]
 
   def index
     redirect_to new_session_path

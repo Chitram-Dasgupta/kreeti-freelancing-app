@@ -20,7 +20,7 @@ class Bid < ApplicationRecord
   delegate :username, to: :user
   delegate :title, to: :project, prefix: true
 
-  default_scope { order(:created_at) }
+  default_scope { order(created_at: :desc) }
 
   def accept
     update(bid_status: 'accepted')

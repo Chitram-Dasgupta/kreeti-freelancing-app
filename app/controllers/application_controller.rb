@@ -35,4 +35,8 @@ class ApplicationController < ActionController::Base
   def require_admin
     redirect_to root_path, flash: { error: 'You are not authorized to view this page' } unless current_user.admin?
   end
+
+  def redirect_logged_in_users
+    redirect_to root_path, flash: { notice: 'You are already signed in' } if logged_in?
+  end
 end

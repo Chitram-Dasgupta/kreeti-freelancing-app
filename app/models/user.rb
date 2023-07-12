@@ -62,9 +62,9 @@ class User < ApplicationRecord
 
   scope :pending_users, -> { where(status: 'pending') }
   scope :approved_users, -> { where(status: 'approved') }
-  scope :visible_to, ->(user) { where.not(visibility: 'priv').or(where(id: user.id)) }
+  scope :visible_to, ->(user) { user.role == 'admin' ? all : where.not(visibility: 'priv').or(where(id: user.id)) }
 
-  default_scope { order(:created_at) }
+  default_scope { order(created_at: :desc) }
 
   def email_activate
     return errors.add(:base, 'Account not approved yet') unless status == 'approved'

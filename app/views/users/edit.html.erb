@@ -1,4 +1,4 @@
-<h1 class="mx-3 my-3">Edit profile</h1>
+<h1 class="my-4 text-center">Edit profile</h1>
 <div class="d-flex justify-content-center">
   <%= form_with model: @user do |f| %>
     <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:profile_picture, 'file'], [:industry, 'text']] %>
@@ -26,3 +26,4 @@
     <%= f.submit "Update", class: "btn btn-primary" %>
   <% end %>
 </div>
+<%= render 'shared/footer', previous_page: @user %>

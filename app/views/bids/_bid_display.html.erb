@@ -5,8 +5,8 @@
 <%= render 'row', label: 'Project', value: link_to(bid.project_title, bid.project, class: 'text-decoration-none text-white btn btn-primary') %>
 <%= render 'row', label: 'By', value: bid.username %>
 <% if bid.project.user == current_user || bid.user == current_user %>
-  <%= display_document(bid, :code) %>
-  <%= display_document(bid, :design) %>
-  <%= display_document(bid, :other) %>
+  <%= display_bid_document(bid, :code) %>
+  <%= display_bid_document(bid, :design) %>
+  <%= display_bid_document(bid, :other) %>
 <% end %>
 <hr>

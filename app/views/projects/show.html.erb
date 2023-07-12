@@ -1,15 +1,16 @@
 <div class="mt-3">
   <%= render 'project_display', project: @project %>
-  <% if current_user == @project.user && !@project.has_awarded_bid? %>
+  <% if (current_user == @project.user || admin?) && !@project.has_awarded_bid? %>
     <%= display_project_action('Edit', edit_project_path(@project), 'pencil', 'warning') %>
+    <%= display_project_action('Delete', project_path(@project), 'trash', 'danger') %>
   <% end %>
   <% if freelancer? %>
-    <p class="card-text">by <%= @project.username %></p>
     <%= render 'freelancer_actions', project: @project %>
   <% end%>
   <% if @project.has_awarded_bid? && current_user == @project.user %>
-    <%= display_project_action('Chat', rooms_path(user_id: @project.accepted_bid_freelancer.id), 'chat-dots', 'info') %>
+    <%= display_project_action('Chat with awarded freelancer', rooms_path(user_id: @project.accepted_bid_freelancer.id), 'chat-dots', 'info') %>
   <% end %>
   <%= render 'shared/bid_table', bids: @bids %>
   <%= paginate @bids %>
 </div>
+<%= render 'shared/footer', previous_page: root_path %>
