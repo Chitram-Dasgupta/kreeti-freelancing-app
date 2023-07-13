@@ -2,11 +2,12 @@
 
 FactoryBot.define do
   factory :notification do
-    recipient { nil }
-    actor { nil }
-    project { nil }
-    bid { nil }
-    bid_status { 1 }
+    # rubocop:disable FactoryBot/AssociationStyle
+    association :recipient, factory: :user
+    # rubocop:enable FactoryBot/AssociationStyle
+    project
+    bid
+    message { 'Test notification message' }
     read { false }
   end
 end

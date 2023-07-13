@@ -2,6 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Project, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe Project do
+  describe 'validations' do
+    it 'validates presence of title' do
+      project = build(:project, title: nil)
+      expect(project).not_to be_valid
+    end
+  end
 end

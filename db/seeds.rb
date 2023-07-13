@@ -9,7 +9,7 @@ industry_names = ['Technology', 'Marketing and Advertising', 'Writing and Editin
                   'Information Services', 'Computer Games', 'Education', 'Finance', 'Retail']
 
 qualification_names = ['No formal education', 'High School', 'Diploma', 'Bachelor of Science', 'Bachelor of Arts',
-                       'Bachelor of Commerce', 'Bachelor of Education','Bachelor of Technology', 'Master of Science',
+                       'Bachelor of Commerce', 'Bachelor of Education', 'Bachelor of Technology', 'Master of Science',
                        'Master of Arts', 'Master of Commerce', 'Master of Education', 'Master of Technology', 'PhD',
                        'Post Doctorate']
 

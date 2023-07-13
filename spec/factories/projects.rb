@@ -2,11 +2,9 @@
 
 FactoryBot.define do
   factory :project do
-    title { 'MyString' }
-    description { 'MyText' }
-    visibility { 1 }
-    design_document { 'MyString' }
-    srs_document { 'MyString' }
-    user { nil }
+    title { 'My Project Title' }
+    description { 'Project Description' }
+    visibility { 0 }
+    user
   end
 end
