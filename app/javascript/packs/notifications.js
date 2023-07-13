@@ -63,7 +63,6 @@ function fetchNotifications() {
   const currentUserId = document.querySelector("body").dataset.currentUserId;
 
   if (currentUserId != "" && currentUserId != "1") {
-    console.log(currentUserId);
     addClickListener(document.getElementById("showAllButton"), function () {
       loadNotifications(true);
       showAllButton.style.display = "none";

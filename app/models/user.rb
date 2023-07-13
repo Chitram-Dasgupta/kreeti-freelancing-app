@@ -45,15 +45,10 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX, message: 'must be a valid email address' },
                     uniqueness: { case_sensitive: false }
-
   validates :password, presence: true, length: { minimum: 6 }, if: :password_changed?, on: :create
-
   validates :password, length: { minimum: 6 }, allow_blank: true, if: :password_changed?, on: :update
-
   validates :username, presence: true, uniqueness: true, length: { maximum: 255 }
-
   validates :experience, numericality: { only_integer: true, allow_nil: true, less_than_or_equal_to: 100 }
-
   validates :role, presence: true, inclusion: { in: %w[freelancer client] }
 
   enum role: { client: 0, freelancer: 1, admin: 2 }
@@ -62,7 +57,7 @@ class User < ApplicationRecord
 
   scope :pending_users, -> { where(status: 'pending') }
   scope :approved_users, -> { where(status: 'approved') }
-  scope :visible_to, ->(user) { user.role == 'admin' ? all : where.not(visibility: 'priv').or(where(id: user.id)) }
+  scope :visible_to, ->(user) { user&.role == 'admin' ? all : where.not(visibility: 'priv').or(where(id: user&.id)) }
 
   default_scope { order(created_at: :desc) }
 

@@ -1,27 +1,39 @@
 <%= render 'shared/profile_picture', user: @user, size: '320x320' %>
 <div class="mt-5">
   <div class="card shadow-sm mb-2 bg-white rounded">
-    <div class="card-header bg-secondary text-white text-center pt-2">
+    <div class="card-header <%= client? ? 'bg-info' : 'bg-danger' %> text-white text-center pt-2">
       <h2 class="mb-0 mt-1"><%= @user.role.capitalize %> Profile</h2>
     </div>
     <div class="card-body pb-0 px-0">
       <% [['Username', @user.username], ['Email', @user.email], ['Industry', @user.industry], ['Visibility', visibility_status(@user)]].each do |label, value| %>
         <div class="row text-center my-1">
-          <div class="col fs-3"><%= label %></div>
-          <div class="col fs-3"><%= value %></div>
+          <div class="col fs-4"><%= label %></div>
+          <div class="col fs-4"><%= value %></div>
         </div>
       <% end %>
-      <div>
-        <% if freelancer? %>
-          <% [['Qualification', @user.qualification], ['Experience', @user.experience]].each do |label, value| %>
-            <div class="row text-center my-1">
-              <div class="col fs-3"><%= label %></div>
-              <div class="col fs-3"><%= value %></div>
+      <% if @user.role == 'freelancer' %>
+        <% [['Qualification', @user.qualification], ['Experience', @user.experience]].each do |label, value| %>
+          <div class="row text-center my-1">
+            <div class="col fs-4"><%= label %></div>
+            <div class="col fs-4"><%= value %></div>
+          </div>
+        <% end %>
+        <div class="row text-center my-1">
+          <div class="col fs-4">Categories</div>
+          <% if @user.categories.empty? %>
+            <div class="col fs-4">
+              No categories available
+            </div>
+          <% else %>
+            <div class="col fs-4">
+              <% @user.categories.each do |cat| %>
+                <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
+              <% end %>
             </div>
           <% end %>
-        <% end %>
-      </div>
-      <div class="card-footer text-muted">
+        </div>
+      <% end %>
+      <div class="card-footer text-muted mt-3">
         Member since <%= @user.created_at.strftime("%d %B %Y") %>
       </div>
     </div>
