@@ -5,7 +5,7 @@ class Project < ApplicationRecord
 
   def as_indexed_json(_options = {})
     as_json(
-      only: %i[id title description user_id visibility has_awarded_bid],
+      only: %i[id title description visibility],
       include: { categories: { only: :name } }
     )
   end
@@ -13,6 +13,9 @@ class Project < ApplicationRecord
   settings index: { number_of_shards: 1 } do
     mapping dynamic: 'false' do
       indexes :visibility
+      indexes :id, type: :integer
+      indexes :title, type: :text
+      indexes :description, type: :text
       indexes :categories, type: :nested do
         indexes :name
       end
@@ -49,6 +52,7 @@ class Project < ApplicationRecord
   # rubocop:disable Metrics/MethodLength
   def self.search_projects(category_name)
     search_definition = {
+      size: 100,
       query: {
         bool: {
           must: [
