@@ -88,6 +88,7 @@ class User < ApplicationRecord
   # rubocop:disable Metrics/MethodLength
   def self.search_freelancer(category_name)
     search_definition = {
+      size: 1000,
       query: {
         bool: {
           filter: [

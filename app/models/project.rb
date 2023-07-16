@@ -52,7 +52,7 @@ class Project < ApplicationRecord
   # rubocop:disable Metrics/MethodLength
   def self.search_projects(category_name)
     search_definition = {
-      size: 100,
+      size: 1000,
       query: {
         bool: {
           must: [
