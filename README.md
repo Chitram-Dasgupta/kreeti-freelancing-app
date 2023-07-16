@@ -68,20 +68,11 @@ rails db:seed
 
 ```sh
 bundle
+
+yarn
 ```
 
-### 6. Set up webpacker
-
-```sh
-rails webpacker:install
-
-# This is important to remove or else the webpacker will not compile
-rm babel.config.js
-
-rails webpacker:compile
-```
-
-### 7. Create the elasticsearch indices
+### 6. Create the elasticsearch indices
 
 Please make sure that elasticsearch is running at `localhost:9200`
 
@@ -99,7 +90,7 @@ User.import force: true
 Project.import force: true
 ```
 
-### 8. Finally, run the server
+### 7. Finally, run the server
 
 ```sh
 rails s
