@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   def as_indexed_json(_options = {})
     as_json(
-      only: %i[id username email role visibility],
+      only: %i[role visibility],
       include: { categories: { only: :name } }
     )
   end

@@ -5,7 +5,7 @@ class Project < ApplicationRecord
 
   def as_indexed_json(_options = {})
     as_json(
-      only: %i[id title description visibility],
+      only: %i[visibility],
       include: { categories: { only: :name } }
     )
   end
@@ -13,9 +13,6 @@ class Project < ApplicationRecord
   settings index: { number_of_shards: 1 } do
     mapping dynamic: 'false' do
       indexes :visibility
-      indexes :id, type: :integer
-      indexes :title, type: :text
-      indexes :description, type: :text
       indexes :categories, type: :nested do
         indexes :name
       end
