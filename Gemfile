@@ -55,6 +55,9 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'letter_opener'
   gem 'pry'
+  gem 'rubocop', '~> 1.54', '>= 1.54.2'
+  gem 'rubocop-rails', '~> 2.20', '>= 2.20.2'
+  gem 'rubocop-rspec', '~> 2.22'
   gem 'spring'
 end
 
