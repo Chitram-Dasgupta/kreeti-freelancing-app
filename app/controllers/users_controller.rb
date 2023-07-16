@@ -79,13 +79,7 @@ class UsersController < ApplicationController
   end
 
   def search
-    search_term = params[:search]
-    @users = if search_term.present?
-               User.search_freelancer(search_term).records
-             else
-               User.where(role: 'freelancer', visibility: 'pub')
-             end
-    @users = @users.page params[:page]
+    @users = User.search_freelancer(params[:search]).records.page params[:page]
   end
 
   def manage_registrations

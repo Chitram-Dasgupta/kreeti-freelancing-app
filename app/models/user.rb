@@ -98,11 +98,17 @@ class User < ApplicationRecord
             {
               nested: {
                 path: 'categories',
-                query: {
-                  match_phrase: {
-                    'categories.name': category_name
-                  }
-                }
+                query: if category_name.present?
+                         {
+                           match_phrase: {
+                             'categories.name': category_name
+                           }
+                         }
+                       else
+                         {
+                           match_all: {}
+                         }
+                       end
               }
             },
             {

@@ -56,13 +56,7 @@ class ProjectsController < ApplicationController
   end
 
   def search
-    search_term = params[:search]
-    @projects = if search_term.present?
-                  Project.search_projects(search_term).records
-                else
-                  Project.where(visibility: 'pub')
-                end
-    @projects = @projects.page params[:page]
+    @projects = Project.search_projects(params[:search]).records.page params[:page]
   end
 
   private
