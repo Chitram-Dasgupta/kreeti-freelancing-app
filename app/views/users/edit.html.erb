@@ -13,7 +13,7 @@
         <% end %>
       </div>
     </div>
-    <% if freelancer? %>
+    <% if freelancer? || admin? %>
       <div class="mb-3">
         <%= f.label :qualification, class: 'form-label' %>
         <%= f.text_field :qualification, class: 'form-control' %>

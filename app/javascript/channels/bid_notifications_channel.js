@@ -12,6 +12,7 @@ document.addEventListener("turbolinks:load", () => {
       disconnected() {},
 
       received(data) {
+        console.log(data);
         const currentBadgeCount = parseInt(notificationBadge.textContent);
         notificationBadge.textContent = currentBadgeCount + 1;
 

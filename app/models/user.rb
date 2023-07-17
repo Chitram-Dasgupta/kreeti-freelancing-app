@@ -35,14 +35,14 @@ class User < ApplicationRecord
   enum visibility: { pub: 0, priv: 1 }
 
   has_many :bids, dependent: :destroy
+  has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
   has_many :projects, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy, inverse_of: :recipient
-  has_many :rooms, through: :user_rooms
-  has_many :user_categories, dependent: :destroy
   has_many :user1_rooms, foreign_key: :user1_id, class_name: 'UserRoom', dependent: :destroy, inverse_of: :user1
   has_many :user2_rooms, foreign_key: :user2_id, class_name: 'UserRoom', dependent: :destroy, inverse_of: :user2
+  has_many :rooms, through: :user_rooms
 
   has_one_attached :profile_picture
 
@@ -72,7 +72,7 @@ class User < ApplicationRecord
   def email_activate
     return errors.add(:base, 'Account not approved yet') unless status == 'approved'
 
-    if confirmation_token_created_at < 30.minutes.ago
+    if confirmation_token_created_at < 60.minutes.ago
       errors.add(:confirmation_token, 'expired')
     else
       self.email_confirmed = true

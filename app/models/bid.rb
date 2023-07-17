@@ -10,6 +10,8 @@ class Bid < ApplicationRecord
   belongs_to :project
   belongs_to :user
 
+  has_many :notifications, dependent: :destroy
+
   has_one_attached :bid_code_document
   has_one_attached :bid_design_document
   has_one_attached :bid_other_document
