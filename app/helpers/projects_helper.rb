@@ -46,4 +46,10 @@ module ProjectsHelper
   def icon(name)
     content_tag(:i, '', class: "bi bi-#{name}")
   end
+
+  def all_skills
+    ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
+     'Python developer', 'Android developer', 'Java developer', 'Graphic designer',
+     'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
+  end
 end

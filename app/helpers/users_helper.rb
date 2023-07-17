@@ -28,4 +28,10 @@ module UsersHelper
 
     'Private'
   end
+
+  def all_qualifications
+    ['No formal education', 'High School', 'Diploma', 'Bachelor of Science', 'Bachelor of Arts',
+     'Bachelor of Commerce', 'Bachelor of Technology', 'Master of Science', 'Master of Arts',
+     'Master of Commerce', 'Master of Technology', 'PhD', 'Post Doctorate']
+  end
 end

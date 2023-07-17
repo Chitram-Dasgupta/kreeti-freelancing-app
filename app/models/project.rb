@@ -49,12 +49,6 @@ class Project < ApplicationRecord
     bids.where(bid_status: :accepted).first&.user
   end
 
-  def self.all_skills
-    ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
-     'Python developer', 'Android developer', 'Java developer', 'Graphic designer',
-     'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
-  end
-
   # rubocop:disable Metrics/MethodLength
   def self.search_projects(category_name)
     search_definition = {

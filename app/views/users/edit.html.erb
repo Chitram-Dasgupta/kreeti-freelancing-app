@@ -16,7 +16,7 @@
     <% if freelancer? || admin? %>
       <div class="mb-3">
         <%= f.label :qualification, class: 'form-label' %>
-        <%= f.text_field :qualification, class: 'form-control' %>
+        <%= f.select :qualification, all_qualifications, {}, class: 'form-control' %>
       </div>
       <div class="mb-3">
         <%= f.label :experience, class: 'form-label' %>

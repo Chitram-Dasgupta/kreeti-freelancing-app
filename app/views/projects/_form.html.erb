@@ -33,7 +33,7 @@
         Select Skills
       </button>
       <ul class="dropdown-menu checkbox-menu overflow-auto allow-focus" style="height: 200px;" aria-labelledby="skillsDropdown">
-        <% Project.all_skills.each do |skill| %>
+        <% all_skills.each do |skill| %>
           <li>
             <div class="dropdown-item">
               <%= check_box_tag 'project[skills][]', skill, local_assigns[:form_object].skills.include?(skill), id: "project_skills_#{skill.parameterize}" %>
