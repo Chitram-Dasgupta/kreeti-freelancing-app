@@ -13,6 +13,10 @@ qualification_names = ['No formal education', 'High School', 'Diploma', 'Bachelo
                        'Master of Arts', 'Master of Commerce', 'Master of Education', 'Master of Technology', 'PhD',
                        'Post Doctorate']
 
+skill_names = ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
+               'Python developer', 'Android developer', 'Java developer', 'Graphic designer',
+               'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
+
 category_names.each do |name|
   Category.create!(name:)
 end
@@ -32,6 +36,8 @@ admin.save(validate: false)
                                       description: 'lorem ipsum', visibility: project_visibility)
 
     project.categories << Category.all.sample(rand(1..3))
+    project.skills = skill_names.sample(rand(1..2))
+    project.save!
   end
 end
 
