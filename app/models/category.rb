@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Category < ApplicationRecord
+  paginates_per 12
+
   has_many :project_categories, dependent: :destroy
   has_many :projects, through: :project_categories
   has_many :user_categories, dependent: :destroy
@@ -9,6 +11,4 @@ class Category < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   default_scope { order(:name) }
-
-  paginates_per 12
 end

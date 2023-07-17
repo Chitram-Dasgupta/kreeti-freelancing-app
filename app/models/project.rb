@@ -26,8 +26,8 @@ class Project < ApplicationRecord
   belongs_to :user
 
   has_many :bids, dependent: :destroy
-  has_many :project_categories, dependent: :destroy
   has_many :categories, through: :project_categories
+  has_many :project_categories, dependent: :destroy
 
   has_one_attached :design_document
   has_one_attached :srs_document
@@ -39,6 +39,14 @@ class Project < ApplicationRecord
   scope :visible_to, ->(user) { user&.role == 'admin' ? all : where.not(visibility: 'priv').or(where(user:)) }
 
   default_scope { order(created_at: :desc) }
+
+  def bid_awarded?
+    bids.exists?(bid_status: 'accepted')
+  end
+
+  def accepted_bid_freelancer
+    bids.where(bid_status: :accepted).first&.user
+  end
 
   def self.all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
@@ -82,12 +90,4 @@ class Project < ApplicationRecord
     __elasticsearch__.search(search_definition)
   end
   # rubocop:enable Metrics/MethodLength
-
-  def bid_awarded?
-    bids.exists?(bid_status: 'accepted')
-  end
-
-  def accepted_bid_freelancer
-    bids.where(bid_status: :accepted).first&.user
-  end
 end
