@@ -25,13 +25,13 @@ admin = User.new(username: 'admin', email: 'admin@email.com', password: '123456'
                  role: 'admin', email_confirmed: true, confirmation_token: nil, status: 'approved')
 admin.save(validate: false)
 
-(1..25).each do |i|
+(1..15).each do |i|
   client = User.create!(username: "c#{i}", email: "c#{i}@email.com", password: '123456',
                         password_confirmation: '123456', role: 'client', industry: industry_names.sample,
                         email_confirmed: true, confirmation_token: nil, status: 'approved')
 
-  rand(4..6).times do |j|
-    project_visibility = i > 20 && j == 5 ? 'priv' : 'pub'
+  rand(3..5).times do |j|
+    project_visibility = i > 10 && j == 4 ? 'priv' : 'pub'
     project = client.projects.create!(title: "Project #{j} for Client #{i}",
                                       description: 'lorem ipsum', visibility: project_visibility)
 
@@ -41,15 +41,15 @@ admin.save(validate: false)
   end
 end
 
-(1..75).each do |i|
-  freelancer_visibility = i > 70 ? 'priv' : 'pub'
+(1..35).each do |i|
+  freelancer_visibility = i > 30 ? 'priv' : 'pub'
   freelancer = User.create!(username: "f#{i}", email: "f#{i}@email.com", password: '123456',
                             password_confirmation: '123456', role: 'freelancer', email_confirmed: true,
                             qualification: qualification_names.sample, experience: rand(0..25),
                             industry: industry_names.sample, confirmation_token: nil, visibility: freelancer_visibility,
                             status: 'approved')
 
-  freelancer.categories << Category.all.sample(rand(1..5))
+  freelancer.categories << Category.all.sample(rand(1..4))
 end
 
 User.where(role: 'freelancer').each do |freelancer|
