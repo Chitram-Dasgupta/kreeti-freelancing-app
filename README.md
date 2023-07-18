@@ -22,32 +22,20 @@ This app was created with:
 
 Make sure you have the correct versions of the above-mentioned software installed on your local system.
 
-### 2. Set up the database
-
-In the `config/database.yml`, you will find that the `username` is set as
-**freelancing_app**, and the `password` is **password**.
-
-To set up the PostgreSQL user, follow these steps:
-
-```sh
-sudo -su postgres
-# Enter the password when prompted
-
-psql
-# This will take you to the psql prompt
-
-# In psql, run the following command:
-CREATE USER freelancing_app WITH PASSWORD 'password' CREATEDB;
-
-# Then exit psql and postgres
-```
-
-### 3. Clone the repository and navigate to it
+### 2. Clone the repository and navigate to it
 
 ```sh
 git clone git@github.com:Chitram-Dasgupta/kreeti-freelancing-app.git
 
 cd kreeti-freelancing-app
+```
+
+### 3. Install the necessary dependencies
+
+```sh
+bundle
+
+yarn
 ```
 
 ### 4. Create and migrate the databases
@@ -60,15 +48,7 @@ rails db:migrate
 rails db:seed
 ```
 
-### 5. Install the necessary dependencies
-
-```sh
-bundle
-
-yarn
-```
-
-### 6. Create the elasticsearch indices
+### 5. Create the elasticsearch indices
 
 Make sure that elasticsearch is running at `localhost:9200`
 
@@ -86,7 +66,7 @@ User.import force: true
 Project.import force: true
 ```
 
-### 7. Finally, run the server
+### 6. Finally, run the server
 
 ```sh
 rails s
