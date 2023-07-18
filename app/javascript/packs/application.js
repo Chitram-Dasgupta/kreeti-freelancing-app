@@ -10,6 +10,7 @@ import "channels"
 import "packs/notifications"
 import "packs/form_submit"
 import "packs/multiselect_input"
+import "packs/role_change"
 
 Rails.start()
 Turbolinks.start()

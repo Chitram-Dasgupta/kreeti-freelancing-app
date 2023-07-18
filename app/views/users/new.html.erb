@@ -1,10 +1,20 @@
 <h1 class="text-center my-4">Register now!</h1>
 <div class="d-flex justify-content-center">
-  <%= form_with model: @user do |f| %>
-    <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:email, 'email'], [:password, 'password'], [:password_confirmation, 'password']] %>
+  <%= form_with model: @user, local: true do |f| %>
     <div class="mb-3">
       <%= f.label :role, class: 'form-label' %>
-      <%= select(:user, :role, [['Client', 'client'], ['Freelancer', 'freelancer']], {}, { class: 'form-select' }) %>
+      <%= f.select :role, [['Client', 'client'], ['Freelancer', 'freelancer']], {}, { class: 'form-select' } %>
+    </div>
+    <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:email, 'email'], [:password, 'password'], [:password_confirmation, 'password'], [:industry, 'text'], [:profile_picture, 'file']] %>
+    <div id="freelancer_fields" style="display: none;">
+      <div class="mb-3">
+        <%= f.label :qualification, class: 'form-label' %>
+        <%= f.select :qualification, all_qualifications, {}, class: 'form-control' %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :experience, class: 'form-label' %>
+        <%= f.number_field :experience, in: 0..100, step: 1, class: 'form-control' %>
+      </div>
     </div>
     <%= f.submit 'Sign up', class: 'btn btn-primary' %>
   <% end %>

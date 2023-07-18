@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:email].downcase)
 
     return handle_invalid_authentication unless @user&.authenticate(params[:password])
-    return handle_unconfirmed_email unless @user.email_confirmed
+    return handle_unconfirmed_email(@user) unless @user.email_confirmed
 
     session[:user_id] = @user.id
     handle_successful_authentication
@@ -34,7 +34,9 @@ class SessionsController < ApplicationController
     render :new, status: :unprocessable_entity
   end
 
-  def handle_unconfirmed_email
+  def handle_unconfirmed_email(user)
+    redirect_to root_path, flash: { error: 'Your account has been rejected!' } and return if user.status == 'rejected'
+
     redirect_to root_path, flash: { error: 'Please activate your account!' }
   end
 
