@@ -33,19 +33,13 @@ cd kreeti-freelancing-app
 ### 3. Install the necessary dependencies
 
 ```sh
-bundle
-
-yarn
+bundle && yarn
 ```
 
-### 4. Create and migrate the databases
+### 4. Create, migrate, and seed the databases
 
 ```sh
-rails db:create
-
-rails db:migrate
-
-rails db:seed
+rails db:setup
 ```
 
 ### 5. Create the elasticsearch indices
@@ -55,14 +49,16 @@ Make sure that elasticsearch is running at `localhost:9200`
 Open the rails console:
 
 ```sh
-rails console
+rails c
 ```
 
 Then, inside rails console, run the following commands:
 
 ```sh
 User.import force: true
+```
 
+```sh
 Project.import force: true
 ```
 
