@@ -1,5 +1,5 @@
 <% unless project.bid_awarded? %>
-  <% if !project.bids.exists?(user_id: current_user.id) %>
+  <% unless user_has_bid?(project, current_user) %>
     <%= display_project_action('New Bid', new_bid_path(project_id: project.id), 'plus-circle-dotted', 'primary') %>
   <% else %>
     <p>You have already placed a bid for this project</p>

@@ -52,4 +52,8 @@ module ProjectsHelper
      'Python developer', 'Android developer', 'Java developer', 'Graphic designer',
      'HTML/CSS developer', 'System admin', 'Data scientist', 'Technical writer']
   end
+
+  def user_has_bid?(project, user)
+    project.bids.exists?(user_id: user.id)
+  end
 end
