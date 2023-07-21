@@ -51,8 +51,7 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :experience,
             numericality: { only_integer: true, allow_nil: true, less_than_or_equal_to: 100 }
-  validates :password, presence: true, length: { minimum: 6 }, if: :password_changed?, on: :create
-  validates :password, length: { minimum: 6 }, allow_blank: true, if: :password_changed?, on: :update
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
   validates :role, presence: true, inclusion: { in: %w[freelancer client] }
   validates :username, presence: true, uniqueness: true, length: { maximum: 255 }
 
@@ -80,10 +79,6 @@ class User < ApplicationRecord
       self.confirmation_token_created_at = nil
       save
     end
-  end
-
-  def password_changed?
-    !password.nil? || !password_confirmation.nil?
   end
 
   # rubocop:disable Metrics/MethodLength
