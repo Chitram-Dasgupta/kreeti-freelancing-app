@@ -21,6 +21,11 @@ function loadNotifications(showAll = false) {
   fetch(`/notifications/fetch_notifications${showAll ? "" : "?limit=5"}`)
     .then((response) => response.json())
     .then((notifications) => {
+      if (notifications.length === 0) {
+        document.getElementById("noNotificationsLabel").style.display = "block";
+      } else {
+        document.getElementById("noNotificationsLabel").style.display = "none";
+      }
       notifications.forEach((notification) => {
         const notificationItem = createNotificationItem(notification);
 
@@ -96,6 +101,9 @@ function fetchNotifications() {
             notificationItems.forEach((item) => {
               item.remove();
             });
+            if (document.querySelectorAll(".dropdown-item").length == 0) {
+              document.getElementById("noNotificationsLabel").style.display = "block";
+            }
             updateButtons();
           }
         })

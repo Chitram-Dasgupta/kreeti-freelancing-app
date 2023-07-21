@@ -26,6 +26,7 @@ document.addEventListener("turbolinks:load", () => {
 
         const notificationList = document.getElementById("notificationList");
         notificationList.insertBefore(notificationItem, notificationList.firstChild);
+        document.getElementById('noNotificationsLabel').style.display = "none";
 
         updateButtons();
       }
