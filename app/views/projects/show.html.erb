@@ -10,7 +10,9 @@
   <% if @project.has_awarded_bid? && current_user == @project.user %>
     <%= display_project_action('Chat with awarded freelancer', rooms_path(user_id: @project.accepted_bid_freelancer.id), 'chat-dots', 'info') %>
   <% end %>
-  <%= render 'shared/bid_table', bids: @bids %>
-  <%= paginate @bids %>
+  <% if logged_in? %>
+    <%= render 'shared/bid_table', bids: @bids %>
+    <%= paginate @bids %>
+  <% end %>
 </div>
 <%= render 'shared/footer', previous_page: root_path %>

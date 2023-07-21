@@ -5,7 +5,9 @@
         <th>Project Title</th>
         <th>Project Description</th>
         <th>Categories</th>
-        <th>Has awarded bid?</th>
+        <% if logged_in? %>
+          <th>Has awarded bid?</th>
+        <% end %>
         <th>Show</th>
       </tr>
     </thead>
@@ -23,13 +25,15 @@
               <% end %>
             <% end %>
           </td>
-          <td>
-            <% if project.has_awarded_bid %>
-              <i class="bi bi-check-circle text-success"></i>
-            <% else %>
-              <i class="bi bi-x-circle text-danger"></i>
-            <% end %>
-          </td>
+          <% if logged_in? %>
+            <td>
+              <% if project.has_awarded_bid %>
+                <i class="bi bi-check-circle text-success"></i>
+              <% else %>
+                <i class="bi bi-x-circle text-danger"></i>
+              <% end %>
+            </td>
+          <% end %>
           <td>
             <%= link_to project, class: "btn btn-primary btn-sm" do %>
               <i class="bi bi-arrow-right-circle"></i>
