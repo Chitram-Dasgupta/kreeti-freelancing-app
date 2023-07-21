@@ -63,7 +63,7 @@ class ProjectsController < ApplicationController
   private
 
   def set_project
-    Project.find_by(id: params[:id])
+    @project = Project.find_by(id: params[:id])
     return redirect_to root_path, flash: { error: 'Project not found' } if @project.nil?
   end
 
