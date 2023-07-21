@@ -17,9 +17,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.visible_to(current_user).find_by(id: params[:id])
-    return if @user.present?
-
-    redirect_to root_path, flash: { error: 'You don\'t have permission to view this profile.' }
+    return redirect_to root_path, flash: { error: 'You don\'t have permission to view this profile.' } if @user.nil?
   end
 
   def new
@@ -108,6 +106,7 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by(id: params[:id])
+    return redirect_to root_path, flash: { error: 'User not found' } if @user.nil?
   end
 
   def user_params

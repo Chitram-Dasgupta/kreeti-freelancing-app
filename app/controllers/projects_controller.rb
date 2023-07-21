@@ -2,7 +2,7 @@
 
 class ProjectsController < ApplicationController
   skip_before_action :require_authorization, only: %i[show search]
-  before_action :current_user_project, only: %i[edit update destroy]
+  before_action :set_project, only: %i[edit update destroy]
 
   def index
     if admin?
@@ -14,11 +14,10 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.visible_to(current_user).find_by(id: params[:id])
+
+    return redirect_to root_path, flash: { error: 'Project cannot be shown' } if @project.nil?
+
     @bids = @project.bids.where.not(bid_status: 'rejected').page params[:page]
-
-    return if @project.present?
-
-    redirect_to search_projects_path, flash: { error: 'You don\'t have permission to view this project.' }
   end
 
   def new
@@ -26,7 +25,8 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    redirect_to @project, notice: 'Cannot edit an awarded project' if @project.has_awarded_bid?
+    return redirect_to @project, notice: 'Cannot edit an awarded project' if @project.has_awarded_bid?
+
     @categories = Category.all
   end
 
@@ -41,7 +41,8 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    redirect_to @project, notice: 'Cannot update an awarded project.' if @project.has_awarded_bid?
+    return redirect_to @project, notice: 'Cannot update an awarded project.' if @project.has_awarded_bid?
+
     if @project.update(project_params)
       redirect_to @project, flash: { notice: 'Project was successfully updated!' }
     else
@@ -61,13 +62,9 @@ class ProjectsController < ApplicationController
 
   private
 
-  def current_user_project
-    id_param = params[:id]
-    @project = if admin?
-                 Project.find_by(id: id_param)
-               else
-                 current_user.projects.find_by(id: id_param)
-               end
+  def set_project
+    Project.find_by(id: params[:id])
+    return redirect_to root_path, flash: { error: 'Project not found' } if @project.nil?
   end
 
   def project_params

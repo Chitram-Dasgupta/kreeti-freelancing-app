@@ -69,12 +69,8 @@ class BidsController < ApplicationController
   private
 
   def set_bid
-    id_param = params[:id]
-    @bid = if freelancer?
-             current_user.bids.find_by(id: id_param)
-           else
-             Bid.find_by(id: id_param)
-           end
+    @bid = Bid.find_by(id: params[:id])
+    redirect_to bids_path, flash: { error: 'Bid not found' } if @bid.nil?
   end
 
   def files_present?
