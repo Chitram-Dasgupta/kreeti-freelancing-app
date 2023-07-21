@@ -42,7 +42,7 @@ admin.save(validate: false)
 end
 
 (1..35).each do |i|
-  freelancer_visibility = i > 30 ? 'priv' : 'pub'
+  freelancer_visibility = rand(10) > 3 ? 'pub' : 'priv'
   freelancer = User.create!(username: "f#{i}", email: "f#{i}@email.com", password: '123456',
                             password_confirmation: '123456', role: 'freelancer', email_confirmed: true,
                             qualification: qualification_names.sample, experience: rand(0..25),
