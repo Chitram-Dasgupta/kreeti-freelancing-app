@@ -1,4 +1,4 @@
-<%= form_with(model: [ room, Message.new ], local: true, remote: true, id: "message-form", class: "mb-3 mt-1") do |f| %>
+<%= form_with(model: [ room, Message.new ], remote: true, id: "message-form", class: "mb-3 mt-1") do |f| %>
   <div class="input-group">
     <%= f.text_field :content, class: "form-control", placeholder: "Type your message" %>
     <div class="input-group-append mx-3">
