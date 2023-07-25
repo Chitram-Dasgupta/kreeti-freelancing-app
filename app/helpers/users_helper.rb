@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 module UsersHelper
+  def all_qualifications
+    ['No formal education', 'High School', 'Diploma', 'Bachelor of Science', 'Bachelor of Arts',
+     'Bachelor of Commerce', 'Bachelor of Technology', 'Master of Science', 'Master of Arts',
+     'Master of Commerce', 'Master of Technology', 'PhD', 'Post Doctorate']
+  end
+
   def display_user_action(label, path, icon_name, style)
     http_method = set_http_method(icon_name, style)
     link_to(path,
@@ -8,6 +14,10 @@ module UsersHelper
               data: (http_method == :delete ? { confirm: 'Are you sure?' } : {}) }) do
       sanitize("#{label} #{icon(icon_name)}")
     end
+  end
+
+  def icon(name)
+    content_tag(:i, '', class: "bi bi-#{name}")
   end
 
   def set_http_method(icon_name, style)
@@ -19,19 +29,9 @@ module UsersHelper
     end
   end
 
-  def icon(name)
-    content_tag(:i, '', class: "bi bi-#{name}")
-  end
-
   def visibility_status(user)
     return 'Public' if user.visibility == 'pub'
 
     'Private'
-  end
-
-  def all_qualifications
-    ['No formal education', 'High School', 'Diploma', 'Bachelor of Science', 'Bachelor of Arts',
-     'Bachelor of Commerce', 'Bachelor of Technology', 'Master of Science', 'Master of Arts',
-     'Master of Commerce', 'Master of Technology', 'PhD', 'Post Doctorate']
   end
 end

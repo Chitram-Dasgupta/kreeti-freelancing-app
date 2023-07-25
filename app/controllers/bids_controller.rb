@@ -68,19 +68,6 @@ class BidsController < ApplicationController
 
   private
 
-  def set_bid
-    @bid = Bid.find_by(id: params[:id])
-    redirect_to bids_path, flash: { error: 'Bid not found' } if @bid.nil?
-  end
-
-  def files_present?
-    bid = params[:bid]
-    return false if bid.nil?
-
-    [bid[:bid_code_document], bid[:bid_design_document], bid[:bid_other_document]]
-      .count(&:present?).positive?
-  end
-
   def attach_files
     bid = params[:bid]
     @bid.bid_code_document.attach(bid[:bid_code_document])
@@ -92,6 +79,19 @@ class BidsController < ApplicationController
   def check_rejected
     @bid = Bid.find_by(id: params[:id])
     redirect_to bids_path, flash: { error: 'Bid cannot be modified' } if @bid.rejected?
+  end
+
+  def files_present?
+    bid = params[:bid]
+    return false if bid.nil?
+
+    [bid[:bid_code_document], bid[:bid_design_document], bid[:bid_other_document]]
+      .count(&:present?).positive?
+  end
+
+  def set_bid
+    @bid = Bid.find_by(id: params[:id])
+    redirect_to bids_path, flash: { error: 'Bid not found' } if @bid.nil?
   end
 
   def bid_params

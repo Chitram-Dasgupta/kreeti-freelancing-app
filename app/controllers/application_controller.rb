@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
     !current_user.nil?
   end
 
+  def admin?
+    current_user&.role == 'admin'
+  end
+
   def client?
     current_user&.role == 'client'
   end
@@ -25,16 +29,12 @@ class ApplicationController < ActionController::Base
     current_user&.role == 'freelancer'
   end
 
-  def admin?
-    current_user&.role == 'admin'
+  def require_admin
+    redirect_to root_path, flash: { error: 'You are not authorized to view this page' } unless current_user.admin?
   end
 
   def require_authorization
     redirect_to new_session_path, flash: { error: 'Please sign in' } unless logged_in?
-  end
-
-  def require_admin
-    redirect_to root_path, flash: { error: 'You are not authorized to view this page' } unless current_user.admin?
   end
 
   def redirect_logged_in_users

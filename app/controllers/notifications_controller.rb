@@ -8,18 +8,17 @@ class NotificationsController < ApplicationController
     render json: { unread_count:, full_count: }
   end
 
+  def delete_read
+    current_user.notifications.where(read: true).destroy_all
+    render json: { success: true }
+  end
+
   def fetch_notifications
     current_notifications = current_user.notifications
     limit = params[:limit] || current_notifications.count
     notifications = current_notifications.includes(:project, :bid).limit(limit)
     render json: notifications.to_json(include: { project: { only: :title },
                                                   bid: { only: :bid_status } })
-  end
-
-  def mark_as_read
-    notification = current_user.notifications.find(params[:id])
-    notification.update(read: true)
-    render json: { success: true }
   end
 
   def mark_all_as_read
@@ -34,8 +33,9 @@ class NotificationsController < ApplicationController
     render json: { success: }
   end
 
-  def delete_read
-    current_user.notifications.where(read: true).destroy_all
+  def mark_as_read
+    notification = current_user.notifications.find(params[:id])
+    notification.update(read: true)
     render json: { success: true }
   end
 end

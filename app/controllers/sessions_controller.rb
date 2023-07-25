@@ -34,12 +34,6 @@ class SessionsController < ApplicationController
     render :new, status: :unprocessable_entity
   end
 
-  def handle_unconfirmed_email(user)
-    redirect_to root_path, flash: { error: 'Your account has been rejected!' } and return if user.status == 'rejected'
-
-    redirect_to root_path, flash: { error: 'Please activate your account!' }
-  end
-
   def handle_successful_authentication
     if client?
       redirect_to projects_path, flash: { notice: 'Logged in as client!' }
@@ -48,5 +42,11 @@ class SessionsController < ApplicationController
     else
       redirect_to root_path, flash: { notice: 'Logged in as admin!' }
     end
+  end
+
+  def handle_unconfirmed_email(user)
+    redirect_to root_path, flash: { error: 'Your account has been rejected!' } and return if user.status == 'rejected'
+
+    redirect_to root_path, flash: { error: 'Please activate your account!' }
   end
 end
