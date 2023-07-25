@@ -2,14 +2,14 @@
 
 class MessagesController < ApplicationController
   def create
-    @room = Room.find(params[:room_id])
-    @message = @room.messages.new(message_params)
+    room = Room.find(params[:room_id])
+    message = room.messages.new(message_params)
 
-    if @message.save
-      RoomChannel.broadcast_to(@room, { content: @message.content, user_id: @message.user_id, status: 'sent' })
+    if message.save
+      RoomChannel.broadcast_to(room, { content: message.content, user_id: message.user_id, status: 'sent' })
       render json: { status: 'ok' }
     else
-      render json: { status: 'error', errors: @message.errors.full_messages }, status: :unprocessable_entity
+      render json: { status: 'error', errors: message.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

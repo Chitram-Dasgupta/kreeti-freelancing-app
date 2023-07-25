@@ -1,10 +1,16 @@
 import consumer from "./consumer";
 
+let currentSubscription;
+
 document.addEventListener("turbolinks:load", () => {
   const currentUserId = document.querySelector("body").dataset.currentUserId;
   const notificationBadge = document.getElementById("notificationBadge");
 
-  consumer.subscriptions.create(
+  if (currentSubscription) {
+    consumer.subscriptions.remove(currentSubscription);
+  }
+
+  currentSubscription = consumer.subscriptions.create(
     { channel: "BidNotificationsChannel", user_id: currentUserId },
     {
       connected() {},
