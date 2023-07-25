@@ -33,6 +33,7 @@ class Project < ApplicationRecord
   has_one_attached :design_document
   has_one_attached :srs_document
 
+  validates :categories, presence: true
   validates :title, presence: true
 
   delegate :username, to: :user

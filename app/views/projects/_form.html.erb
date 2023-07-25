@@ -25,6 +25,7 @@
         <% end %>
       </ul>
     </div>
+    <%= render 'shared/field_errors', object: local_assigns[:form_object], field: :categories %>
   </div>
   <div class="mb-3">
     <%= f.label :skills, "Skills", class: 'form-label' %>
