@@ -52,9 +52,6 @@ function loadNotifications(showAll = false) {
                 window.location.href = notificationItem.href;
                 updateButtons();
               }
-            })
-            .catch((error) => {
-              console.error("There has been a problem with your fetch operation:", error);
             });
         });
 
@@ -75,41 +72,33 @@ function fetchNotifications() {
 
     const markAllAsReadButton = document.getElementById("markAllAsReadButton");
     addClickListener(markAllAsReadButton, function () {
-      fetchWithCsrfToken("/notifications/mark_all_as_read", "POST")
-        .then((data) => {
-          if (data.success) {
-            const notificationItems = document.querySelectorAll(".dropdown-item");
-            const notificationBadge = document.getElementById("notificationBadge");
-            notificationItems.forEach((item) => {
-              item.classList.add("text-muted");
-            });
-            notificationBadge.innerText = 0;
-            updateButtons();
-          }
-        })
-        .catch((error) => {
-          console.error("There has been a problem with your fetch operation:", error);
-        });
+      fetchWithCsrfToken("/notifications/mark_all_as_read", "POST").then((data) => {
+        if (data.success) {
+          const notificationItems = document.querySelectorAll(".dropdown-item");
+          const notificationBadge = document.getElementById("notificationBadge");
+          notificationItems.forEach((item) => {
+            item.classList.add("text-muted");
+          });
+          notificationBadge.innerText = 0;
+          updateButtons();
+        }
+      });
     });
 
     const deleteReadNotificationsButton = document.getElementById("deleteReadNotificationsButton");
     addClickListener(deleteReadNotificationsButton, function () {
-      fetchWithCsrfToken("/notifications/delete_read", "POST")
-        .then((data) => {
-          if (data.success) {
-            const notificationItems = document.querySelectorAll(".dropdown-item.text-muted");
-            notificationItems.forEach((item) => {
-              item.remove();
-            });
-            if (document.querySelectorAll(".dropdown-item").length == 0) {
-              document.getElementById("noNotificationsLabel").style.display = "block";
-            }
-            updateButtons();
+      fetchWithCsrfToken("/notifications/delete_read", "POST").then((data) => {
+        if (data.success) {
+          const notificationItems = document.querySelectorAll(".dropdown-item.text-muted");
+          notificationItems.forEach((item) => {
+            item.remove();
+          });
+          if (document.querySelectorAll(".dropdown-item").length == 0) {
+            document.getElementById("noNotificationsLabel").style.display = "block";
           }
-        })
-        .catch((error) => {
-          console.error("There has been a problem with your fetch operation:", error);
-        });
+          updateButtons();
+        }
+      });
     });
 
     fetchNotificationsCount();

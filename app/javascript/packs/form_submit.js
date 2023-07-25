@@ -29,12 +29,10 @@ window.addEventListener("DOMContentLoaded", () => {
         if (data.status === "ok") {
           submitButton.disabled = false;
         } else {
-          console.error("Error:", data.errors);
           submitButton.disabled = false;
         }
       })
-      .catch((error) => {
-        console.error("Error:", error);
+      .catch((_error) => {
         submitButton.disabled = false;
       });
 

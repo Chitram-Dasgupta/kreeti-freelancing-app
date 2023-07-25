@@ -12,7 +12,6 @@ document.addEventListener("turbolinks:load", () => {
       disconnected() {},
 
       received(data) {
-        console.log(data);
         const currentBadgeCount = parseInt(notificationBadge.textContent);
         notificationBadge.textContent = currentBadgeCount + 1;
 
@@ -26,7 +25,7 @@ document.addEventListener("turbolinks:load", () => {
 
         const notificationList = document.getElementById("notificationList");
         notificationList.insertBefore(notificationItem, notificationList.firstChild);
-        document.getElementById('noNotificationsLabel').style.display = "none";
+        document.getElementById("noNotificationsLabel").style.display = "none";
 
         updateButtons();
       }
