@@ -46,6 +46,7 @@ class User < ApplicationRecord
 
   has_one_attached :profile_picture
 
+  validates :categories, presence: true, if: -> { freelancer? }
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX, message: 'must be a valid email address' },
                     uniqueness: { case_sensitive: false }

@@ -8,6 +8,25 @@
     <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:email, 'email'], [:password, 'password'], [:password_confirmation, 'password'], [:industry, 'text'], [:profile_picture, 'file']] %>
     <div id="freelancer_fields" style="display: none;">
       <div class="mb-3">
+        <%= f.label :category_ids, "Categories", class: 'form-label' %>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Categories
+          </button>
+          <ul class="dropdown-menu checkbox-menu overflow-auto allow-focus" style="height: 200px;" aria-labelledby="categoriesDropdown">
+            <% Category.all.each do |category| %>
+              <li>
+                <div class="dropdown-item">
+                  <%= check_box_tag 'user[category_ids][]', category.id, @user.categories.include?(category), id: "user_category_ids_#{category.id}" %>
+                  <%= label_tag "user_category_ids_#{category.id}", category.name %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <%= render 'shared/field_errors', object: @user, field: :categories %>
+      </div>
+      <div class="mb-3">
         <%= f.label :qualification, class: 'form-label' %>
         <%= f.select :qualification, all_qualifications, {}, class: 'form-control' %>
       </div>
