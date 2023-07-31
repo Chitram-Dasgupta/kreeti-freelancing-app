@@ -68,12 +68,12 @@ class UsersController < ApplicationController
   def approve
     @user.update(status: 'approved')
     UserMailer.account_activation(@user).deliver_later
-    redirect_to users_path, flash: { success: 'User approved.' }
+    redirect_to manage_registrations_users_path, flash: { success: 'User approved.' }
   end
 
   def reject
     @user.update(status: 'rejected', confirmation_token: nil)
-    redirect_to users_path, flash: { success: 'User rejected.' }
+    redirect_to manage_registrations_users_path, flash: { success: 'User rejected.' }
   end
 
   def search
