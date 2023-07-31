@@ -10,7 +10,7 @@
   </div>
   <% if new_record %>
     <%= form.hidden_field :user_id, value: current_user.id %>
-    <%= form.hidden_field :project_id, value: @project.id %>
+    <%= form.hidden_field :project_id, value: project.id %>
   <% end %>
   <%= form.submit class: 'btn btn-primary' %>
 <% end %>

@@ -1,7 +1,7 @@
 <% if !@bid.accepted? || admin? %>
   <div class="mx-2">
     <h2>Edit your bid</h2>
-    <%= render 'form', bid: @bid, new_record: false %>
+    <%= render 'form', bid: @bid, project: @project, new_record: false %>
   </div>
 <% else %>
   <%= render 'file_upload_form', bid: @bid %>
