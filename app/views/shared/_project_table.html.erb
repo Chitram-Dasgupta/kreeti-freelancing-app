@@ -15,7 +15,7 @@
       <% projects.each do |project| %>
         <tr>
           <td><%= project.title %></td>
-          <td><%= project.description %></td>
+          <td><%= project.description.truncate(75) %></td>
           <td>
             <% if project.categories.empty? %>
               No categories available

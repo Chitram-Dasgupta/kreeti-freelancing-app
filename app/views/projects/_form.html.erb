@@ -7,6 +7,7 @@
   <div class="mb-3">
     <%= f.label :description, class: 'form-label' %>
     <%= f.text_area :description, class: 'form-control' %>
+    <%= render 'shared/field_errors', object: local_assigns[:form_object], field: :description %>
   </div>
   <div class="mb-3">
     <%= f.label :category_ids, "Categories", class: 'form-label' %>

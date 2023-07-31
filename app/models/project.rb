@@ -34,7 +34,8 @@ class Project < ApplicationRecord
   has_one_attached :srs_document
 
   validates :categories, presence: true
-  validates :title, presence: true
+  validates :title, presence: true, length: { maximum: 64 }
+  validates :description, length: { maximum: 1024 }
 
   delegate :username, to: :user
 
