@@ -29,18 +29,18 @@
       <h1 class="display-4">Welcome visitor</h1>
     <% end %>
     <% if logged_in? %>
-      <%= link_to 'Chat dashboard', rooms_path, class: "btn btn-danger btn-lg" %>
+      <%= link_to 'Chat dashboard', rooms_path, class: "btn btn-danger btn-lg m-1" %>
       <% if client? %>
-        <%= link_to 'My projects', projects_path, class: "btn btn-info btn-lg" %>
+        <%= link_to 'My projects', projects_path, class: "btn btn-info btn-lg m-1" %>
       <% elsif freelancer? %>
-        <%= link_to 'My bids', bids_path, class: "btn btn-primary btn-lg" %>
+        <%= link_to 'My bids', bids_path, class: "btn btn-primary btn-lg m-1" %>
       <% end %>
     <% else %>
     <% end %>
     <hr class="my-4">
     <p class="lead mt-3">
-      <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success" %>
-      <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning" %>
+      <%= link_to 'Search freelancers', search_users_path, class: "btn btn-success m-1" %>
+      <%= link_to 'Search Projects', search_projects_path, class: "btn btn-warning m-1" %>
     </p>
     <hr class="my-4">
     <p class="lead">
