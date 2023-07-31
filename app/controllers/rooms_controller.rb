@@ -45,7 +45,7 @@ class RoomsController < ApplicationController
   def check_user_access
     @room = Room.find_by(id: params[:id])
     return redirect_to_root('Room not found') if @room.nil?
-    return if @room.user_rooms.first.user1_id == current_user.id || @room.user_rooms.first.user2_id == current_user.id
+    return if @room.user_rooms.belongs_to_user(current_user).exists?
 
     redirect_to_root('You cannot access this page')
   end
