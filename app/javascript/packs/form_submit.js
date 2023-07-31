@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("turbolinks:load", () => {
   var form = document.getElementById("message-form");
 
   if (!form) {
