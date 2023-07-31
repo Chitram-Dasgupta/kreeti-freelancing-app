@@ -26,6 +26,7 @@
         <% end %>
       </ul>
     </div>
+    <%= f.hidden_field :category_ids, value: "", multiple: true %>
     <%= render 'shared/field_errors', object: local_assigns[:form_object], field: :categories %>
   </div>
   <div class="mb-3">

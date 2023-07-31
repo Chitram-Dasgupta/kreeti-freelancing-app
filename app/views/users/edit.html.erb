@@ -31,6 +31,7 @@
             <% end %>
           </ul>
         </div>
+        <%= f.hidden_field :category_ids, value: "", multiple: true %>
         <%= render 'shared/field_errors', object: @user, field: :categories %>
       </div>
       <div class="mb-3">
