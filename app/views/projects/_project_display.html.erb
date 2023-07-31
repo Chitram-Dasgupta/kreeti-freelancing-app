@@ -1,6 +1,6 @@
 <h1 class="mb-3"><%= project.title %></h1>
 <h5 class="text-muted mb-3"><%= project.description %></h5>
-<% if project.has_awarded_bid? %>
+<% if project.has_awarded_bid? && logged_in? %>
   <div class="alert alert-warning">Project has awarded bid</div>
 <% end %>
 <hr>
