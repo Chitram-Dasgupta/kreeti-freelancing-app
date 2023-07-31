@@ -5,7 +5,9 @@
       <tr>
         <th>Bid Description</th>
         <th>Bid Amount</th>
-        <th>By</th>
+        <% unless params['controller'] == 'bids' && params['action'] == 'index' %>
+          <th>By</th>
+        <% end %>
         <th>Actions</th>
         <th>Show</th>
       </tr>
@@ -15,7 +17,9 @@
         <tr>
           <td><%= bid.bid_description %></td>
           <td><%= bid.bid_amount %></td>
-          <td><%= bid.username %></td>
+          <% unless params['controller'] == 'bids' && params['action'] == 'index' %>
+            <td><%= bid.username %></td>
+          <% end %>
           <td>
             <% if bid.accepted? %>
               <% if bid.project_files_uploaded? %>
