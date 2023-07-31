@@ -2,13 +2,16 @@
 
 class BidsController < ApplicationController
   before_action :check_rejected, only: %i[edit update]
-  before_action :set_bid, only: %i[show edit update destroy accept reject files_upload]
+  before_action :set_bid, only: %i[show edit update destroy files_upload]
+  before_action :check_project_owner, only: %i[accept reject]
 
   def index
     @bids = if admin?
               Bid.all
-            else
+            elsif freelancer?
               current_user.bids
+            else
+              return redirect_to root_path, flash: { error: 'You are not authorized to view bids' }
             end
     @bids = @bids.page params[:page]
   end
@@ -16,11 +19,17 @@ class BidsController < ApplicationController
   def show; end
 
   def new
+    return redirect_to root_path, flash: { error: 'Bid cannot be created' } unless freelancer?
+
     @project = Project.find_by(id: params[:project_id])
     @bid = Bid.new
   end
 
-  def edit; end
+  def edit
+    return unless current_user != @bid.user && !admin?
+
+    redirect_to root_path, flash: { error: 'Bid cannot be edited' }
+  end
 
   def create
     @project = Project.find_by(id: params['bid']['project_id'])
@@ -87,6 +96,14 @@ class BidsController < ApplicationController
 
     [bid[:bid_code_document], bid[:bid_design_document], bid[:bid_other_document]]
       .count(&:present?).positive?
+  end
+
+  def check_project_owner
+    @bid = Bid.find_by(id: params[:id])
+    redirect_to root_path, flash: { error: 'You are not authorized to perform this action' } if @bid.nil?
+    return if @bid.project.user == current_user
+
+    redirect_to root_path, flash: { error: 'You are not authorized to perform this action' }
   end
 
   def set_bid

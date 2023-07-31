@@ -7,8 +7,10 @@ class ProjectsController < ApplicationController
   def index
     if admin?
       @projects = Project.all.page params[:page]
-    else
+    elsif client?
       @user_projects = current_user.projects.page params[:page]
+    else
+      redirect_to root_path, flash: { error: 'You are not authorized to view projects' }
     end
   end
 
@@ -21,10 +23,15 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    return redirect_to root_path, flash: { error: 'Project cannot be created' } unless client?
+
     @project = current_user.projects.new
   end
 
   def edit
+    if current_user != @project.user && !admin?
+      return redirect_to root_path, flash: { error: 'Project cannot be edited' }
+    end
     return redirect_to @project, notice: 'Cannot edit an awarded project' if @project.has_awarded_bid?
 
     @categories = Category.all
