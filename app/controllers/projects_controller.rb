@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.visible_to(current_user).find_by(id: params[:id])
+    @project = Project.find_by(id: params[:id])
 
     return redirect_to root_path, flash: { error: 'Project cannot be shown' } if @project.nil?
 
@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:title, :description, :visibility, :design_document, :srs_document,
+    params.require(:project).permit(:title, :description, :design_document, :srs_document,
                                     skills: [], category_ids: [])
   end
 end

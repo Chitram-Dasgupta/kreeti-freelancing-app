@@ -5,14 +5,12 @@ class Project < ApplicationRecord
 
   def as_indexed_json(_options = {})
     as_json(
-      only: %i[visibility],
       include: { categories: { only: :name } }
     )
   end
 
   settings index: { number_of_shards: 1 } do
     mapping dynamic: 'false' do
-      indexes :visibility
       indexes :categories, type: :nested do
         indexes :name
       end
@@ -20,8 +18,6 @@ class Project < ApplicationRecord
   end
 
   paginates_per 12
-
-  enum visibility: { pub: 0, priv: 1 }
 
   belongs_to :user
 
@@ -38,8 +34,6 @@ class Project < ApplicationRecord
   validates :description, length: { maximum: 1024 }
 
   delegate :username, to: :user
-
-  scope :visible_to, ->(user) { user&.role == 'admin' ? all : where.not(visibility: 'priv').or(where(user:)) }
 
   default_scope { order(created_at: :desc) }
 
@@ -72,11 +66,6 @@ class Project < ApplicationRecord
                            match_all: {}
                          }
                        end
-              }
-            },
-            {
-              match: {
-                visibility: 'pub'
               }
             }
           ]

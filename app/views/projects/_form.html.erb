@@ -48,10 +48,6 @@
     </div>
   </div>
   <div class="mb-3">
-    <%= f.label :visibility, class: 'form-label' %>
-    <%= select(:project, :visibility, [['Public', 'pub'], ['Private', 'priv']], {}, { class: 'form-select' }) %>
-  </div>
-  <div class="mb-3">
     <%= f.label :design_document, class: 'form-label' %>
     <%= f.file_field :design_document, class: 'form-control' %>
   </div>

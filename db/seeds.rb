@@ -31,9 +31,8 @@ admin.save(validate: false)
                         email_confirmed: true, confirmation_token: nil, status: 'approved')
 
   rand(3..5).times do |j|
-    project_visibility = i > 10 && j == 4 ? 'priv' : 'pub'
     project = client.projects.create!(title: "Project #{j} for Client #{i}",
-                                      description: 'lorem ipsum', visibility: project_visibility)
+                                      description: 'lorem ipsum')
 
     project.categories << Category.all.sample(rand(1..3))
     project.skills = skill_names.sample(rand(1..2))
