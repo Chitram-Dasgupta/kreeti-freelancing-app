@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   skip_before_action :require_authorization, only: %i[new create show confirm_email search]
-  before_action :set_user, only: %i[show edit update destroy approve reject approve reject]
+  before_action :set_user, only: %i[show edit update destroy approve reject]
   before_action :require_authorization, only: %i[destroy]
   before_action :find_user_by_confirmation_token, only: %i[confirm_email]
   before_action :require_admin, only: %i[approve reject manage_registrations]

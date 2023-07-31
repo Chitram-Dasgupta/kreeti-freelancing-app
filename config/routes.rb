@@ -45,8 +45,6 @@ Rails.application.routes.draw do
 
   resources :categories, except: %i[show]
 
-  get 'admin/manage_registrations', to: 'admin#manage_registrations'
-
   root 'welcome#index'
 end
 # rubocop:enable Metrics/BlockLength
