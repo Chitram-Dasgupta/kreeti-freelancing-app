@@ -21,7 +21,7 @@ class Bid < ApplicationRecord
   validates :user_id, uniqueness: { scope: :project_id }
 
   delegate :title, to: :project, prefix: true
-  delegate :username, to: :user
+  delegate :username, to: :user, allow_nil: true
 
   default_scope { order(created_at: :desc) }
 

@@ -1,4 +1,8 @@
 <div class="row mb-3">
   <span class="col-sm-3"><strong><%= label %>:</strong></span>
+  <% unless value.nil? %>
   <span class="col-sm-9"><%= value %></span>
+  <% else %>
+  <span class="col-sm-9"><em>Profile deleted</em></span>
+  <% end %>
 </div>

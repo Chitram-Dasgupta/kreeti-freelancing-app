@@ -18,7 +18,11 @@
           <td><%= bid.bid_description.truncate(75) %></td>
           <td><%= bid.bid_amount %></td>
           <% unless params['controller'] == 'bids' && params['action'] == 'index' %>
-            <td><%= bid.username %></td>
+            <% unless bid.username.nil? %>
+              <td><%= bid.username %></td>
+            <% else %>
+              <td><em>Profile deleted</em></td>
+            <% end %>
           <% end %>
           <td>
             <% if bid.accepted? %>

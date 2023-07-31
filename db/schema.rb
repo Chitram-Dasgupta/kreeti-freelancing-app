@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_10_063752) do
+ActiveRecord::Schema.define(version: 2023_07_31_180936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2023_07_10_063752) do
     t.integer "bid_status", default: 0
     t.decimal "bid_amount", precision: 8, scale: 2, null: false
     t.bigint "project_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "project_files_uploaded", default: false, null: false

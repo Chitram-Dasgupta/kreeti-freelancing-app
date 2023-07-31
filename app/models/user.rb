@@ -34,7 +34,7 @@ class User < ApplicationRecord
   enum status: { pending: 0, approved: 1, rejected: 2 }
   enum visibility: { pub: 0, priv: 1 }
 
-  has_many :bids, dependent: :destroy
+  has_many :bids, dependent: :nullify
   has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
   has_many :projects, dependent: :destroy
