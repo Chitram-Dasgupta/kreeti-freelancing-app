@@ -2,14 +2,29 @@
 <%= form_with model: bid, url: files_upload_bid_path(bid), local: true, multipart: true do |form| %>
   <div class="mb-3">
     <%= form.label :bid_code_document, class: 'form-label' %>
+    <% if bid.bid_code_document.attached? %>
+      <div class="mb-2">
+        <strong>Current file:</strong> <%= link_to bid.bid_code_document.filename, url_for(bid.bid_code_document), target: "_blank" %>
+      </div>
+    <% end %>
     <%= form.file_field :bid_code_document, class: 'form-control' %>
   </div>
   <div class="mb-3">
     <%= form.label :bid_design_document, class: 'form-label' %>
+    <% if bid.bid_design_document.attached? %>
+      <div class="mb-2">
+        <strong>Current file:</strong> <%= link_to bid.bid_design_document.filename, url_for(bid.bid_design_document), target: "_blank" %>
+      </div>
+    <% end %>
     <%= form.file_field :bid_design_document, class: 'form-control' %>
   </div>
   <div class="mb-3">
     <%= form.label :bid_other_document, class: 'form-label' %>
+    <% if bid.bid_other_document.attached? %>
+      <div class="mb-2">
+        <strong>Current file:</strong> <%= link_to bid.bid_other_document.filename, url_for(bid.bid_other_document), target: "_blank" %>
+      </div>
+    <% end %>
     <%= form.file_field :bid_other_document, class: 'form-control' %>
   </div>
   <%= form.submit class: 'btn btn-primary' %>

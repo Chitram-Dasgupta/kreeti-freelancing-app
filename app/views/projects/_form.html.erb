@@ -49,10 +49,20 @@
   </div>
   <div class="mb-3">
     <%= f.label :design_document, class: 'form-label' %>
+    <% if local_assigns[:form_object].design_document.attached? %>
+      <div class="mb-2">
+        <span class="text-muted">Current file:</span> <%= link_to local_assigns[:form_object].design_document.filename, url_for(local_assigns[:form_object].design_document), target: "_blank" %>
+      </div>
+    <% end %>
     <%= f.file_field :design_document, class: 'form-control' %>
   </div>
   <div class="mb-3">
     <%= f.label :srs_document, class: 'form-label' %>
+    <% if local_assigns[:form_object].srs_document.attached? %>
+      <div class="mb-2">
+        <span  class="text-muted">Current file:</span> <%= link_to local_assigns[:form_object].srs_document.filename, url_for(local_assigns[:form_object].srs_document), target: "_blank" %>
+      </div>
+    <% end %>
     <%= f.file_field :srs_document, class: 'form-control' %>
   </div>
   <%= f.submit local_assigns[:submit_text], class: "btn btn-primary" %>

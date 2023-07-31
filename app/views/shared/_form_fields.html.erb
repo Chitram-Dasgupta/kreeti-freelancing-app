@@ -1,6 +1,11 @@
 <% fields.each do |field, type| %>
   <div class="mb-3">
     <%= form.label field, class: 'form-label' %>
+    <% if type == 'file' && user.send(field).attached? %>
+      <div class="mb-2">
+        <span class="text-muted">Current file:</span> <%= link_to user.send(field).filename, url_for(user.send(field)), target: "_blank" %>
+      </div>
+    <% end %>
     <%= form.send("#{type}_field", field, class: 'form-control') %>
     <%= render 'shared/field_errors', object: user, field: field %>
   </div>
