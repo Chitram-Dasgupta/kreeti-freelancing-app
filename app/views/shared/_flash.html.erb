@@ -1,6 +1,7 @@
 <% flash.each do |type, msg| %>
-  <div class="w-50 alert <%= flash_class(type) %> alert-dismissible fade show d-flex justify-content-center mx-auto my-2">
-    <%= msg %>
+  <div class="flashMessage w-50 alert <%= flash_class(type) %> alert-dismissible fade show d-flex flex-column justify-content-center align-items-center mx-auto my-2" role="alert">
+    <span><%= msg %></span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="progressBar" style="height: 5px; background: #007bff; margin-top: 10px;"></div>
   </div>
 <% end %>
