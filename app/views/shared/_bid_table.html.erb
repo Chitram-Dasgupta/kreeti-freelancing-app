@@ -15,7 +15,7 @@
     <tbody>
       <% bids.each do |bid| %>
         <tr>
-          <td><%= bid.bid_description %></td>
+          <td><%= bid.bid_description.truncate(75) %></td>
           <td><%= bid.bid_amount %></td>
           <% unless params['controller'] == 'bids' && params['action'] == 'index' %>
             <td><%= bid.username %></td>

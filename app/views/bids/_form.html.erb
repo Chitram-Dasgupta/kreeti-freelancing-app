@@ -2,6 +2,7 @@
   <div class="mb-3">
     <%= form.label :bid_description, class: 'form-label' %>
     <%= form.text_area :bid_description, class: 'form-control' %>
+    <%= render 'shared/field_errors', object: bid, field: :bid_description %>
   </div>
   <div class="mb-3">
     <%= form.label :bid_amount, class: 'form-label' %>
