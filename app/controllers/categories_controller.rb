@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
+  before_action :require_admin, except: []
+
   def index
     @categories = Category.all.page params[:page]
   end
