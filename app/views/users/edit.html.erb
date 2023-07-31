@@ -13,7 +13,7 @@
         <% end %>
       </div>
     </div>
-    <% if freelancer? || admin? %>
+    <% if @user.role == 'freelancer' %>
       <div class="mb-3">
         <%= f.label :qualification, class: 'form-label' %>
         <%= f.select :qualification, all_qualifications, {}, class: 'form-control' %>
