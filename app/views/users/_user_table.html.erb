@@ -1,34 +1,38 @@
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Categories</th>
-        <th>Show</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% users.each do |user| %>
+<% if users.count == 0 %>
+  <p>No such freelancers found</p>
+<% else %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
-          <td><%= user.username %></td>
-          <td><%= user.email %></td>
-          <td>
-            <% if user.categories.empty? %>
-              No categories available
-            <% else %>
-              <% user.categories.each do |cat| %>
-                <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
-              <% end %>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to user, class: "btn btn-primary btn-sm" do %>
-              <i class="bi bi-arrow-right-circle"></i>
-            <% end %>
-          </td>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Categories</th>
+          <th>Show</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        <% users.each do |user| %>
+          <tr>
+            <td><%= user.username %></td>
+            <td><%= user.email %></td>
+            <td>
+              <% if user.categories.empty? %>
+                No categories available
+              <% else %>
+                <% user.categories.each do |cat| %>
+                  <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
+                <% end %>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to user, class: "btn btn-primary btn-sm" do %>
+                <i class="bi bi-arrow-right-circle"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
