@@ -46,5 +46,6 @@ Rails.application.routes.draw do
   resources :categories, except: %i[show]
 
   root 'welcome#index'
+  match '*path', to: 'application#render_not_found', via: :all
 end
 # rubocop:enable Metrics/BlockLength
