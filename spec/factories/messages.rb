@@ -3,5 +3,7 @@
 FactoryBot.define do
   factory :message do
     content { 'MyText' }
+    room
+    user
   end
 end
