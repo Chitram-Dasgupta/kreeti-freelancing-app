@@ -16,6 +16,10 @@
     <% if @user.role == 'freelancer' %>
       <div class="mb-3">
         <%= f.label :category_ids, "Categories", class: 'form-label' %>
+        <div class="my-2">
+          <span class="text-muted">Selected categories: </span>
+          <%= display_badges(@user.categories, :name) %>
+        </div>
         <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             Select Categories
