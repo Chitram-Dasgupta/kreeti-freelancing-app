@@ -1,46 +1,50 @@
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Project Title</th>
-        <th>Project Description</th>
-        <th>Categories</th>
-        <% if logged_in? %>
-          <th>Has awarded bid?</th>
-        <% end %>
-        <th>Show</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% projects.each do |project| %>
+<% if projects.count == 0 %>
+  <p>No such projects found</p>
+<% else %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
-          <td><%= project.title %></td>
-          <td><%= project.description.truncate(75) %></td>
-          <td>
-            <% if project.categories.empty? %>
-              No categories available
-            <% else %>
-              <% project.categories.each do |cat| %>
-                <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
-              <% end %>
-            <% end %>
-          </td>
+          <th>Project Title</th>
+          <th>Project Description</th>
+          <th>Categories</th>
           <% if logged_in? %>
+            <th>Has awarded bid?</th>
+          <% end %>
+          <th>Show</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% projects.each do |project| %>
+          <tr>
+            <td><%= project.title %></td>
+            <td><%= project.description.truncate(75) %></td>
             <td>
-              <% if project.has_awarded_bid %>
-                <i class="bi bi-check-circle text-success"></i>
+              <% if project.categories.empty? %>
+                No categories available
               <% else %>
-                <i class="bi bi-x-circle text-danger"></i>
+                <% project.categories.each do |cat| %>
+                  <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
+                <% end %>
               <% end %>
             </td>
-          <% end %>
-          <td>
-            <%= link_to project, class: "btn btn-primary btn-sm" do %>
-              <i class="bi bi-arrow-right-circle"></i>
+            <% if logged_in? %>
+              <td>
+                <% if project.has_awarded_bid %>
+                  <i class="bi bi-check-circle text-success"></i>
+                <% else %>
+                  <i class="bi bi-x-circle text-danger"></i>
+                <% end %>
+              </td>
             <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+            <td>
+              <%= link_to project, class: "btn btn-primary btn-sm" do %>
+                <i class="bi bi-arrow-right-circle"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
