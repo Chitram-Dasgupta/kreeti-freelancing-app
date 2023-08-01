@@ -97,11 +97,8 @@ class BidsController < ApplicationController
   end
 
   def check_project_owner
-    @bid = Bid.find_by(id: params[:id])
+    @bid = Bid.owned_by(current_user).find_by(id: params[:id])
     redirect_to root_path, flash: { error: 'You are not authorized to perform this action' } if @bid.nil?
-    return if @bid.project.user == current_user
-
-    redirect_to root_path, flash: { error: 'You are not authorized to perform this action' }
   end
 
   def set_bid

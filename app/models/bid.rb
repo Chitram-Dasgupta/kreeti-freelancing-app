@@ -27,6 +27,7 @@ class Bid < ApplicationRecord
     where(user:).or(where(project: user.projects))
   }
   scope :editable_by, ->(user) { where(user:).or(where(user: User.where(role: 'admin'))) }
+  scope :owned_by, ->(user) { joins(:project).where(projects: { user: user }) }
 
   default_scope { order(created_at: :desc) }
 
