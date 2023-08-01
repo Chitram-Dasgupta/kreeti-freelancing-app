@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   def as_indexed_json(_options = {})
     as_json(
-      only: %i[role visibility],
+      only: %i[role visibility email_confirmed],
       include: { categories: { only: :name } }
     )
   end
@@ -14,6 +14,7 @@ class User < ApplicationRecord
     mapping dynamic: 'false' do
       indexes :visibility
       indexes :role
+      indexes :email_confirmed
       indexes :categories, type: :nested do
         indexes :name
       end
@@ -89,7 +90,8 @@ class User < ApplicationRecord
       query: {
         bool: {
           filter: [
-            { term: { role: 'freelancer' } }
+            { term: { role: 'freelancer' } },
+            { term: { email_confirmed: true } }
           ],
           must: [
             {
