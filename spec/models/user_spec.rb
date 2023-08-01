@@ -18,80 +18,59 @@ RSpec.describe User do
       end
     end
 
-    context 'when email is present' do
+    context 'when email is present and format is correct' do
       it 'is valid' do
         user.email = 'user@example.com'
-        expect(user.valid?).to be_truthy
+        expect(user).to be_valid
       end
     end
 
     context 'when email is not present' do
       it 'is not valid' do
         user.email = nil
-        expect(user.valid?).to be_falsey
-      end
-    end
-
-    context 'when email format is correct' do
-      it 'is valid' do
-        user.email = 'user@example.com'
-        expect(user.valid?).to be_truthy
+        expect(user).not_to be_valid
       end
     end
 
     context 'when email format is incorrect' do
       it 'is not valid' do
         user.email = 'user'
-        expect(user.valid?).to be_falsey
+        expect(user).not_to be_valid
       end
     end
 
-    context 'when password is present on create' do
+    context 'when password is present and at least 6 characters long on create' do
       it 'is valid' do
         user.password = 'password'
-        expect(user.valid?).to be_truthy
+        expect(user).to be_valid
       end
     end
 
     context 'when password is not present on create' do
       it 'is not valid' do
         user.password = nil
-        expect(user.valid?).to be_falsey
-      end
-    end
-
-    context 'when password length is at least 6 on create' do
-      it 'is valid' do
-        user.password = 'password'
-        expect(user.valid?).to be_truthy
+        expect(user).not_to be_valid
       end
     end
 
     context 'when password length is less than 6 on create' do
       it 'is not valid' do
         user.password = 'pass'
-        expect(user.valid?).to be_falsey
+        expect(user).not_to be_valid
       end
     end
 
-    context 'when role is present' do
+    context 'when role is present and one of the defined enum values' do
       it 'is valid' do
         user.role = :client
-        expect(user.valid?).to be_truthy
+        expect(user).to be_valid
       end
     end
 
     context 'when role is not present' do
       it 'is not valid' do
         user.role = nil
-        expect(user.valid?).to be_falsey
-      end
-    end
-
-    context 'when role is one of the defined enum values' do
-      it 'is valid' do
-        user.role = :client
-        expect(user.valid?).to be_truthy
+        expect(user).not_to be_valid
       end
     end
 
@@ -104,29 +83,29 @@ RSpec.describe User do
     context 'when username is present' do
       it 'is valid' do
         user.username = 'username'
-        expect(user.valid?).to be_truthy
+        expect(user).to be_valid
       end
     end
 
     context 'when username is not present' do
       it 'is not valid' do
         user.username = nil
-        expect(user.valid?).to be_falsey
+        expect(user).not_to be_valid
       end
     end
 
     context 'when username is unique' do
       it 'is valid' do
         user.username = 'unique_username'
-        expect(user.valid?).to be_truthy
+        expect(user).to be_valid
       end
     end
 
     context 'when username is not unique' do
       it 'is not valid' do
-        User.create!(username: 'username', email: 'user2@example.com', password: 'password')
+        described_class.create!(username: 'username', email: 'user2@example.com', password: 'password')
         user.username = 'username'
-        expect(user.valid?).to be_falsey
+        expect(user).not_to be_valid
       end
     end
 
@@ -134,7 +113,7 @@ RSpec.describe User do
       it 'is valid' do
         user.role = :freelancer
         user.categories = [build(:category)]
-        expect(user.valid?).to be_truthy
+        expect(user).to be_valid
       end
     end
 
@@ -142,7 +121,7 @@ RSpec.describe User do
       it 'is not valid' do
         user.role = :freelancer
         user.categories = []
-        expect(user.valid?).to be_falsey
+        expect(user).not_to be_valid
       end
     end
   end
