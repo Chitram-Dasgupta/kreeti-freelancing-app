@@ -20,19 +20,19 @@ Rails.application.routes.draw do
 
   resources :users do
     collection do
-      get :search, to: 'users#search'
-      get :manage_registrations, to: 'users#manage_registrations'
+      get :search, controller: 'users', action: 'search'
+      get :manage_registrations, controller: 'users', action: 'manage_registrations'
     end
 
     member do
-      get :confirm_email, to: 'users#confirm_email'
+      get :confirm_email, controller: 'users', action: 'confirm_email'
       post :approve
       post :reject
     end
   end
 
   resources :projects do
-    get :search, to: 'projects#search', on: :collection
+    get :search, controller: 'projects', action: 'search', on: :collection
   end
 
   resources :bids do
