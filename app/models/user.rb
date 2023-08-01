@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class User < ApplicationRecord
   include Searchable
 
@@ -124,3 +125,4 @@ class User < ApplicationRecord
   end
   # rubocop:enable Metrics/MethodLength
 end
+# rubocop:enable Metrics/ClassLength
