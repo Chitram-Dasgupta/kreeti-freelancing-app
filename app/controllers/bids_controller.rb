@@ -16,7 +16,9 @@ class BidsController < ApplicationController
     @bids = @bids.page params[:page]
   end
 
-  def show; end
+  def show
+    @bids_related_to_user = admin? ? Bid.all : Bid.to_freelancer_or_awardee_client(current_user)
+  end
 
   def new
     return redirect_to root_path, flash: { error: 'Bid cannot be created' } unless freelancer?

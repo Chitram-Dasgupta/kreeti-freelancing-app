@@ -23,6 +23,10 @@ class Bid < ApplicationRecord
   delegate :title, to: :project, prefix: true
   delegate :username, to: :user, allow_nil: true
 
+  scope :to_freelancer_or_awardee_client, lambda { |user|
+    where(user:).or(where(project: user.projects))
+  }
+
   default_scope { order(created_at: :desc) }
 
   def accept
