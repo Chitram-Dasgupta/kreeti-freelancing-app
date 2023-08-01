@@ -5,5 +5,6 @@ FactoryBot.define do
     title { 'My Project Title' }
     description { 'Project Description' }
     user
+    categories { [association(:category)] }
   end
 end

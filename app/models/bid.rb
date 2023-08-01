@@ -26,11 +26,15 @@ class Bid < ApplicationRecord
   default_scope { order(created_at: :desc) }
 
   def accept
+    return unless modifiable?
+
     update(bid_status: 'accepted')
     project.bids.where.not(id:).find_each { |other_bid| other_bid.update(bid_status: 'rejected') }
   end
 
   def reject
+    return unless modifiable?
+
     update(bid_status: 'rejected')
   end
 
