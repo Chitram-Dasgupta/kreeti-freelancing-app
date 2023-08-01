@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class BidsController < ApplicationController
-  before_action :check_rejected, only: %i[edit update]
-  before_action :set_bid, only: %i[show edit update destroy files_upload]
+  before_action :check_modifiable, only: %i[edit update]
+  before_action :set_bid, only: %i[show destroy files_upload]
   before_action :check_project_owner, only: %i[accept reject]
 
   def index
@@ -27,11 +27,7 @@ class BidsController < ApplicationController
     @bid = Bid.new
   end
 
-  def edit
-    return unless current_user != @bid.user && !admin?
-
-    redirect_to root_path, flash: { error: 'Bid cannot be edited' }
-  end
+  def edit; end
 
   def create
     @project = Project.find_by(id: params['bid']['project_id'])
@@ -87,9 +83,9 @@ class BidsController < ApplicationController
     @bid.upload_project_files
   end
 
-  def check_rejected
-    @bid = Bid.find_by(id: params[:id])
-    redirect_to bids_path, flash: { error: 'Bid cannot be modified' } if @bid.rejected?
+  def check_modifiable
+    @bid = Bid.editable_by(current_user).find_by(id: params[:id])
+    redirect_to bids_path, flash: { error: 'Bid cannot be modified' } if @bid.nil? || @bid.rejected?
   end
 
   def files_present?
