@@ -2,7 +2,7 @@
 
 class ProjectsController < ApplicationController
   skip_before_action :require_authorization, only: %i[show search]
-  before_action :set_project, only: %i[edit update destroy]
+  before_action :set_project, only: %i[update destroy]
 
   def index
     if admin?
@@ -29,9 +29,8 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    if current_user != @project.user && !admin?
-      return redirect_to root_path, flash: { error: 'Project cannot be edited' }
-    end
+    @project = Project.editable_by(current_user).find_by(id: params[:id])
+    return redirect_to root_path, flash: { error: 'Project cannot be edited' } if @project.nil?
     return redirect_to @project, notice: 'Cannot edit an awarded project' if @project.has_awarded_bid?
 
     @categories = Category.all

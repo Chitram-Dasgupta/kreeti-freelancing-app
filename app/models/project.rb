@@ -35,6 +35,8 @@ class Project < ApplicationRecord
 
   delegate :username, to: :user
 
+  scope :editable_by, ->(user) { where(user:).or(where(user: User.where(role: 'admin'))) }
+
   default_scope { order(created_at: :desc) }
 
   def bid_awarded?
