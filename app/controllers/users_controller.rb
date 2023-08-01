@@ -10,8 +10,10 @@ class UsersController < ApplicationController
   def index
     if admin?
       @users = User.approved_users.where.not(role: 'admin').page params[:page]
-    else
+    elsif !logged_in?
       redirect_to new_user_path
+    else
+      redirect_to root_path, flash: { error: 'You don\'t have permission to view this page.' }
     end
   end
 
