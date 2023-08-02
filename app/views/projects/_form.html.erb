@@ -11,10 +11,12 @@
   </div>
   <div class="mb-3">
     <%= f.label :category_ids, "Categories", class: 'form-label' %>
-    <div class="my-2">
-      <span class="text-muted">Selected categories: </span>
-      <%= display_badges(local_assigns[:form_object].categories, :name) %>
-    </div>
+    <% if params['action'] == 'edit' %>
+      <div class="my-2">
+        <span class="text-muted">Selected categories: </span>
+        <%= display_badges(local_assigns[:form_object].categories, :name) %>
+      </div>
+    <% end %>
     <div class="dropdown mt-1">
       <button class="btn btn-primary dropdown-toggle" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
         Select Categories
@@ -35,10 +37,12 @@
   </div>
   <div class="mb-3">
     <%= f.label :skills, "Skills", class: 'form-label' %>
-    <div class="my-2">
-      <span class="text-muted">Selected skills: </span>
-      <%= display_badges(local_assigns[:form_object].skills) %>
-    </div>
+    <% if params['action'] == 'edit' %>
+      <div class="my-2">
+        <span class="text-muted">Selected skills: </span>
+        <%= display_badges(local_assigns[:form_object].skills) %>
+      </div>
+    <% end %>
     <div class="dropdown mt-1">
       <button class="btn btn-primary dropdown-toggle" type="button" id="skillsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
         Select Skills
