@@ -31,8 +31,8 @@ admin.save(validate: false)
                         email_confirmed: true, confirmation_token: nil, status: 'approved')
 
   rand(3..5).times do |j|
-    project = client.projects.create!(title: "Project #{j} for Client #{i}",
-                                      description: 'lorem ipsum')
+    project = client.projects.build(title: "Project #{j} for Client #{i}",
+                                    description: 'lorem ipsum')
 
     project.categories << Category.all.sample(rand(1..3))
     project.skills = skill_names.sample(rand(1..2))
@@ -42,13 +42,14 @@ end
 
 (1..35).each do |i|
   freelancer_visibility = rand(10) > 3 ? 'pub' : 'priv'
-  freelancer = User.create!(username: "f#{i}", email: "f#{i}@email.com", password: '123456',
-                            password_confirmation: '123456', role: 'freelancer', email_confirmed: true,
-                            qualification: qualification_names.sample, experience: rand(0..25),
-                            industry: industry_names.sample, confirmation_token: nil, visibility: freelancer_visibility,
-                            status: 'approved')
+  freelancer = User.new(username: "f#{i}", email: "f#{i}@email.com", password: '123456',
+                        password_confirmation: '123456', role: 'freelancer', email_confirmed: true,
+                        qualification: qualification_names.sample, experience: rand(0..25),
+                        industry: industry_names.sample, confirmation_token: nil, visibility: freelancer_visibility,
+                        status: 'approved')
 
   freelancer.categories << Category.all.sample(rand(1..4))
+  freelancer.save!
 end
 
 User.where(role: 'freelancer').each do |freelancer|
