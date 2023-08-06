@@ -17,7 +17,7 @@
       <div class="mb-3">
         <%= f.label :category_ids, "Categories", class: 'form-label' %>
         <div class="my-2">
-          <span class="text-muted">Selected categories: </span>
+          <span class="text-muted">Previously selected: </span>
           <%= display_badges(@user.categories, :name) %>
         </div>
         <div class="dropdown">

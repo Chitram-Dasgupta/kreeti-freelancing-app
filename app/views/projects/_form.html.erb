@@ -13,7 +13,7 @@
     <%= f.label :category_ids, "Categories", class: 'form-label' %>
     <% if params['action'] == 'edit' %>
       <div class="my-2">
-        <span class="text-muted">Selected categories: </span>
+        <span class="text-muted">Previously selected: </span>
         <%= display_badges(local_assigns[:form_object].categories, :name) %>
       </div>
     <% end %>
@@ -39,7 +39,7 @@
     <%= f.label :skills, "Skills", class: 'form-label' %>
     <% if params['action'] == 'edit' %>
       <div class="my-2">
-        <span class="text-muted">Selected skills: </span>
+        <span class="text-muted">Previously selected: </span>
         <%= display_badges(local_assigns[:form_object].skills) %>
       </div>
     <% end %>
