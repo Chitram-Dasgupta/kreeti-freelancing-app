@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Bid < ApplicationRecord
+  include Editable
+
   paginates_per 12
 
   after_save :send_notifications, :update_project
@@ -26,7 +28,7 @@ class Bid < ApplicationRecord
   scope :to_freelancer_or_awardee_client, lambda { |user|
     where(user:).or(where(project: user.projects))
   }
-  scope :editable_by, ->(user) { where(user:).or(where(user: User.where(role: 'admin'))) }
+
   scope :owned_by, ->(user) { joins(:project).where(projects: { user: }) }
 
   default_scope { order(created_at: :desc) }

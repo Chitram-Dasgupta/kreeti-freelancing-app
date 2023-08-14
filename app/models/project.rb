@@ -2,6 +2,7 @@
 
 class Project < ApplicationRecord
   include Searchable
+  include Editable
 
   def as_indexed_json(_options = {})
     as_json(
@@ -35,8 +36,6 @@ class Project < ApplicationRecord
 
   delegate :username, to: :user
 
-  scope :editable_by, ->(user) { where(user:).or(where(user: User.where(role: 'admin'))) }
-
   default_scope { order(created_at: :desc) }
 
   def bid_awarded?
@@ -47,35 +46,7 @@ class Project < ApplicationRecord
     bids.where(bid_status: :accepted).first&.user
   end
 
-  # rubocop:disable Metrics/MethodLength
   def self.search_projects(category_name)
-    search_definition = {
-      size: 1000,
-      query: {
-        bool: {
-          must: [
-            {
-              nested: {
-                path: 'categories',
-                query: if category_name.present?
-                         {
-                           match_phrase: {
-                             'categories.name': category_name
-                           }
-                         }
-                       else
-                         {
-                           match_all: {}
-                         }
-                       end
-              }
-            }
-          ]
-        }
-      }
-    }
-
-    __elasticsearch__.search(search_definition)
+    __elasticsearch__.search(search_definition(category_name))
   end
-  # rubocop:enable Metrics/MethodLength
 end

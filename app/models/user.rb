@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 class User < ApplicationRecord
   include Searchable
 
@@ -84,45 +83,11 @@ class User < ApplicationRecord
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def self.search_freelancer(category_name)
-    search_definition = {
-      size: 1000,
-      query: {
-        bool: {
-          filter: [
-            { term: { role: 'freelancer' } },
-            { term: { email_confirmed: true } }
-          ],
-          must: [
-            {
-              nested: {
-                path: 'categories',
-                query: if category_name.present?
-                         {
-                           match_phrase: {
-                             'categories.name': category_name
-                           }
-                         }
-                       else
-                         {
-                           match_all: {}
-                         }
-                       end
-              }
-            },
-            {
-              match: {
-                visibility: 'pub'
-              }
-            }
-          ]
-        }
-      }
-    }
-
-    __elasticsearch__.search(search_definition)
+    filter = [
+      { term: { role: 'freelancer' } },
+      { term: { email_confirmed: true } }
+    ]
+    __elasticsearch__.search(search_definition(category_name, filter))
   end
-  # rubocop:enable Metrics/MethodLength
 end
-# rubocop:enable Metrics/ClassLength

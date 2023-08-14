@@ -10,7 +10,7 @@ class Notification < ApplicationRecord
   default_scope { order(created_at: :desc) }
 
   def self.create_for_bid(bid)
-    bid_project_title = Project.find_by(id: bid.project_id).title
+    bid_project_title = project_title(bid)
     notification = create_notification_for_bid(bid, bid_project_title)
     broadcast_notification_for_bid(notification, bid, bid_project_title)
   end
@@ -36,7 +36,7 @@ class Notification < ApplicationRecord
   end
 
   def self.create_for_project_files_upload(bid)
-    bid_project_title = Project.find_by(id: bid.project_id).title
+    bid_project_title = project_title(bid)
     notification = create_notification_for_files_upload(bid, bid_project_title)
     broadcast_notification_for_files_upload(notification, bid, bid_project_title)
   end
@@ -59,5 +59,11 @@ class Notification < ApplicationRecord
         notification_id: notification.id
       }
     )
+  end
+
+  private
+
+  def project_title(bid)
+    Project.find_by(id: bid.project_id).title
   end
 end
