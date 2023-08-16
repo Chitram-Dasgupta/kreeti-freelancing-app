@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   helper_method :client?
   helper_method :freelancer?
   helper_method :admin?
+  helper_method :create_instance
 
   rescue_from ActionController::RoutingError, with: :render_not_found
 
@@ -44,5 +45,14 @@ class ApplicationController < ActionController::Base
 
   def render_not_found
     redirect_to root_path, flash: { error: 'The page you are looking for cannot be shown.' }
+  end
+
+  def create_instance(instance, success_path, success_message, failure_message, failure_view)
+    if instance.save
+      redirect_to success_path, flash: { notice: success_message }
+    else
+      flash.now[:error] = failure_message
+      render failure_view, status: :unprocessable_entity
+    end
   end
 end

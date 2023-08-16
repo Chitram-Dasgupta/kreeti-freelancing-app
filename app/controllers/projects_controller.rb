@@ -38,12 +38,8 @@ class ProjectsController < ApplicationController
 
   def create
     @project = current_user.projects.new(project_params)
-    if @project.save
-      redirect_to projects_path, flash: { notice: 'Project was successfully created!' }
-    else
-      flash.now[:error] = 'Please enter the information correctly'
-      render :new, status: :unprocessable_entity
-    end
+    create_instance(@project, projects_path, 'Project was successfully created!',
+                    'Please enter the information correctly', :new)
   end
 
   def update

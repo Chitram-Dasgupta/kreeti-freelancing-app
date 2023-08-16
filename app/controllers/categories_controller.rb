@@ -17,12 +17,8 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-    if @category.save
-      redirect_to categories_path, flash: { notice: 'Category was successfully created!' }
-    else
-      flash.now[:error] = 'Please enter the information correctly'
-      render :new, status: :unprocessable_entity
-    end
+    create_instance(@category, categories_path, 'Category was successfully created!',
+                    'Please enter the information correctly', :new)
   end
 
   def update

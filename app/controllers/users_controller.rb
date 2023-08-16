@@ -32,12 +32,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if User.where(email: @user.email, status: 'rejected').any?
       redirect_to new_user_path, flash: { error: 'This email was previously rejected.' }
-    elsif @user.save
-      redirect_to root_path,
-                  flash: { notice: 'Registration successful. Please wait for an admin to approve your account.' }
     else
-      flash.now[:error] = 'Please enter the data properly'
-      render :new, status: :unprocessable_entity
+      create_instance(@user, root_path, 'Registration successful. Please wait for an admin to approve your account.',
+                      'Please enter the data properly', :new)
     end
   end
 
