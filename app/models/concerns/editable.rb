@@ -3,7 +3,13 @@
 module Editable
   extend ActiveSupport::Concern
 
-  included do
-    scope :editable_by, ->(user) { where(user:).or(where(user: User.where(role: 'admin'))) }
+  class_methods do
+    def editable_by(user)
+      if user.admin?
+        all
+      else
+        where(user:)
+      end
+    end
   end
 end
