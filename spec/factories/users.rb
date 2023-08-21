@@ -12,5 +12,15 @@ FactoryBot.define do
     experience { 10 }
     confirmation_token { 'token' }
     confirmation_token_created_at { Time.current }
+
+    trait :invisible do
+      visibility { 'priv' }
+    end
+
+    trait :freelancer do
+      role { 'freelancer' }
+      categories { [create(:category)] }
+    end
   end
 end
+
