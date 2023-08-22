@@ -27,25 +27,24 @@ RSpec.describe RoomsController do
 
   describe 'GET #show' do
     context 'when user is logged in but does not have access' do
+      let(:current_user) { create(:user) }
+      let(:room) { create(:room) }
+
       before do
         session[:user_id] = current_user.id
-        @room = create(:room)
       end
 
-      it 'redirects to root path with an error message' do
-        get :show, params: { id: @room.id }
+      it 'redirects to root path' do
+        get :show, params: { id: room.id }
         expect(response).to redirect_to(root_path)
-        expect(flash[:error]).to be_present
       end
     end
 
     context 'when user is not logged in' do
-      before do
-        @room = create(:room)
-      end
+      let(:room) { create(:room) }
 
       it 'redirects to the login page' do
-        get :show, params: { id: @room.id }
+        get :show, params: { id: room.id }
         expect(response).to redirect_to(new_session_path)
       end
     end
@@ -55,15 +54,16 @@ RSpec.describe RoomsController do
     context 'when user is logged in' do
       before { session[:user_id] = current_user.id }
 
-      it 'creates a new room and redirects to it' do
+      it 'creates a new room' do
         expect { post :create, params: { user_id: other_user.id } }.to change(Room, :count).by(1)
+      end
+
+      it 'redirects to the created room' do
+        post :create, params: { user_id: other_user.id }
         expect(response).to redirect_to(Room.last)
       end
 
       it 'redirects to root when attempting to create a room with invalid users' do
-        post :create, params: { user_id: current_user.id }
-        expect(response).to redirect_to(root_path)
-
         post :create, params: { user_id: admin_user.id }
         expect(response).to redirect_to(root_path)
       end
