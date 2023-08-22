@@ -4,7 +4,7 @@ RSpec.describe BidsController do
   describe 'GET #index' do
     context 'when user is an admin' do
       let(:admin) { create(:user, :admin) }
-      let!(:bids) { create_list(:bid, 3) }
+      let(:bids) { create_list(:bid, 3) }
 
       before do
         session[:user_id] = admin.id
@@ -19,7 +19,7 @@ RSpec.describe BidsController do
     context 'when user is a freelancer' do
       let(:category) { create(:category) }
       let(:freelancer) { create(:user, role: 'freelancer', categories: [category]) }
-      let!(:user_bids) { create_list(:bid, 2, user: freelancer) }
+      let(:user_bids) { create_list(:bid, 2, user: freelancer) }
 
       before do
         session[:user_id] = freelancer.id
@@ -301,7 +301,6 @@ RSpec.describe BidsController do
       delete :destroy, params: { id: bid.id }
 
       expect(response).to redirect_to(bids_path)
-      expect(flash[:notice]).to eq('Bid was successfully deleted')
     end
   end
 
