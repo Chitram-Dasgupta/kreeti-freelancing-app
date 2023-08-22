@@ -61,9 +61,7 @@ class Notification < ApplicationRecord
     )
   end
 
-  private
-
-  def project_title(bid)
+  def self.project_title(bid)
     Project.find_by(id: bid.project_id).title
   end
 end
