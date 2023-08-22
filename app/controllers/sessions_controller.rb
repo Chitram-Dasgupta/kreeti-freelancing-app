@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  skip_before_action :require_authorization, only: %i[index new create activation]
+  skip_before_action :require_authorization, only: %i[index new create]
   before_action :redirect_logged_in_users, only: %i[new create]
 
   def index
@@ -24,8 +24,6 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to root_path, flash: { notice: 'Logged out' }
   end
-
-  def activation; end
 
   private
 
