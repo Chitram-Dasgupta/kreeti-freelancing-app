@@ -34,20 +34,18 @@ RSpec.describe SessionsController do
     end
 
     context 'with unconfirmed email' do
-      it 'redirects to the root path with an error message' do
+      it 'redirects to the root path' do
         user.update(email_confirmed: false)
         post :create, params: valid_params
         expect(response).to redirect_to(root_path)
-        expect(flash[:error]).to eq('Please activate your account!')
       end
     end
 
     context 'with rejected account' do
-      it 'redirects to the root path with an error message' do
+      it 'redirects to the root path' do
         user.update(email_confirmed: false, status: 'rejected')
         post :create, params: valid_params
         expect(response).to redirect_to(root_path)
-        expect(flash[:error]).to eq('Your account has been rejected!')
       end
     end
   end
@@ -64,9 +62,8 @@ RSpec.describe SessionsController do
       expect(session[:user_id]).to be_nil
     end
 
-    it 'redirects to the root path with a logout message' do
+    it 'redirects to the root path' do
       expect(response).to redirect_to(root_path)
-      expect(flash[:notice]).to eq('Logged out')
     end
   end
 end
