@@ -34,7 +34,9 @@ class NotificationsController < ApplicationController
   end
 
   def mark_as_read
-    notification = current_user.notifications.find(params[:id])
+    notification = current_user.notifications.find_by(id: params[:id])
+    return render json: { success: false } if notification.nil?
+
     notification.update(read: true)
     render json: { success: true }
   end
