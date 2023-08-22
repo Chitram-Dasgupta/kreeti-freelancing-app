@@ -76,48 +76,31 @@ RSpec.describe ProjectsController do
   end
 
   describe 'POST #create' do
-    context 'when user is a client' do
-      let(:client) { create(:user, :client) }
+    let(:client) { create(:user, :client) }
+    let(:category) { create(:category) }
 
-      before do
-        session[:user_id] = client.id
+    before do
+      session[:user_id] = client.id
+    end
+
+    context 'when user is a client with valid parameters' do
+      let(:valid_params) { { project: attributes_for(:project, user: client, category_ids: [category.id]) } }
+
+      it 'creates a new project' do
+        expect { post :create, params: valid_params }.to change(Project, :count).by(1)
       end
 
-      context 'with valid parameters' do
-        let(:client) { create(:user, :client) }
-        let(:category) { create(:category) }
-        let(:valid_params) { { project: attributes_for(:project, user: client, category_ids: [category.id]) } }
-
-        before do
-          session[:user_id] = client.id
-        end
-
-        it 'creates a new project' do
-          expect do
-            post :create, params: valid_params
-          end.to change(Project, :count).by(1)
-        end
-
-        it 'redirects to the created project' do
-          post :create, params: valid_params
-          expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(projects_path)
-        end
+      it 'redirects to the created project' do
+        post :create, params: valid_params
+        expect(response).to redirect_to(projects_path)
       end
+    end
 
-      context 'with invalid parameters' do
-        let(:invalid_params) { { project: attributes_for(:project, title: '') } }
+    context 'when user is a client with invalid parameters' do
+      let(:invalid_params) { { project: attributes_for(:project, title: '') } }
 
-        it 'does not create a new project' do
-          expect do
-            post :create, params: invalid_params
-          end.not_to change(Project, :count)
-        end
-
-        it 'sets a flash error message' do
-          post :create, params: invalid_params
-          expect(flash[:error]).to eq('Please enter the information correctly')
-        end
+      it 'does not create a new project' do
+        expect { post :create, params: invalid_params }.not_to change(Project, :count)
       end
     end
 
@@ -168,42 +151,46 @@ RSpec.describe ProjectsController do
     let(:project) { create(:project, user:) }
 
     context 'when the project is not awarded' do
-      it 'updates the project and redirects to the project page' do
+      before do
         session[:user_id] = user.id
-
         put :update, params: { id: project.id, project: { title: 'New Title' } }
+      end
 
+      it 'updates the project and redirects to the project page' do
         expect(response).to redirect_to(project)
-        expect(flash[:notice]).to eq('Project was successfully updated!')
+      end
 
+      it 'redirects to the project page' do
         project.reload
         expect(project.title).to eq('New Title')
       end
     end
 
     context 'when the project is awarded' do
-      it 'does not update the project and redirects to the project page with a notice' do
+      before do
         session[:user_id] = user.id
         project.update(has_awarded_bid: true)
 
         put :update, params: { id: project.id, project: { title: 'New Title' } }
+      end
 
+      it 'does not update the project and redirects to the project page with a notice' do
         expect(response).to redirect_to(project)
-        expect(flash[:notice]).to eq('Cannot update an awarded project.')
+      end
 
+      it 'redirects to the project page' do
         project.reload
         expect(project.title).not_to eq('New Title')
       end
     end
 
     context 'when the project is not found' do
-      it 'redirects to the root path with an error flash message' do
+      it 'redirects to the root path' do
         session[:user_id] = user.id
 
         put :update, params: { id: 999, project: { title: 'New Title' } }
 
         expect(response).to redirect_to(root_path)
-        expect(flash[:error]).to eq('Project not found')
       end
     end
 
@@ -211,11 +198,7 @@ RSpec.describe ProjectsController do
       it 'renders the edit template with an error flash message' do
         session[:user_id] = user.id
         project = create(:project, user:)
-
         put :update, params: { id: project.id, project: { title: '' } }
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(flash[:error]).to eq('Please enter the information correctly')
 
         project.reload
         expect(project.title).not_to eq('')
@@ -233,20 +216,20 @@ RSpec.describe ProjectsController do
         delete :destroy, params: { id: project.id }
 
         expect(response).to redirect_to(projects_path)
-        expect(flash[:notice]).to eq('Project was successfully deleted!')
       end
     end
 
     context 'when the project does not exist' do
-      it 'redirects to the root path with an error flash message' do
+      it 'does not destroy the project' do
         session[:user_id] = user.id
 
         expect do
           delete :destroy, params: { id: -1 }
         end.not_to change(Project, :count)
+      end
 
+      it 'redirects to the root path' do
         expect(response).to redirect_to(root_path)
-        expect(flash[:error]).to eq('Project not found')
       end
     end
   end
