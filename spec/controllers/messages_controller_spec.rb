@@ -18,7 +18,7 @@ RSpec.describe MessagesController do
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq 'application/json; charset=utf-8'
 
-        parsed_response = JSON.parse(response.body)
+        parsed_response = response.parsed_body
         expect(parsed_response['status']).to eq 'ok'
       end
     end
@@ -34,7 +34,7 @@ RSpec.describe MessagesController do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq 'application/json; charset=utf-8'
 
-        parsed_response = JSON.parse(response.body)
+        parsed_response = response.parsed_body
         expect(parsed_response['status']).to eq 'error'
         expect(parsed_response['errors']).to be_present
       end

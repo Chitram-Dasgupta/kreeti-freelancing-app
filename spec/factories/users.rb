@@ -19,8 +19,7 @@ FactoryBot.define do
 
     trait :freelancer do
       role { 'freelancer' }
-      categories { [create(:category)] }
+      categories { create_list(:category, 1) }
     end
   end
 end
-

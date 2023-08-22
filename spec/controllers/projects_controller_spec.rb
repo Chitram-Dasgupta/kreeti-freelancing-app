@@ -214,7 +214,7 @@ RSpec.describe ProjectsController do
 
         put :update, params: { id: project.id, project: { title: '' } }
 
-        expect(response.status).to eq(422)
+        expect(response).to have_http_status(:unprocessable_entity)
         expect(flash[:error]).to eq('Please enter the information correctly')
 
         project.reload

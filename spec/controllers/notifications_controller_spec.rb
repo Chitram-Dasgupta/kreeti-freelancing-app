@@ -12,7 +12,7 @@ RSpec.describe NotificationsController do
       create_list(:notification, 3, recipient: user)
       get :count
       expect(response).to have_http_status(:success)
-      response_data = JSON.parse(response.body)
+      response_data = response.parsed_body
       expect(response_data['unread_count']).to eq(3)
       expect(response_data['full_count']).to eq(3)
     end
@@ -34,7 +34,7 @@ RSpec.describe NotificationsController do
       notifications = create_list(:notification, 5, recipient: user)
       get :fetch_notifications
       expect(response).to have_http_status(:success)
-      response_data = JSON.parse(response.body)
+      response_data = response.parsed_body
       expect(response_data.length).to eq(5)
       expect(response_data.first['message']).to eq(notifications.first.message)
     end
@@ -54,7 +54,7 @@ RSpec.describe NotificationsController do
       notification = create(:notification, recipient: user, read: false)
       patch :mark_as_read, params: { id: notification.id }
       expect(response).to have_http_status(:success)
-      expect(notification.reload.read).to eq(true)
+      expect(notification.reload.read).to be(true)
     end
   end
 end
