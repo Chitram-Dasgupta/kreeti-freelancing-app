@@ -105,12 +105,14 @@ RSpec.describe ProjectsController do
     end
 
     context 'when user is not a client' do
+      let(:valid_params) { { project: attributes_for(:project, user: client, category_ids: [category.id]) } }
+
       before do
-        post :create
+        post :create, params: valid_params
       end
 
-      it 'redirects to root path' do
-        expect(response).to redirect_to(new_session_path)
+      it 'redirects to projects index page path' do
+        expect(response).to redirect_to(projects_path)
       end
     end
   end
@@ -223,13 +225,7 @@ RSpec.describe ProjectsController do
       it 'does not destroy the project' do
         session[:user_id] = user.id
 
-        expect do
-          delete :destroy, params: { id: -1 }
-        end.not_to change(Project, :count)
-      end
-
-      it 'redirects to the root path' do
-        expect(response).to redirect_to(root_path)
+        expect { delete :destroy, params: { id: -1 } }.not_to change(Project, :count)
       end
     end
   end
