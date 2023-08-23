@@ -14,9 +14,7 @@ class Bid < ApplicationRecord
 
   has_many :notifications, dependent: :destroy
 
-  has_one_attached :bid_code_document
-  has_one_attached :bid_design_document
-  has_one_attached :bid_other_document
+  has_one_attached :bid_code_document, :bid_design_document, :bid_other_document
 
   validates :bid_description, length: { maximum: 1024 }
   validates :bid_amount, presence: true, numericality: { greater_than: 0, less_than: 1_000_000 }
@@ -25,9 +23,7 @@ class Bid < ApplicationRecord
   delegate :title, to: :project, prefix: true
   delegate :username, to: :user, allow_nil: true
 
-  scope :to_freelancer_or_awardee_client, lambda { |user|
-    where(user:).or(where(project: user.projects))
-  }
+  scope :to_freelancer_or_awardee_client, ->(user) { where(user:).or(where(project: user.projects)) }
 
   scope :owned_by, ->(user) { joins(:project).where(projects: { user: }) }
 
