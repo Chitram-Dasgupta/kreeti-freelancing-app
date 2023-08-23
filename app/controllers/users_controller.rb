@@ -13,13 +13,13 @@ class UsersController < ApplicationController
     elsif !logged_in?
       redirect_to new_user_path
     else
-      redirect_to root_path, flash: { error: 'You don\'t have permission to view this page.' }
+      redirect_to_root_with_err('You don\'t have permission to view this page')
     end
   end
 
   def show
     @user = User.visible_to(current_user).find_by(id: params[:id])
-    return redirect_to root_path, flash: { error: 'You don\'t have permission to view this profile.' } if @user.nil?
+    return redirect_to_root_with_err('You don\'t have permission to view this profile') if @user.nil?
   end
 
   def new
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
         handle_successful_confirmation
       end
     else
-      redirect_to root_path, flash: { error: 'Sorry. User does not exist' }
+      redirect_to_root_with_err('Sorry. User does not exist')
     end
   end
 
@@ -105,7 +105,7 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by(id: params[:id])
-    return redirect_to root_path, flash: { error: 'User not found' } if @user.nil?
+    return redirect_to_root_with_err('User not found') if @user.nil?
   end
 
   def user_params

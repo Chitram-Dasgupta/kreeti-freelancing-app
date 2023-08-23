@@ -11,7 +11,7 @@ class BidsController < ApplicationController
             elsif freelancer?
               current_user.bids
             else
-              return redirect_to root_path, flash: { error: 'You are not authorized to view bids' }
+              return redirect_to_root_with_err('You are not authorized to view bids')
             end
     @bids = @bids.page params[:page]
   end
@@ -21,7 +21,7 @@ class BidsController < ApplicationController
   end
 
   def new
-    return redirect_to root_path, flash: { error: 'Bid cannot be created' } unless freelancer?
+    return redirect_to_root_with_err('Bid cannot be created') unless freelancer?
 
     @project = Project.find_by(id: params[:project_id])
     @bid = Bid.new
@@ -32,6 +32,7 @@ class BidsController < ApplicationController
   def create
     @project = Project.find_by(id: params['bid']['project_id'])
     @bid = Bid.new(bid_params)
+
     if @bid.save
       redirect_to @bid.project, flash: { success: 'Bid was successfully created' }
     else
@@ -98,7 +99,7 @@ class BidsController < ApplicationController
 
   def check_project_owner
     @bid = Bid.owned_by(current_user).find_by(id: params[:id])
-    redirect_to root_path, flash: { error: 'You are not authorized to perform this action' } if @bid.nil?
+    redirect_to_root_with_err('You are not authorized to perform this action') if @bid.nil?
   end
 
   def set_bid

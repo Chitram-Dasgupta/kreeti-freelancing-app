@@ -43,8 +43,8 @@ class SessionsController < ApplicationController
   end
 
   def handle_unconfirmed_email(user)
-    redirect_to root_path, flash: { error: 'Your account has been rejected!' } and return if user.status == 'rejected'
+    redirect_to_root_with_err('Your account has been rejected!') and return if user.status == 'rejected'
 
-    redirect_to root_path, flash: { error: 'Please activate your account!' }
+    redirect_to_root_with_err('Please activate your account!')
   end
 end

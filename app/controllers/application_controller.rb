@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :freelancer?
   helper_method :admin?
   helper_method :create_instance
+  helper_method :redirect_to_root_with_err
 
   rescue_from ActionController::RoutingError, with: :render_not_found
 
@@ -54,5 +55,9 @@ class ApplicationController < ActionController::Base
       flash.now[:error] = failure_message
       render failure_view, status: :unprocessable_entity
     end
+  end
+
+  def redirect_to_root_with_err(error_message)
+    redirect_to root_path, flash: { error: error_message }
   end
 end

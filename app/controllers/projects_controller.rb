@@ -10,27 +10,27 @@ class ProjectsController < ApplicationController
     elsif client?
       @user_projects = current_user.projects.page params[:page]
     else
-      redirect_to root_path, flash: { error: 'You are not authorized to view projects' }
+      redirect_to_root_with_err('You are not authorized to view projects')
     end
   end
 
   def show
     @project = Project.find_by(id: params[:id])
 
-    return redirect_to root_path, flash: { error: 'Project cannot be shown' } if @project.nil?
+    return redirect_to_root_with_err('Project cannot be shown') if @project.nil?
 
     @bids = @project.bids.where.not(bid_status: 'rejected').page params[:page]
   end
 
   def new
-    return redirect_to root_path, flash: { error: 'Project cannot be created' } unless client?
+    return redirect_to_root_with_err('Project cannot be created') unless client?
 
     @project = current_user.projects.new
   end
 
   def edit
     @project = Project.editable_by(current_user).find_by(id: params[:id])
-    return redirect_to root_path, flash: { error: 'Project cannot be edited' } if @project.nil?
+    return redirect_to_root_with_err('Project cannot be edited') if @project.nil?
     return redirect_to @project, notice: 'Cannot edit an awarded project' if @project.has_awarded_bid?
 
     @categories = Category.all
@@ -66,7 +66,7 @@ class ProjectsController < ApplicationController
 
   def set_project
     @project = Project.find_by(id: params[:id])
-    return redirect_to root_path, flash: { error: 'Project not found' } if @project.nil?
+    return redirect_to_root_with_err('Project cannot be found') if @project.nil?
   end
 
   def project_params

@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
   before_action :check_user_access, only: [:show]
 
   def index
-    return redirect_to_root('As an admin, you cannot access this page') if admin?
+    return redirect_to_root_with_err('As an admin, you cannot access this page') if admin?
 
     current_user_id = current_user.id
     @rooms = Room.joins(:user_rooms).where('user_rooms.user1_id = ? OR user_rooms.user2_id = ?', current_user_id,
@@ -18,13 +18,12 @@ class RoomsController < ApplicationController
 
   def create
     other_user = User.find_by(id: params[:user_id])
-    return redirect_to_root('User not found') if other_user.nil?
+    return redirect_to_root_with_err('User not found') if other_user.nil?
 
     if current_user.role == other_user.role || (admin? || other_user.role == 'admin')
-      redirect_to_root('This chat cannot be initiated')
+      redirect_to_root_with_err('This chat cannot be initiated')
     else
-      @room = find_or_create_room(other_user)
-      redirect_to @room
+      redirect_to find_or_create_room(other_user)
     end
   end
 
@@ -46,13 +45,9 @@ class RoomsController < ApplicationController
 
   def check_user_access
     @room = Room.find_by(id: params[:id])
-    return redirect_to_root('Room not found') if @room.nil?
+    return redirect_to_root_with_err('Room not found') if @room.nil?
     return if @room.user_rooms.belongs_to_user(current_user).exists?
 
-    redirect_to_root('You cannot access this page')
-  end
-
-  def redirect_to_root(error_message)
-    redirect_to root_path, flash: { error: error_message }
+    redirect_to_root_with_err('You cannot access this page')
   end
 end
