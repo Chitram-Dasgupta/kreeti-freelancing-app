@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe BidsController do
   describe 'GET #index' do
     context 'when user is an admin' do

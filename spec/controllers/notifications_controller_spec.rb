@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 RSpec.describe NotificationsController do
   let(:user) { create(:user) }
   let(:project) { create(:project, user:) }
