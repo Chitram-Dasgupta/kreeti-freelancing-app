@@ -1,0 +1,14 @@
+<div class="mt-5">
+  <div class="card shadow-sm mb-2 bg-white rounded">
+    <div class="card-header <%= client? ? 'bg-info' : 'bg-danger' %> text-white text-center pt-2">
+      <h2 class="mb-0 mt-1"><%= user.role.capitalize %> Profile</h2>
+    </div>
+    <div class="card-body pb-0 px-0">
+      <%= render 'common_profile_details', user: %>
+      <%= render 'freelancer_profile_details', user: %>
+      <div class="card-footer text-muted mt-3">
+        Member since <%= user.created_at.strftime("%d %B %Y") %>
+      </div>
+    </div>
+  </div>
+</div>

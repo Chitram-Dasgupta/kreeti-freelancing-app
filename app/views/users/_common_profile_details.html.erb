@@ -1,0 +1,6 @@
+<% [['Username', user.username], ['Email', user.email], ['Industry', user.industry], ['Visibility', visibility_status(user)]].each do |label, value| %>
+  <div class="row text-center my-1">
+    <div class="col fs-4"><%= label %></div>
+    <div class="col fs-4"><%= value %></div>
+  </div>
+<% end %>

@@ -1,0 +1,22 @@
+<% if user.role == 'freelancer' %>
+  <% [['Qualification', user.qualification], ['Experience', user.experience]].each do |label, value| %>
+    <div class="row text-center my-1">
+      <div class="col fs-4"><%= label %></div>
+      <div class="col fs-4"><%= value %></div>
+    </div>
+  <% end %>
+  <div class="row text-center my-1">
+    <div class="col fs-4">Categories</div>
+    <% if user.categories.empty? %>
+      <div class="col fs-4">
+        No categories available
+      </div>
+    <% else %>
+      <div class="col fs-4">
+        <% user.categories.each do |cat| %>
+          <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
