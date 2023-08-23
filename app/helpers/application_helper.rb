@@ -27,10 +27,7 @@ module ApplicationHelper
   def set_project_http_method(icon_name, style)
     if icon_name == 'trash' && style == 'danger'
       :delete
-    elsif icon_name == 'chat-dots' && style == 'info'
-      :post
-    elsif (icon_name == 'check-lg' && style == 'success') ||
-          (icon_name == 'x-lg' && style == 'danger')
+    elsif (icon_name == 'chat-dots' && style == 'info') || (%w[check-lg x-lg].include?(icon_name) && style == 'danger')
       :post
     end
   end
