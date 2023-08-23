@@ -24,11 +24,14 @@ module ApplicationHelper
     content_tag(:i, '', class: "bi bi-#{name}")
   end
 
-  def set_project_http_method(icon_name, style)
-    if icon_name == 'trash' && style == 'danger'
-      :delete
-    elsif (icon_name == 'chat-dots' && style == 'info') || (%w[check-lg x-lg].include?(icon_name) && style == 'danger')
-      :post
-    end
+  def set_http_method(icon_name, style)
+    http_methods = {
+      %w[trash danger] => :delete,
+      %w[chat-dots info] => :post,
+      %w[check-lg success] => :post,
+      %w[x-lg danger] => :post
+    }
+
+    http_methods[[icon_name, style]]
   end
 end
