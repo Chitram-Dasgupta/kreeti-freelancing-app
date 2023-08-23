@@ -11,7 +11,7 @@ class BidsController < ApplicationController
             elsif freelancer?
               current_user.bids
             else
-              return redirect_to_root_with_err('You are not authorized to view bids')
+              return redirect_to_root_with_err('You cannot view this page')
             end
     @bids = @bids.page params[:page]
   end
