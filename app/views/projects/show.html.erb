@@ -11,6 +11,7 @@
     <%= display_project_action('Chat with awarded freelancer', rooms_path(user_id: @project.accepted_bid_freelancer&.id), 'chat-dots', 'info') %>
   <% end %>
   <% if logged_in? %>
+    <h2 class="my-4">Bids:</h2>
     <%= render 'shared/bid_table', bids: @bids %>
     <%= paginate @bids %>
   <% end %>
