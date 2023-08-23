@@ -26,8 +26,10 @@ Make sure you have the correct versions of the above-mentioned software installe
 
 ```sh
 git clone git@github.com:Chitram-Dasgupta/kreeti-freelancing-app.git
+```
 
-cd kreeti-freelancing-app
+```sh
+cd kreeti-freelancing-app/
 ```
 
 ### 3. Install the necessary dependencies
@@ -61,6 +63,8 @@ User.import force: true
 ```sh
 Project.import force: true
 ```
+
+Then exit out of the rails console by typing `exit`
 
 ### 6. Finally, run the server
 
