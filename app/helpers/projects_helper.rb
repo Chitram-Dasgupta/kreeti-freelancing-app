@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ProjectsHelper
+  include ApplicationHelper
+
   def all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
      'Python developer', 'Android developer', 'Java developer', 'Graphic designer',
@@ -34,23 +36,7 @@ module ProjectsHelper
 
   def display_project_action(label, path, icon_name, style)
     http_method = set_project_http_method(icon_name, style)
-    link_to(path,
-            { class: "btn btn-#{style} mt-2", method: http_method,
-              data: (http_method == :delete ? { confirm: 'Are you sure?' } : {}) }) do
-      sanitize("#{label} #{icon(icon_name)}")
-    end
-  end
-
-  def icon(name)
-    content_tag(:i, '', class: "bi bi-#{name}")
-  end
-
-  def set_project_http_method(icon_name, style)
-    if icon_name == 'trash' && style == 'danger'
-      :delete
-    elsif icon_name == 'chat-dots' && style == 'info'
-      :post
-    end
+    display_action(label, path, icon_name, style, http_method)
   end
 
   def user_has_bid?(project, user)
