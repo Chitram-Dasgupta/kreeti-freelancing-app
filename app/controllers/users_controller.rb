@@ -31,9 +31,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if User.where(email: @user.email, status: 'rejected').any?
-      redirect_to new_user_path, flash: { error: 'This email was previously rejected.' }
+      redirect_to new_user_path, flash: { error: 'This email was previously rejected' }
     else
-      create_instance(@user, root_path, 'Registration successful. Please wait for an admin to approve your account.',
+      create_instance(@user, root_path, 'Registration successful. Please wait for an admin to approve your account',
                       'Please enter the data properly', :new)
     end
   end
@@ -67,12 +67,12 @@ class UsersController < ApplicationController
   def approve
     @user.update(status: 'approved')
     UserMailer.account_activation(@user).deliver_later
-    redirect_to manage_registrations_users_path, flash: { success: 'User approved.' }
+    redirect_to manage_registrations_users_path, flash: { success: 'User approved' }
   end
 
   def reject
     @user.update(status: 'rejected', confirmation_token: nil)
-    redirect_to manage_registrations_users_path, flash: { success: 'User rejected.' }
+    redirect_to manage_registrations_users_path, flash: { success: 'User rejected' }
   end
 
   def search
@@ -95,12 +95,12 @@ class UsersController < ApplicationController
   end
 
   def handle_successful_confirmation
-    redirect_to new_session_path, flash: { success: 'Your email has been confirmed. Please sign in to continue.' }
+    redirect_to new_session_path, flash: { success: 'Your email has been confirmed. Please sign in to continue' }
   end
 
   def handle_unsuccessful_confirmation(user)
     user.destroy
-    redirect_to new_user_path, flash: { error: 'Confirmation token expired. Please sign up again.' }
+    redirect_to new_user_path, flash: { error: 'Confirmation token expired. Please sign up again' }
   end
 
   def set_user
