@@ -1,7 +1,7 @@
 <h2>Submit your project files</h2>
 <%= form_with model: bid, url: files_upload_bid_path(bid), local: true, multipart: true do |form| %>
-  <%= render 'file_field', form:, bid:, field: :bid_code_document %>
-  <%= render 'file_field', form:, bid:, field: :bid_design_document %>
-  <%= render 'file_field', form:, bid:, field: :bid_other_document %>
+  <%= render 'shared/file_field_with_attachment', form:, object: bid, field: :bid_code_document %>
+  <%= render 'shared/file_field_with_attachment', form:, object: bid, field: :bid_design_document %>
+  <%= render 'shared/file_field_with_attachment', form:, object: bid, field: :bid_other_document %>
   <%= form.submit class: 'btn btn-primary' %>
 <% end %>
