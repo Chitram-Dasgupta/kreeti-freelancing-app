@@ -23,7 +23,7 @@ end
 
 admin = User.new(username: 'admin', email: 'admin@email.com', password: '123456', password_confirmation: '123456',
                  role: 'admin', email_confirmed: true, confirmation_token: nil, status: 'approved')
-admin.save(validate: false)
+admin.save
 
 (1..15).each do |i|
   client = User.create!(username: "c#{i}", email: "c#{i}@email.com", password: '123456',
