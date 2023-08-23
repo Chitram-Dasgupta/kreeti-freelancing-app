@@ -14,7 +14,7 @@
       </div>
     </div>
     <% if @user.role == 'freelancer' %>
-      <%= render 'shared/freelancer_form_fields', f: %>
+      <%= render 'freelancer_form_fields', f: %>
       <%= f.hidden_field :category_ids, value: "", multiple: true %>
     <% end %>
     <%= f.submit "Update", class: "btn btn-primary" %>

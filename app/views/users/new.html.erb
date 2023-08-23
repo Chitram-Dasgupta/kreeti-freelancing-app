@@ -7,7 +7,7 @@
     </div>
     <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:email, 'email'], [:password, 'password'], [:password_confirmation, 'password'], [:industry, 'text'], [:profile_picture, 'file']] %>
     <div id="freelancer_fields" style="display: none;">
-      <%= render 'shared/freelancer_form_fields', f: %>
+      <%= render 'freelancer_form_fields', f: %>
     </div>
     <%= f.submit 'Sign up', class: 'btn btn-primary' %>
   <% end %>
