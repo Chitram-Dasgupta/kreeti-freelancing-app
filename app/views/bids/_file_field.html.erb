@@ -1,0 +1,9 @@
+<div class="mb-3">
+  <%= form.label field, class: 'form-label' %>
+  <% if bid.send(field).attached? %>
+    <div class="mb-2">
+      <strong>Current file:</strong> <%= link_to bid.send(field).filename, url_for(bid.send(field)), target: "_blank" %>
+    </div>
+  <% end %>
+  <%= form.file_field field, class: 'form-control' %>
+</div>
