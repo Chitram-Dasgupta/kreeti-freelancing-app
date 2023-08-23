@@ -16,4 +16,8 @@
     <%= paginate @bids %>
   <% end %>
 </div>
-<%= render 'shared/footer', previous_page: root_path %>
+<% unless admin? %>
+  <%= render 'shared/footer', previous_page: root_path %>
+<% else %>
+  <%= render 'shared/footer', previous_page: projects_path %>
+<% end %>
