@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module ProjectsHelper
-  include ApplicationHelper
-
   def all_skills
     ['Javascript developer', 'Ruby developer', 'Elixir developer', 'Typescript developer',
      'Python developer', 'Android developer', 'Java developer', 'Graphic designer',
@@ -35,7 +33,7 @@ module ProjectsHelper
   end
 
   def display_project_action(label, path, icon_name, style)
-    http_method = set_project_http_method(icon_name, style)
+    http_method = set_http_method(icon_name, style)
     display_action(label, path, icon_name, style, http_method)
   end
 

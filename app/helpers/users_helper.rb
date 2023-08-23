@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module UsersHelper
-  include ApplicationHelper
-
   def all_qualifications
     ['No formal education', 'High School', 'Diploma', 'Bachelor of Science', 'Bachelor of Arts',
      'Bachelor of Commerce', 'Bachelor of Technology', 'Master of Science', 'Master of Arts',
