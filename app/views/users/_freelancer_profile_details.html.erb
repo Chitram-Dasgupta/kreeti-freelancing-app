@@ -1,9 +1,6 @@
 <% if user.role == 'freelancer' %>
   <% [['Qualification', user.qualification], ['Experience', user.experience]].each do |label, value| %>
-    <div class="row text-center my-1">
-      <div class="col fs-4"><%= label %></div>
-      <div class="col fs-4"><%= value %></div>
-    </div>
+    <%= render 'label_value', label:, value: %>
   <% end %>
   <div class="row text-center my-1">
     <div class="col fs-4">Categories</div>
