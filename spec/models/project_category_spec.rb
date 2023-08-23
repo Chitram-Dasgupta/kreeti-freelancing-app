@@ -24,12 +24,12 @@ RSpec.describe ProjectCategory do
 
     it 'is not valid without a project' do
       project_cat.project = nil
-      expect(project_cat).to_not be_valid
+      expect(project_cat).not_to be_valid
     end
 
     it 'is not valid without a category' do
       project_cat.category = nil
-      expect(project_cat).to_not be_valid
+      expect(project_cat).not_to be_valid
     end
   end
 end
