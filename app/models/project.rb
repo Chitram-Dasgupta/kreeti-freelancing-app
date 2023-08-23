@@ -27,7 +27,8 @@ class Project < ApplicationRecord
   has_many :categories, through: :project_categories
   has_many :notifications, dependent: :destroy
 
-  has_one_attached :design_document, :srs_document
+  has_one_attached :design_document
+  has_one_attached :srs_document
 
   validates :categories, presence: true
   validates :title, presence: true, length: { maximum: 64 }

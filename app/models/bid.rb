@@ -14,7 +14,9 @@ class Bid < ApplicationRecord
 
   has_many :notifications, dependent: :destroy
 
-  has_one_attached :bid_code_document, :bid_design_document, :bid_other_document
+  has_one_attached :bid_code_document
+  has_one_attached :bid_design_document
+  has_one_attached :bid_other_document
 
   validates :bid_description, length: { maximum: 1024 }
   validates :bid_amount, presence: true, numericality: { greater_than: 0, less_than: 1_000_000 }
