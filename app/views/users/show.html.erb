@@ -5,4 +5,8 @@
     Edit <i class="bi bi-pencil"></i>
   <% end %>
 <% end %>
-<%= render 'shared/footer', previous_page: root_path %>
+<% unless admin? %>
+  <%= render 'shared/footer', previous_page: root_path %>
+<% else %>
+  <%= render 'shared/footer', previous_page: users_path %>
+<% end %>

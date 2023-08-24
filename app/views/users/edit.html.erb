@@ -20,4 +20,8 @@
     <%= f.submit "Update", class: "btn btn-primary" %>
   <% end %>
 </div>
-<%= render 'shared/footer', previous_page: @user %>
+<% unless admin? %>
+  <%= render 'shared/footer', previous_page: @user %>
+<% else %>
+  <%= render 'shared/footer', previous_page: users_path %>
+<% end %>
