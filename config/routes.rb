@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  match '*path', to: 'application#render_not_found', constraints: lambda { |req|
+  match '*path', controller: 'application', action: 'render_not_found', constraints: lambda { |req|
     req.path.exclude? 'rails/active_storage'
   }, via: :all
 end
