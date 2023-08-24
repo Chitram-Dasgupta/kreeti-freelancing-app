@@ -20,7 +20,7 @@ class RoomsController < ApplicationController
     other_user = User.find_by(id: params[:user_id])
     return redirect_to_root_with_err('User not found') if other_user.nil?
 
-    if current_user.role == other_user.role || (admin? || other_user.role == 'admin')
+    if current_user.role == other_user.role || (admin? || other_user.admin?)
       redirect_to_root_with_err('This chat cannot be initiated')
     else
       redirect_to find_or_create_room(other_user)

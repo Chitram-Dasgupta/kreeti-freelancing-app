@@ -13,6 +13,6 @@ module UsersHelper
   end
 
   def visibility_status(user)
-    user.visibility == 'pub' ? 'Public' : 'Private'
+    user.pub? ? 'Public' : 'Private'
   end
 end

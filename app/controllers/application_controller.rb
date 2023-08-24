@@ -21,15 +21,15 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    current_user&.role == 'admin'
+    current_user&.admin?
   end
 
   def client?
-    current_user&.role == 'client'
+    current_user&.client?
   end
 
   def freelancer?
-    current_user&.role == 'freelancer'
+    current_user&.freelancer?
   end
 
   def require_admin

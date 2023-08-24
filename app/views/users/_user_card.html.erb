@@ -1,7 +1,7 @@
 <div class="col">
   <div class="card h-100">
     <div class="card-body pb-0">
-      <% if user.status == 'pending' && admin? %>
+      <% if user.pending? && admin? %>
         <div class="alert alert-danger">User's registration is pending</div>
         <div>
           <%= display_user_action('Approve', approve_user_path(user), 'check-lg', 'success') %>
@@ -20,7 +20,7 @@
       </p>
       <% if admin? %>
         <div class="mb-2">
-          <% if user.status == 'approved' %>
+          <% if user.approved? %>
             <%= display_user_action('Show', user, 'arrow-right-circle', 'primary') %>
             <%= display_user_action('Edit', edit_user_path(user), 'pencil', 'warning') %>
             <%= display_user_action('Delete', user_path(user), 'trash', 'danger') %>

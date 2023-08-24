@@ -31,29 +31,19 @@ class Bid < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
+  alias modifiable? pending?
+
   def accept
-    return unless modifiable?
+    ensure_modifiable
 
     update(bid_status: 'accepted')
     project.bids.where.not(id:).find_each { |other_bid| other_bid.update(bid_status: 'rejected') }
   end
 
   def reject
-    return unless modifiable?
+    ensure_modifiable
 
     update(bid_status: 'rejected')
-  end
-
-  def modifiable?
-    bid_status == 'pending'
-  end
-
-  def accepted?
-    bid_status == 'accepted'
-  end
-
-  def rejected?
-    bid_status == 'rejected'
   end
 
   def upload_project_files
@@ -61,6 +51,10 @@ class Bid < ApplicationRecord
   end
 
   private
+
+  def ensure_modifiable
+    return unless modifiable?
+  end
 
   def bid_status_changed?
     saved_change_to_attribute?(:bid_status)
@@ -79,7 +73,7 @@ class Bid < ApplicationRecord
   end
 
   def update_project
-    return unless bid_status == 'accepted'
+    return unless accepted?
 
     project.update(has_awarded_bid: true)
   end

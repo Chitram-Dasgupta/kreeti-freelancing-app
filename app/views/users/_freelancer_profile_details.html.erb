@@ -1,4 +1,4 @@
-<% if user.role == 'freelancer' %>
+<% if user.freelancer? %>
   <% [['Qualification', user.qualification], ['Experience', user.experience]].each do |label, value| %>
     <%= render 'label_value', label:, value: %>
   <% end %>

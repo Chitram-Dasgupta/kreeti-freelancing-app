@@ -13,7 +13,7 @@
         <% end %>
       </div>
     </div>
-    <% if @user.role == 'freelancer' %>
+    <% if @user.freelancer? %>
       <%= render 'freelancer_form_fields', f: %>
       <%= f.hidden_field :category_ids, value: "", multiple: true %>
     <% end %>

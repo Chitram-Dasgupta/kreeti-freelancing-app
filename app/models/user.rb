@@ -71,7 +71,7 @@ class User < ApplicationRecord
   end
 
   def email_activate
-    return errors.add(:base, 'Account not approved yet') unless status == 'approved'
+    return errors.add(:base, 'Account not approved yet') unless approved?
 
     if confirmation_token_created_at < 60.minutes.ago
       errors.add(:confirmation_token, 'expired')
