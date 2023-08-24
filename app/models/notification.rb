@@ -10,58 +10,38 @@ class Notification < ApplicationRecord
   default_scope { order(created_at: :desc) }
 
   def self.create_for_bid(bid)
-    bid_project_title = project_title(bid)
-    notification = create_notification_for_bid(bid, bid_project_title)
-    broadcast_notification_for_bid(notification, bid, bid_project_title)
-  end
-
-  def self.create_notification_for_bid(bid, bid_project_title)
-    create(
-      recipient_id: bid.user_id,
-      project_id: bid.project_id,
-      bid_id: bid.id,
-      message: "Your bid for #{bid_project_title} is #{bid.bid_status}",
-      read: false
-    )
-  end
-
-  def self.broadcast_notification_for_bid(notification, bid, bid_project_title)
-    ActionCable.server.broadcast(
-      "bid_notifications_channel_#{bid.user_id}", {
-        message: "Your bid for #{bid_project_title} is #{bid.bid_status}",
-        project_id: bid.project_id,
-        notification_id: notification.id
-      }
-    )
+    notification_message = "Your bid for #{project_title(bid)} is #{bid.bid_status}"
+    notification = create_notification(bid.user_id, bid.project_id, bid.id, notification_message)
+    broadcast_notification(notification, bid.user_id, bid.project_id)
   end
 
   def self.create_for_project_files_upload(bid)
-    bid_project_title = project_title(bid)
-    notification = create_notification_for_files_upload(bid, bid_project_title)
-    broadcast_notification_for_files_upload(notification, bid, bid_project_title)
+    notification_message = "The freelancer #{bid.username} for #{project_title(bid)} submitted the project files"
+    notification = create_notification(bid.project.user_id, bid.project_id, bid.id, notification_message)
+    broadcast_notification(notification, bid.project.user_id, bid.project_id)
   end
 
-  def self.create_notification_for_files_upload(bid, bid_project_title)
+  def self.create_notification(recipient_id, project_id, bid_id, message)
     create(
-      recipient_id: bid.project.user_id,
-      project_id: bid.project_id,
-      bid_id: bid.id,
-      message: "The freelancer #{bid.username} for #{bid_project_title} has submitted the project files",
+      recipient_id:,
+      project_id:,
+      bid_id:,
+      message:,
       read: false
     )
   end
 
-  def self.broadcast_notification_for_files_upload(notification, bid, bid_project_title)
+  def self.broadcast_notification(notification, user_id, project_id)
     ActionCable.server.broadcast(
-      "bid_notifications_channel_#{bid.project.user_id}", {
-        message: "The freelancer #{bid.username} for #{bid_project_title} has submitted the project files",
-        project_id: bid.project_id,
+      "bid_notifications_channel_#{user_id}", {
+        message: notification.message,
+        project_id:,
         notification_id: notification.id
       }
     )
   end
 
   def self.project_title(bid)
-    Project.find_by(id: bid.project_id).title
+    bid.project_title
   end
 end
