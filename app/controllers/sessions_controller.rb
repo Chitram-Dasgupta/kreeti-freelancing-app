@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path, flash: { notice: 'Logged out' }
+    redirect_to_root_with_notice('Logged out')
   end
 
   private
@@ -38,12 +38,12 @@ class SessionsController < ApplicationController
     elsif freelancer?
       redirect_to bids_path, flash: { notice: 'Logged in as freelancer!' }
     else
-      redirect_to root_path, flash: { notice: 'Logged in as admin!' }
+      redirect_to_root_with_notice('Logged in as admin!')
     end
   end
 
   def handle_unconfirmed_email(user)
-    redirect_to_root_with_err('Your account has been rejected!') and return if user.status == 'rejected'
+    redirect_to_root_with_err('Your account has been rejected!') and return if user.rejected?
 
     redirect_to_root_with_err('Please activate your account!')
   end

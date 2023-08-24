@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   helper_method :admin?
   helper_method :create_instance
   helper_method :redirect_to_root_with_err
+  helper_method :redirect_to_root_with_notice
 
   rescue_from ActionController::RoutingError, with: :render_not_found
 
@@ -38,7 +39,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    redirect_to root_path, flash: { error: 'You are not authorized to view this page' } unless admin?
+    redirect_to_root_with_err('You are not authorized to view this page') unless admin?
   end
 
   def require_authorization
@@ -46,11 +47,11 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_logged_in_users
-    redirect_to root_path, flash: { notice: 'You are already signed in' } if logged_in?
+    redirect_to_root_with_notice('You are already signed in') if logged_in?
   end
 
   def render_not_found
-    redirect_to root_path, flash: { error: 'The page you are looking for cannot be shown.' }
+    redirect_to_root_with_err('The page you are looking for cannot be shown')
   end
 
   def create_instance(instance, success_path, success_message, failure_message, failure_view)
@@ -64,5 +65,9 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_root_with_err(error_message)
     redirect_to root_path, flash: { error: error_message }
+  end
+
+  def redirect_to_root_with_notice(notice)
+    redirect_to root_path, flash: { notice: }
   end
 end
