@@ -1,9 +1,9 @@
 <div class="mx-2 my-3">
   <%= render 'bid_display', bid: @bid, bids_by_user: @bids_related_to_user %>
-  <% if (current_user == @bid.user && @bid.modifiable?) || admin? %>
+  <% if (current_user?(@bid.user) && @bid.modifiable?) || admin? %>
     <%= display_bid_action('Edit this bid', edit_bid_path(@bid), 'pencil', 'warning') %>
     <%= display_bid_action('Delete this bid', bid_path(@bid), 'trash', 'danger') %>
-  <% elsif current_user == @bid.user && @bid.accepted? %>
+  <% elsif current_user?(@bid.user) && @bid.accepted? %>
     <% unless @bid.project_files_uploaded %>
       <%= display_bid_action('Submit project files', edit_bid_path(@bid), 'upload', 'primary') %>
     <% end %>

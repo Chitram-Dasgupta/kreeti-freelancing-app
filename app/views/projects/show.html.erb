@@ -1,13 +1,13 @@
 <div class="mt-3">
   <%= render 'project_display', project: @project %>
-  <% if (current_user == @project.user && !@project.has_awarded_bid?) || admin? %>
+  <% if (current_user?(@project.user) && !@project.has_awarded_bid?) || admin? %>
     <%= display_project_action('Edit', edit_project_path(@project), 'pencil', 'warning') %>
     <%= display_project_action('Delete', project_path(@project), 'trash', 'danger') %>
   <% end %>
   <% if freelancer? %>
     <%= render 'freelancer_actions', project: @project %>
   <% end%>
-  <% if @project.has_awarded_bid? && current_user == @project.user %>
+  <% if @project.has_awarded_bid? && current_user?(@project.user) %>
     <%= display_project_action('Chat with awarded freelancer', rooms_path(user_id: @project.accepted_bid_freelancer&.id), 'chat-dots', 'info') %>
   <% end %>
   <% if logged_in? %>

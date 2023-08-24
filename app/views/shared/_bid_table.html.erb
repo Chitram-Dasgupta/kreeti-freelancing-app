@@ -39,7 +39,7 @@
                 This bid is rejected
               </div>
             <% else %>
-              <% if bid.project.user == current_user %>
+              <% if current_user?(bid.project.user) %>
                 <%= link_to 'Accept Bid', accept_bid_path(bid), method: :post, class: 'btn btn-success m-1' %>
                 <%= link_to 'Reject Bid', reject_bid_path(bid), method: :post, class: 'btn btn-danger m-1' %>
               <% else %>

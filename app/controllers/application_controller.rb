@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   before_action :require_authorization, except: [:render_not_found]
   helper_method :current_user
+  helper_method :current_user?
   helper_method :logged_in?
   helper_method :client?
   helper_method :freelancer?
@@ -14,6 +15,10 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+
+  def current_user?(user)
+    current_user == user
   end
 
   def logged_in?

@@ -1,6 +1,6 @@
 <%= render 'shared/profile_picture', user: @user, size: '320x320' %>
 <%= render 'user_profile', user: @user %>
-<% if current_user == @user %>
+<% if current_user?(@user) %>
   <%= link_to edit_user_path(@user), class: "btn btn-primary mb-2" do %>
     Edit <i class="bi bi-pencil"></i>
   <% end %>
