@@ -59,7 +59,7 @@
       </ul>
     </div>
   </div>
-  <%= render 'shared/file_field_with_attachment', form: f, form_object: local_assigns[:form_object], field: :design_document %>
-  <%= render 'shared/file_field_with_attachment', form: f, form_object: local_assigns[:form_object], field: :srs_document %>
+  <%= render 'shared/file_field_with_attachment', form: f, object: local_assigns[:form_object], field: :design_document %>
+  <%= render 'shared/file_field_with_attachment', form: f, object: local_assigns[:form_object], field: :srs_document %>
   <%= f.submit local_assigns[:submit_text], class: "btn btn-primary" %>
 <% end %>
