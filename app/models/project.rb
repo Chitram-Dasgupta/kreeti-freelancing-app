@@ -43,7 +43,7 @@ class Project < ApplicationRecord
   end
 
   def accepted_bid_freelancer
-    bids.where(bid_status: :accepted).first&.user
+    bids.find_by(bid_status: :accepted)&.user
   end
 
   def self.search_projects(category_name)
