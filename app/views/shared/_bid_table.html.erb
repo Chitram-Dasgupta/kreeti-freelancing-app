@@ -4,7 +4,7 @@
       <tr>
         <th>Bid Description</th>
         <th>Bid Amount</th>
-        <% unless params['controller'] == 'bids' && params['action'] == 'index' %>
+        <% unless controller_name == 'bids' && action_name == 'index' %>
           <th>By</th>
         <% end %>
         <th>Actions</th>
@@ -16,7 +16,7 @@
         <tr>
           <td><%= bid.bid_description.truncate(75) %></td>
           <td><%= bid.bid_amount %></td>
-          <% unless params['controller'] == 'bids' && params['action'] == 'index' %>
+          <% unless controller_name == 'bids' && action_name == 'index' %>
             <% unless bid.username.nil? %>
               <td><%= bid.username %></td>
             <% else %>
