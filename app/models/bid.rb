@@ -34,14 +34,14 @@ class Bid < ApplicationRecord
   alias modifiable? pending?
 
   def accept
-    ensure_modifiable
+    return unless modifiable?
 
     update(bid_status: 'accepted')
-    project.bids.where.not(id:).find_each { |other_bid| other_bid.update(bid_status: 'rejected') }
+    reject_other_bids
   end
 
   def reject
-    ensure_modifiable
+    return unless modifiable?
 
     update(bid_status: 'rejected')
   end
@@ -52,8 +52,10 @@ class Bid < ApplicationRecord
 
   private
 
-  def ensure_modifiable
-    return unless modifiable?
+  def reject_other_bids
+    project.bids.where.not(id:).find_each do |other_bid|
+      other_bid.update(bid_status: 'rejected')
+    end
   end
 
   def bid_status_changed?
