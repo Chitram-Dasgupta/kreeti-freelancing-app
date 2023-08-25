@@ -10,4 +10,8 @@
     <%= display_bid_action('Chat with client', rooms_path(user_id: @bid.project.user_id), 'chat-dots', 'info') %>
   <% end %>
 </div>
-<%= render 'shared/footer', previous_page: bids_path %>
+<% if client? %>
+  <%= render 'shared/footer', previous_page: @bid.project %>
+<% else %>
+  <%= render 'shared/footer', previous_page: bids_path %>
+<% end %>
