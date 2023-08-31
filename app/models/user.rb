@@ -86,7 +86,8 @@ class User < ApplicationRecord
   def self.search_freelancer(category_name)
     filter = [
       { term: { role: 'freelancer' } },
-      { term: { email_confirmed: true } }
+      { term: { email_confirmed: true } },
+      { term: { visibility: 'pub' } }
     ]
     __elasticsearch__.search(search_definition(category_name, filter))
   end
