@@ -12,6 +12,7 @@ import "packs/form_submit"
 import "packs/multiselect_input"
 import "packs/role_change"
 import "packs/flash_hide"
+import "packs/theme_toggler"
 
 Rails.start()
 Turbolinks.start()

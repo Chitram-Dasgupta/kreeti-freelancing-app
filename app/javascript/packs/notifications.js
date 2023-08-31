@@ -133,7 +133,7 @@ function addClickListener(button, callback) {
 
 function createNotificationItem(notification) {
   const notificationItem = document.createElement("a");
-  notificationItem.classList.add("dropdown-item", "text-wrap", notification.read ? "text-muted" : "text-dark");
+  notificationItem.classList.add("dropdown-item", "text-wrap", notification.read ? "text-muted" : "text-primary");
   notificationItem.href = `/projects/${notification.project_id}`;
   notificationItem.textContent = notification.message;
   return notificationItem;

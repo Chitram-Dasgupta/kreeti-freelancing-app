@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light px-2 mb-4">
+<nav class="navbar navbar-expand-md bg-secondary px-2 mb-4">
   <div class="container">
     <%= link_to "Freelancing app", root_path, class: "navbar-brand"%>
     <button
@@ -10,6 +10,9 @@
     </button>
     <div class="collapse navbar-collapse" id="primary-navigation">
       <ul class="navbar-nav ms-auto text-center">
+        <li>
+          <button id="themeToggle" type="button" class="btn"><i class="bi bi-moon-stars-fill"></i></button>
+        </li>
         <% unless logged_in? %>
           <li class="nav-item"><%= link_to "Log in", new_session_path, class: "nav-link"%></li>
           <li class="nav-item"><%= link_to "Register", new_user_path, class: "nav-link"%></li>
