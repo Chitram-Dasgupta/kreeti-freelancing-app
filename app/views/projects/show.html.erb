@@ -10,6 +10,9 @@
   <% if @project.has_awarded_bid? && current_user?(@project.user) %>
     <%= display_project_action('Chat with awarded freelancer', rooms_path(user_id: @project.accepted_bid_freelancer&.id), 'chat-dots', 'info') %>
   <% end %>
+  <% if @project.has_awarded_bid? && current_user?(awarded_freelancer(@project)) %>
+    <%= display_bid_action('Chat with client', rooms_path(user_id: @project.user_id), 'chat-dots', 'info') %>
+  <% end %>
   <% if logged_in? %>
     <h2 class="my-4">Bids:</h2>
     <%= render 'shared/bid_table', bids: @bids %>

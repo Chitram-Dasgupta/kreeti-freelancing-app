@@ -40,4 +40,8 @@ module ProjectsHelper
   def user_has_bid?(project, user)
     project.bids.exists?(user_id: user.id)
   end
+
+  def awarded_freelancer(project)
+    project.bids.accepted.first&.user
+  end
 end
