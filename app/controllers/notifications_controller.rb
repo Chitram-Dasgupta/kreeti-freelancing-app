@@ -4,13 +4,13 @@ class NotificationsController < ApplicationController
   def count
     notifications = current_user.notifications
     full_count = notifications.count
-    unread_count = notifications.where(read: false).count
+    unread_count = notifications.unread.count
     render json: { unread_count:, full_count: }
   end
 
   def delete_read
-    current_user.notifications.where(read: true).destroy_all
-    render json: { success: true }
+    current_user.notifications.read.destroy_all
+    render_success_response true
   end
 
   def fetch_notifications
@@ -22,7 +22,7 @@ class NotificationsController < ApplicationController
   end
 
   def mark_all_as_read
-    notifications = current_user.notifications.where(read: false)
+    notifications = current_user.notifications.unread
     success = true
     notifications.each do |notification|
       unless notification.update(read: true)
@@ -30,7 +30,7 @@ class NotificationsController < ApplicationController
         break
       end
     end
-    render json: { success: }
+    render_success_response success
   end
 
   def mark_as_read
@@ -38,6 +38,12 @@ class NotificationsController < ApplicationController
     return render json: { success: false } if notification.nil?
 
     notification.update(read: true)
-    render json: { success: true }
+    render_success_response true
+  end
+
+  private
+
+  def render_success_response(success)
+    render json: { success: }
   end
 end

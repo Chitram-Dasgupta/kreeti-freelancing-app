@@ -7,6 +7,9 @@ class Notification < ApplicationRecord
 
   validates :message, presence: true, length: { maximum: 255 }
 
+  scope :read, -> { where(read: true) }
+  scope :unread, -> { where(read: false) }
+
   default_scope { order(created_at: :desc) }
 
   def self.create_for_bid(bid)
