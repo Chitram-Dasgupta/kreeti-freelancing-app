@@ -6,9 +6,7 @@ class RoomsController < ApplicationController
   def index
     return redirect_to_root_with_err('As an admin, you cannot access this page') if admin?
 
-    current_user_id = current_user.id
-    @rooms = Room.joins(:user_rooms).where('user_rooms.sender_id = ? OR user_rooms.receiver_id = ?', current_user_id,
-                                           current_user_id).order('updated_at DESC').page params[:page]
+    @rooms = Room.for_user(current_user.id).page params[:page]
   end
 
   def show

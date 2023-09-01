@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   def index
     if admin?
-      @users = User.approved_users.where.not(role: 'admin').page params[:page]
+      @users = User.approved_non_admins.page params[:page]
     elsif !logged_in?
       redirect_to new_user_path
     else
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if User.where(email: @user.email, status: 'rejected').any?
+    if User.rejected_email(@user.email).any?
       redirect_to new_user_path, flash: { error: 'This email was previously rejected' }
     else
       create_instance(@user, root_path, 'Registration successful. Please wait for an admin to approve your account',
@@ -65,13 +65,12 @@ class UsersController < ApplicationController
   end
 
   def approve
-    @user.update(status: 'approved')
-    UserMailer.account_activation(@user).deliver_later
+    @user.approve
     redirect_to manage_registrations_users_path, flash: { success: 'User approved' }
   end
 
   def reject
-    @user.update(status: 'rejected', confirmation_token: nil)
+    @user.reject
     redirect_to manage_registrations_users_path, flash: { success: 'User rejected' }
   end
 

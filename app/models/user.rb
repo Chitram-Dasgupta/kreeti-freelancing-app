@@ -61,6 +61,8 @@ class User < ApplicationRecord
   scope :approved_users, -> { where(status: 'approved') }
   scope :pending_users, -> { where(status: 'pending') }
   scope :visible_to, ->(user) { user&.role == 'admin' ? all : where.not(visibility: 'priv').or(where(id: user&.id)) }
+  scope :approved_non_admins, -> { approved_users.where.not(role: 'admin') }
+  scope :rejected_email, ->(email) { where(email:, status: 'rejected') }
 
   default_scope { order(created_at: :desc) }
 
@@ -91,5 +93,14 @@ class User < ApplicationRecord
       { term: { visibility: 'pub' } }
     ]
     __elasticsearch__.search(search_definition(category_name, filter))
+  end
+
+  def approve
+    update(status: 'approved')
+    UserMailer.account_activation(self).deliver_later
+  end
+
+  def reject
+    update(status: 'rejected', confirmation_token: nil)
   end
 end

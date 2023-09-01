@@ -2,7 +2,7 @@
   <div class="mb-3">
     <%= form.label :search, 'Search by category:', class: 'form-label' %>
     <div class="col-sm-6">
-      <%= form.select :search, [['All categories', '']].concat(Category.all.collect {|c| [c.name, c.name]}), {selected: params[:search].presence || ''}, class: 'form-control' %>
+      <%= form.select :search, [['All categories', '']].concat(Category.all_categories.collect {|category| [category.name, category.name]}), {selected: params[:search].presence || ''}, class: 'form-control' %>
     </div>
   </div>
   <div class="mt-3">

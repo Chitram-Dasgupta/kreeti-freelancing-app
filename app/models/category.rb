@@ -10,5 +10,7 @@ class Category < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
+  scope :all_categories, -> { all }
+
   default_scope { order(:name) }
 end

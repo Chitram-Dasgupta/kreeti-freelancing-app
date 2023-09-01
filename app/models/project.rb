@@ -36,6 +36,8 @@ class Project < ApplicationRecord
 
   delegate :username, to: :user
 
+  scope :all_projects, -> { all }
+
   default_scope { order(created_at: :desc) }
 
   def bid_awarded?

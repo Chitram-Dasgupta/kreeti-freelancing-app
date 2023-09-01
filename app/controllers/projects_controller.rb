@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
 
   def index
     if admin?
-      @projects = Project.all.page params[:page]
+      @projects = Project.all_projects.page params[:page]
     elsif client?
       @user_projects = current_user.projects.page params[:page]
     else
@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
 
     return redirect_to_root_with_err('Project cannot be shown') if @project.nil?
 
-    @bids = @project.bids.where.not(bid_status: 'rejected').page params[:page]
+    @bids = @project.bids.not_rejected.page params[:page]
   end
 
   def new
@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
     return redirect_to_root_with_err('Project cannot be edited') if @project.nil?
     return redirect_to @project, notice: 'Cannot edit an awarded project' if @project.has_awarded_bid?
 
-    @categories = Category.all
+    @categories = Category.all_categories
   end
 
   def create

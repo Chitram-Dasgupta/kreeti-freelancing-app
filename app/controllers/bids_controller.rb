@@ -7,7 +7,7 @@ class BidsController < ApplicationController
 
   def index
     @bids = if admin?
-              Bid.all
+              Bid.all_bids
             elsif freelancer?
               current_user.bids
             else
@@ -17,7 +17,7 @@ class BidsController < ApplicationController
   end
 
   def show
-    @bids_related_to_user = admin? ? Bid.all : Bid.to_freelancer_or_awardee_client(current_user)
+    @bids_related_to_user = admin? ? Bid.all_bids : Bid.to_freelancer_or_awardee_client(current_user)
   end
 
   def new

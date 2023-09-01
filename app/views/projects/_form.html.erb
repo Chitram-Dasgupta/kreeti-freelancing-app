@@ -22,7 +22,7 @@
         Select Categories
       </button>
       <ul class="dropdown-menu checkbox-menu overflow-auto allow-focus" style="height: 200px;" aria-labelledby="categoriesDropdown">
-        <% Category.all.each do |category| %>
+        <% Category.all_categories.each do |category| %>
           <li>
             <div class="dropdown-item">
               <%= check_box_tag 'project[category_ids][]', category.id, local_assigns[:form_object].categories.include?(category), id: "project_category_ids_#{category.id}" %>

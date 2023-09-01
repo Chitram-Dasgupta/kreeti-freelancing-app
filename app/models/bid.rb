@@ -26,8 +26,9 @@ class Bid < ApplicationRecord
   delegate :username, to: :user, allow_nil: true
 
   scope :to_freelancer_or_awardee_client, ->(user) { where(user:).or(where(project: user.projects)) }
-
   scope :owned_by, ->(user) { joins(:project).where(projects: { user: }) }
+  scope :all_bids, -> { all }
+  scope :not_rejected, -> { where.not(bid_status: 'rejected') }
 
   default_scope { order(created_at: :desc) }
 

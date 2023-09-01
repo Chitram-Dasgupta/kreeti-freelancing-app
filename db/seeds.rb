@@ -34,7 +34,7 @@ admin.save
     project = client.projects.build(title: "Project #{j} for Client #{i}",
                                     description: 'lorem ipsum')
 
-    project.categories << Category.all.sample(rand(1..3))
+    project.categories << Category.all_categories.sample(rand(1..3))
     project.skills = skill_names.sample(rand(1..2))
     project.save!
   end
@@ -48,12 +48,12 @@ end
                         industry: industry_names.sample, confirmation_token: nil, visibility: freelancer_visibility,
                         status: 'approved')
 
-  freelancer.categories << Category.all.sample(rand(1..4))
+  freelancer.categories << Category.all_categories.sample(rand(1..4))
   freelancer.save!
 end
 
 User.where(role: 'freelancer').each do |freelancer|
-  project = Project.all.sample
+  project = Project.all_projects.sample
 
   project.bids.create!(bid_description: 'lorem ipsum dolor', bid_amount: rand(10_000..25_000), user_id: freelancer.id)
 end
