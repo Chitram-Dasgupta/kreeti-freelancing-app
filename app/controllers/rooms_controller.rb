@@ -7,7 +7,7 @@ class RoomsController < ApplicationController
     return redirect_to_root_with_err('As an admin, you cannot access this page') if admin?
 
     current_user_id = current_user.id
-    @rooms = Room.joins(:user_rooms).where('user_rooms.user1_id = ? OR user_rooms.user2_id = ?', current_user_id,
+    @rooms = Room.joins(:user_rooms).where('user_rooms.sender_id = ? OR user_rooms.receiver_id = ?', current_user_id,
                                            current_user_id).order('updated_at DESC').page params[:page]
   end
 
@@ -31,13 +31,14 @@ class RoomsController < ApplicationController
 
   def find_or_create_room(other_user)
     user_room = UserRoom.find_by(
-      '(user1_id = :current_user AND user2_id = :other_user) OR (user1_id = :other_user AND user2_id = :current_user)',
+      '(sender_id = :current_user AND receiver_id = :other_user)
+      OR (sender_id = :other_user AND receiver_id = :current_user)',
       current_user: current_user.id, other_user: other_user.id
     )
 
     unless user_room
       room = Room.create
-      user_room = UserRoom.create(user1: current_user, user2: other_user, room:)
+      user_room = UserRoom.create(sender_id: current_user.id, receiver_id: other_user.id, room:)
     end
 
     user_room.room

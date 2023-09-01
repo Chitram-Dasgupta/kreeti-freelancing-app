@@ -41,8 +41,9 @@ class User < ApplicationRecord
   has_many :projects, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy, inverse_of: :recipient
-  has_many :user1_rooms, foreign_key: :user1_id, class_name: 'UserRoom', dependent: :destroy, inverse_of: :user1
-  has_many :user2_rooms, foreign_key: :user2_id, class_name: 'UserRoom', dependent: :destroy, inverse_of: :user2
+  has_many :sender_rooms, foreign_key: :sender_id, class_name: 'UserRoom', dependent: :destroy, inverse_of: :sender
+  has_many :receiver_rooms, foreign_key: :receiver_id, class_name: 'UserRoom', dependent: :destroy,
+                            inverse_of: :receiver
   has_many :rooms, through: :user_rooms
 
   has_one_attached :profile_picture

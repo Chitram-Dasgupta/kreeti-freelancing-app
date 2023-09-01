@@ -16,17 +16,17 @@ RSpec.describe Room do
     end
 
     it 'has many user_rooms' do
-      user_room1 = create(:user_room, room:, user1: user, user2: other_user)
-      user_room2 = create(:user_room, room:, user1: user, user2: other_user)
+      user_room1 = create(:user_room, room:, sender: user, receiver: other_user)
+      user_room2 = create(:user_room, room:, sender: user, receiver: other_user)
 
       expect(room.user_rooms).to include(user_room1, user_room2)
     end
 
     it 'has many users through user_rooms' do
-      create(:user_room, room:, user1: user, user2: other_user)
-      create(:user_room, room:, user1: user, user2: other_user)
+      create(:user_room, room:, sender: user, receiver: other_user)
+      create(:user_room, room:, sender: user, receiver: other_user)
 
-      users = room.user_rooms.map { |ur| [ur.user1, ur.user2] }.flatten
+      users = room.user_rooms.map { |ur| [ur.sender, ur.receiver] }.flatten
       expect(users).to include(user, other_user)
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe Room do
     end
 
     it 'destroys associated user_rooms when destroyed' do
-      create(:user_room, room:, user1: first_user, user2: second_user)
+      create(:user_room, room:, sender: first_user, receiver: second_user)
       expect { room.destroy }.to change(UserRoom, :count).by(-1)
     end
   end

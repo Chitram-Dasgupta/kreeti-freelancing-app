@@ -9,13 +9,13 @@ RSpec.describe UserRoom do
       expect(association.macro).to eq(:belongs_to)
     end
 
-    it 'belongs to user1' do
-      association = described_class.reflect_on_association(:user1)
+    it 'belongs to sender' do
+      association = described_class.reflect_on_association(:sender)
       expect(association.macro).to eq(:belongs_to)
     end
 
-    it 'belongs to user2' do
-      association = described_class.reflect_on_association(:user2)
+    it 'belongs to receiver' do
+      association = described_class.reflect_on_association(:receiver)
       expect(association.macro).to eq(:belongs_to)
     end
   end
@@ -25,8 +25,8 @@ RSpec.describe UserRoom do
       let(:first_user) { create(:user) }
       let(:second_user) { create(:user) }
       let(:third_user) { create(:user) }
-      let(:first_user_room) { create(:user_room, user1: first_user, user2: second_user) }
-      let(:second_user_room) { create(:user_room, user1: second_user, user2: third_user) }
+      let(:first_user_room) { create(:user_room, sender: first_user, receiver: second_user) }
+      let(:second_user_room) { create(:user_room, sender: second_user, receiver: third_user) }
 
       it 'returns user rooms that belong to the specified user' do
         expect(described_class.belongs_to_user(second_user)).to eq([first_user_room, second_user_room])
@@ -37,7 +37,7 @@ RSpec.describe UserRoom do
   describe '#other_user' do
     let(:first_user) { create(:user) }
     let(:second_user) { create(:user) }
-    let(:user_room) { create(:user_room, user1: first_user, user2: second_user) }
+    let(:user_room) { create(:user_room, sender: first_user, receiver: second_user) }
 
     it 'returns the other user in the user room' do
       expect(user_room.other_user(first_user)).to eq(second_user)

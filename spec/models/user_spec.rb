@@ -103,7 +103,7 @@ RSpec.describe User do
 
     context 'when username is not unique' do
       it 'is not valid' do
-        described_class.create!(username: 'username', email: 'user2@example.com', password: 'password')
+        described_class.create!(username: 'username', email: 'receiver@example.com', password: 'password')
         user.username = 'username'
         expect(user).not_to be_valid
       end
@@ -151,28 +151,28 @@ RSpec.describe User do
       expect(user.notifications.count).to eq(1)
     end
 
-    it 'can have many user1_rooms' do
-      user.user1_rooms << create(:user_room, user1: user)
+    it 'can have many sender_rooms' do
+      user.sender_rooms << create(:user_room, sender: user)
       user.save
-      expect(user.user1_rooms.count).to eq(1)
+      expect(user.sender_rooms.count).to eq(1)
     end
 
-    it 'can have many user2_rooms' do
-      user.user2_rooms << create(:user_room, user2: user)
+    it 'can have many receiver_rooms' do
+      user.receiver_rooms << create(:user_room, receiver: user)
       user.save
-      expect(user.user2_rooms.count).to eq(1)
+      expect(user.receiver_rooms.count).to eq(1)
     end
 
-    it 'can have many rooms as user1' do
-      create(:user_room, user1: user)
+    it 'can have many rooms as sender' do
+      create(:user_room, sender: user)
       user.save
-      expect(user.user1_rooms.count).to eq(1)
+      expect(user.sender_rooms.count).to eq(1)
     end
 
-    it 'can have many rooms as user2' do
-      create(:user_room, user2: user)
+    it 'can have many rooms as receiver' do
+      create(:user_room, receiver: user)
       user.save
-      expect(user.user2_rooms.count).to eq(1)
+      expect(user.receiver_rooms.count).to eq(1)
     end
 
     it 'can have many categories through user_categories' do

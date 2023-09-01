@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :user_room do
-    user1 { association(:user) }
-    user2 { association(:user) }
+    sender { association(:user) }
+    receiver { association(:user) }
     room { association(:room) }
   end
 end

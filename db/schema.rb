@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_31_191209) do
+ActiveRecord::Schema.define(version: 2023_09_01_081132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,14 +122,14 @@ ActiveRecord::Schema.define(version: 2023_07_31_191209) do
   end
 
   create_table "user_rooms", force: :cascade do |t|
-    t.bigint "user1_id", null: false
-    t.bigint "user2_id", null: false
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
     t.bigint "room_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["receiver_id"], name: "index_user_rooms_on_receiver_id"
     t.index ["room_id"], name: "index_user_rooms_on_room_id"
-    t.index ["user1_id"], name: "index_user_rooms_on_user1_id"
-    t.index ["user2_id"], name: "index_user_rooms_on_user2_id"
+    t.index ["sender_id"], name: "index_user_rooms_on_sender_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -166,6 +166,6 @@ ActiveRecord::Schema.define(version: 2023_07_31_191209) do
   add_foreign_key "user_categories", "categories"
   add_foreign_key "user_categories", "users"
   add_foreign_key "user_rooms", "rooms"
-  add_foreign_key "user_rooms", "users", column: "user1_id"
-  add_foreign_key "user_rooms", "users", column: "user2_id"
+  add_foreign_key "user_rooms", "users", column: "receiver_id"
+  add_foreign_key "user_rooms", "users", column: "sender_id"
 end
