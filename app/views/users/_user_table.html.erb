@@ -20,8 +20,8 @@
               <% if user.categories.empty? %>
                 No categories available
               <% else %>
-                <% user.categories.each do |cat| %>
-                  <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
+                <% user.categories.each do |category| %>
+                  <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= category.name %></span>
                 <% end %>
               <% end %>
             </td>

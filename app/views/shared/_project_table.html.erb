@@ -23,8 +23,8 @@
               <% if project.categories.empty? %>
                 No categories available
               <% else %>
-                <% project.categories.each do |cat| %>
-                  <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= cat.name %></span>
+                <% project.categories.each do |category| %>
+                  <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= category.name %></span>
                 <% end %>
               <% end %>
             </td>
