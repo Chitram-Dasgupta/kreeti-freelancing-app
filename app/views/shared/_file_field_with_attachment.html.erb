@@ -1,6 +1,6 @@
 <div class="mb-3">
   <%= form.label field, class: 'form-label' %>
-  <% if object.send(field).attached? && action_name == 'edit' %>
+  <% if object.send(field).attached? && action_name != 'new' && action_name != 'files_upload' %>
     <div class="mb-2">
       <span class="text-muted">Previously selected:</span> <%= link_to object.send(field).filename.to_s.truncate(25), url_for(object.send(field)), target: "_blank" %>
     </div>
