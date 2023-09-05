@@ -2,6 +2,7 @@
 
 class Bid < ApplicationRecord
   include Editable
+  include FileValidatable
 
   paginates_per 12
 
@@ -21,6 +22,7 @@ class Bid < ApplicationRecord
   validates :bid_description, length: { maximum: 1024 }
   validates :bid_amount, presence: true, numericality: { greater_than: 0, less_than: 1_000_000 }
   validates :user_id, uniqueness: { scope: :project_id }
+  validate :check_file_type_and_size
 
   delegate :title, to: :project, prefix: true
   delegate :username, to: :user, allow_nil: true
@@ -79,5 +81,11 @@ class Bid < ApplicationRecord
     return unless accepted?
 
     project.update(has_awarded_bid: true)
+  end
+
+  def check_file_type_and_size
+    check_file_type_and_size_for(:bid_code_document, 25)
+    check_file_type_and_size_for(:bid_design_document, 25)
+    check_file_type_and_size_for(:bid_other_document, 25)
   end
 end

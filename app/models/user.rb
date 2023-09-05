@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   include Searchable
+  include FileValidatable
 
   def as_indexed_json(_options = {})
     as_json(
@@ -57,6 +58,7 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, on: :create
   validates :role, presence: true, inclusion: { in: %w[freelancer client] }, unless: :admin?
   validates :username, presence: true, uniqueness: true, length: { maximum: 255 }
+  validate :check_file_type_and_size
 
   scope :approved_users, -> { where(status: 'approved') }
   scope :pending_users, -> { where(status: 'pending') }
@@ -102,5 +104,11 @@ class User < ApplicationRecord
 
   def reject
     update(status: 'rejected', confirmation_token: nil)
+  end
+
+  private
+
+  def check_file_type_and_size
+    check_file_type_and_size_for(:profile_picture, 5, profile_pic: true)
   end
 end

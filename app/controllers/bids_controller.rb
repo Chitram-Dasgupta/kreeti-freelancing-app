@@ -66,12 +66,13 @@ class BidsController < ApplicationController
   end
 
   def files_upload
-    if files_present?
-      attach_files
-      redirect_to @bid, flash: { success: 'Files uploaded successfully' }
-    else
-      redirect_to @bid, flash: { error: 'Please upload at least one file' }
+    unless files_present?
+      flash.now[:error] = 'Please upload at least one file'
+      return render :edit, status: :unprocessable_entity
     end
+
+    attach_files
+    check_validity_of_files(@bid)
   end
 
   private
@@ -81,7 +82,19 @@ class BidsController < ApplicationController
     @bid.bid_code_document.attach(bid[:bid_code_document])
     @bid.bid_design_document.attach(bid[:bid_design_document])
     @bid.bid_other_document.attach(bid[:bid_other_document])
+
+    return unless @bid.valid?
+
     @bid.upload_project_files
+  end
+
+  def check_validity_of_files(bid)
+    if bid.valid?
+      redirect_to bid, flash: { success: 'Files uploaded successfully' }
+    else
+      flash.now[:error] = 'The files must be PDFs and less than 25MB'
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def check_modifiable

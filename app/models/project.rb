@@ -3,6 +3,7 @@
 class Project < ApplicationRecord
   include Searchable
   include Editable
+  include FileValidatable
 
   def as_indexed_json(_options = {})
     as_json(
@@ -33,6 +34,7 @@ class Project < ApplicationRecord
   validates :categories, presence: true
   validates :title, presence: true, length: { maximum: 64 }
   validates :description, length: { maximum: 1024 }
+  validate :check_file_type_and_size
 
   delegate :username, to: :user
 
@@ -50,5 +52,12 @@ class Project < ApplicationRecord
 
   def self.search_projects(category_name)
     __elasticsearch__.search(search_definition(category_name))
+  end
+
+  private
+
+  def check_file_type_and_size
+    check_file_type_and_size_for(:design_document, 25)
+    check_file_type_and_size_for(:srs_document, 25)
   end
 end
