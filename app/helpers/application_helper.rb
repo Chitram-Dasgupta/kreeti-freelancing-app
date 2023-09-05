@@ -34,4 +34,9 @@ module ApplicationHelper
 
     http_methods[[icon_name, style]]
   end
+
+  def cycle_bg_colors_badge(content)
+    content_tag(:span, content, class: "badge #{cycle('bg-primary', 'bg-secondary', 'bg-success',
+                                                      'bg-danger', 'bg-warning', 'bg-info')}")
+  end
 end

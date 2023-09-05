@@ -11,7 +11,7 @@
     <% else %>
       <div class="col fs-4">
         <% user.categories.each do |category| %>
-          <span class="badge <%= cycle('bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info') %>"><%= category.name %></span>
+          <%= cycle_bg_colors_badge(category.name) %>
         <% end %>
       </div>
     <% end %>

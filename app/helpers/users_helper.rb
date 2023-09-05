@@ -15,4 +15,26 @@ module UsersHelper
   def visibility_status(user)
     user.pub? ? 'Public' : 'Private'
   end
+
+  def common_profile_details_array(user)
+    [['Username', user.username], ['Email', user.email], ['Industry', user.industry],
+     ['Visibility', visibility_status(user)]]
+  end
+
+  def shared_form_fields_array
+    [[:username, 'text'], [:email, 'email'], [:password, 'password'], [:password_confirmation, 'password'],
+     [:industry, 'text'], [:profile_picture, 'file']]
+  end
+
+  def editable_shared_form_fields_array
+    [[:username, 'text'], [:profile_picture, 'file'], [:industry, 'text']]
+  end
+
+  def user_role_options
+    [%w[Client client], %w[Freelancer freelancer]]
+  end
+
+  def freelancer_visibility_options
+    [%w[pub Public], %w[priv Private]]
+  end
 end

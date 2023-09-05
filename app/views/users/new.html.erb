@@ -3,9 +3,9 @@
   <%= form_with model: @user, local: true do |f| %>
     <div class="mb-3">
       <%= f.label :role, class: 'form-label' %>
-      <%= f.select :role, [['Client', 'client'], ['Freelancer', 'freelancer']], {}, { class: 'form-select' } %>
+      <%= f.select :role, user_role_options, {}, { class: 'form-select' } %>
     </div>
-    <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:email, 'email'], [:password, 'password'], [:password_confirmation, 'password'], [:industry, 'text'], [:profile_picture, 'file']] %>
+    <%= render 'shared/form_fields', form: f, user: @user, fields: shared_form_fields_array %>
     <div id="freelancer_fields" style="display: none;">
       <%= render 'freelancer_form_fields', f:, user: @user %>
     </div>

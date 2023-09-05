@@ -1,11 +1,11 @@
 <h1 class="my-4 text-center">Edit profile</h1>
 <div class="d-flex justify-content-center">
   <%= form_with model: @user do |f| %>
-    <%= render 'shared/form_fields', form: f, user: @user, fields: [[:username, 'text'], [:profile_picture, 'file'], [:industry, 'text']] %>
+    <%= render 'shared/form_fields', form: f, user: @user, fields: editable_shared_form_fields_array %>
     <div class="mb-3">
       <%= f.label :visibility, class: 'form-label' %>
       <div>
-        <%= f.collection_radio_buttons :visibility, [['pub', 'Public'], ['priv', 'Private']], :first, :last do |b| %>
+        <%= f.collection_radio_buttons :visibility, freelancer_visibility_options, :first, :last do |b| %>
           <div class="form-check form-check-inline">
             <%= b.radio_button %>
             <%= b.label class: "form-check-label" %>

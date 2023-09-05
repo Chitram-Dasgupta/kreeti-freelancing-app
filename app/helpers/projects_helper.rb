@@ -13,8 +13,7 @@ module ProjectsHelper
     else
       badges = collection.map do |item|
         content = attribute ? item.send(attribute) : item
-        content_tag(:span, content, class: "badge #{cycle('bg-primary', 'bg-secondary', 'bg-success',
-                                                          'bg-danger', 'bg-warning', 'bg-info')}")
+        cycle_bg_colors_badge(content)
       end
       safe_join(badges, ' ')
     end
