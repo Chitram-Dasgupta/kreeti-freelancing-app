@@ -19,16 +19,7 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[index new create destroy]
 
   resources :users do
-    collection do
-      get :search, controller: 'users', action: 'search'
-      get :manage_registrations, controller: 'users', action: 'manage_registrations'
-    end
-
-    member do
-      get :confirm_email, controller: 'users', action: 'confirm_email'
-      post :approve
-      post :reject
-    end
+    get :search, controller: 'users', action: 'search', on: :collection
   end
 
   resources :projects do
@@ -43,7 +34,19 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :categories, except: %i[show]
+  scope '/admin' do
+    resources :categories, except: %i[show]
+
+    resources :users do
+      get :manage_registrations, controller: 'users', action: 'manage_registrations', on: :collection
+
+      member do
+        get :confirm_email, controller: 'users', action: 'confirm_email'
+        post :approve
+        post :reject
+      end
+    end
+  end
 
   root 'welcome#index'
 
