@@ -54,7 +54,8 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX, message: 'must be a valid email address' },
                     uniqueness: { case_sensitive: false }
   validates :experience,
-            numericality: { only_integer: true, allow_nil: true, less_than_or_equal_to: 100 }
+            numericality: { only_integer: true, allow_nil: true, less_than_or_equal_to: 100,
+                            greater_than_or_equal_to: 0 }
   validates :password, presence: true, length: { minimum: 6 }, on: :create
   validates :role, presence: true, inclusion: { in: %w[freelancer client] }, unless: :admin?
   validates :username, presence: true, uniqueness: true, length: { maximum: 255 }
